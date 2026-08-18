@@ -10,17 +10,25 @@
 <body>
 <a class="skip-link" href="#content">Skip to content</a>
 <header class="site-header">
-  <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-  <a class="repo-link" href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}">View on GitHub</a>
+  <div class="header-inner">
+    <a class="site-title" href="{{ '/' | relative_url }}">
+      <span class="site-mark" aria-hidden="true">✦</span>
+      <span>{{ site.title }}</span>
+    </a>
+    <a class="repo-link" href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}">
+      <span>View on GitHub</span><span aria-hidden="true">↗</span>
+    </a>
+  </div>
 </header>
 <div class="layout">
   <nav class="sidebar" aria-label="Sections">
-    <p class="nav-heading">Guide</p>
+    <p class="nav-kicker">Admin training</p>
+    <p class="nav-heading">Guide contents</p>
     <ul>
-      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Overview</a></li>
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}><span class="nav-dot"></span>Overview</a></li>
       {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
       {% for s in sections %}
-      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active"{% endif %}>{{ s.title }}</a></li>
+      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active"{% endif %}><span class="nav-number">{{ s.nav_order }}</span>{{ s.title }}</a></li>
       {% endfor %}
     </ul>
   </nav>
@@ -28,7 +36,7 @@
     {{ content }}
     <hr>
     <p class="footer-note">
-      Last built {{ site.time | date: "%Y-%m-%d" }} ·
+      Last built {{ site.time | date: "%Y-%m-%d" }} <span aria-hidden="true">·</span>
       Content is maintained automatically by the
       <a href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}/blob/main/.github/workflows/copilot-governance-watch.md">governance watch workflow</a>.
     </p>
