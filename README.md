@@ -14,9 +14,31 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `docs/index.md` | Landing page and section index |
 | `docs/sections/*.md` | One page per guide section |
 | `docs/CHANGELOG.md` | Dated record of automated content updates |
+| `test-suite/` | Automated and behavioral governance control tests |
 | `.github/workflows/pages.yml` | Builds and deploys the site on push to `main` |
 | `.github/workflows/copilot-governance-watch.md` | Agentic workflow source ([gh-aw](https://github.com/github/gh-aw)) |
 | `.github/workflows/copilot-governance-watch.lock.yml` | Compiled workflow — do not edit by hand |
+
+## Governance test suite
+
+[`test-suite/`](test-suite/) verifies Copilot governance controls instead of assuming
+they work:
+
+- **Automated config checks** assert live content exclusion rules, org/enterprise
+  policies, and seat hygiene against a declared baseline.
+- **Behavioral test cases** use positive and negative prompts to prove runtime
+  enforcement across IDE, Chat, and CLI.
+- **Canary fixtures** contain safe fake secrets with unique tokens, so leaks are
+  detectable mechanically.
+
+Start with [`test-suite/README.md`](test-suite/README.md) and the documented
+[`test-suite/config/expected.example.json`](test-suite/config/expected.example.json).
+
+```bash
+cp test-suite/config/expected.example.json test-suite/config/expected.json
+python3 test-suite/checks/run_checks.py --dump   # discover live values
+python3 test-suite/checks/run_checks.py          # assert against baseline
+```
 
 ## Keeping content current
 
