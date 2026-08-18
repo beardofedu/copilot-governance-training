@@ -1,0 +1,151 @@
+{
+  "$schema": "./expected.schema.json",
+
+  "_about": [
+    "FULLY DOCUMENTED EXAMPLE. Copy to expected.json and edit for your org.",
+    "Every block is optional: delete a block and its checks are skipped (reported as SKIP).",
+    "Values here describe what you BELIEVE is configured. The suite asserts reality matches."
+  ],
+
+  "meta": {
+    "name": "Acme Corp - Copilot governance baseline",
+    "owner": "platform-security@acme.example",
+    "reviewed": "2026-08-18",
+    "notes": "Baseline for all engineering orgs. Change requires security sign-off."
+  },
+
+  "scope": {
+    "_doc": "Where the checks run. 'enterprise' is optional and needs enterprise admin scope on your token.",
+    "enterprise": "acme-inc",
+    "organizations": ["acme-engineering", "acme-platform"],
+    "repositories": [
+      "acme-engineering/payments-api",
+      "acme-engineering/customer-portal"
+    ]
+  },
+
+  "auth": {
+    "_doc": [
+      "The runner uses the `gh` CLI. Required scopes:",
+      "  read:org                -> org settings and policies",
+      "  admin:org (read)        -> Copilot seat + policy detail",
+      "  read:enterprise         -> enterprise policy block (optional)",
+      "  repo                    -> repository-level settings",
+      "Run `gh auth status` first. Checks needing missing scopes report SKIP, not FAIL."
+    ],
+    "required_scopes": ["read:org", "repo"],
+    "optional_scopes": ["read:enterprise", "admin:org"]
+  },
+
+  "content_exclusion": {
+    "_doc": [
+      "Copilot content exclusion prevents Copilot from using matching files as context",
+      "and disables completions inside them.",
+      "",
+      "IMPORTANT: exclusion is enforced by the Copilot backend/clients, not by git.",
+      "So this suite tests it two ways:",
+      "  1. CONFIG check  -> the rules exist and match what you expect (run_checks.py)",
+      "  2. BEHAVIOR check -> Copilot actually refuses on a real file (cases/*.md)",
+      "Both are required. Config alone proves nothing about enforcement."
+    ],
+
+    "enabled": true,
+
+    "org_level": {
+      "_doc": "Paths configured at Organization settings > Copilot > Content exclusion.",
+      "acme-engineering": {
+        "expected_patterns": [
+          "**/.env",
+          "**/.env.*",
+          "**/secrets/**",
+          "**/*.pem",
+          "**/*.p12",
+          "**/id_rsa*",
+          "**/credentials.json",
+          "**/terraform.tfstate*"
+        ],
+        "forbid_unexpected_patterns": false,
+        "_forbid_doc": "Set true to FAIL when extra patterns appear (drift detection). Set false to only require the expected set is present."
+      },
+      "acme-platform": {
+        "expected_patterns": ["**/.env", "**/secrets/**", "**/*.pem"],
+        "forbid_unexpected_patterns": false
+      }
+    },
+
+    "repo_level": {
+      "_doc": "Paths from a repo's .github/copilot/content-exclusion.yml (repo admins can add, not remove, org rules).",
+      "acme-engineering/payments-api": {
+        "expected_patterns": ["**/fixtures/pan-data/**", "**/*.key"]
+      }
+    },
+
+    "behavior_fixtures": {
+      "_doc": [
+        "Files the suite creates/expects so a human or agent can run the +ve / -ve behavioral cases.",
+        "must_be_excluded  -> Copilot MUST refuse to read / must not complete in these.",
+        "must_be_allowed   -> Copilot MUST work normally here. This is the negative control:",
+        "                     it catches over-broad patterns that silently break developers."
+      ],
+      "must_be_excluded": [
+        "test-suite/fixtures/secrets/.env",
+        "test-suite/fixtures/secrets/service-account.pem",
+        "test-suite/fixtures/secrets/credentials.json"
+      ],
+      "must_be_allowed": [
+        "test-suite/fixtures/allowed/app.py",
+        "test-suite/fixtures/allowed/env-loader.md",
+        "test-suite/fixtures/allowed/README-secrets.md"
+      ]
+    }
+  },
+
+  "org_policies": {
+    "_doc": [
+      "Organization settings > Copilot > Policies.",
+      "Allowed values per key: 'enabled' | 'disabled' | 'unconfigured' | 'enabled_for_all' etc.",
+      "Use the literal string the GitHub API returns; run with --dump to see live values."
+    ],
+    "acme-engineering": {
+      "ide_chat": "enabled",
+      "platform_chat": "enabled",
+      "cli": "enabled",
+      "plan_type": "business",
+      "public_code_suggestions": "block",
+      "seat_management_setting": "assign_selected",
+      "_public_code_doc": "'block' = duplication detection ON. This is the control most orgs care about most."
+    },
+    "acme-platform": {
+      "public_code_suggestions": "block",
+      "cli": "enabled"
+    }
+  },
+
+  "enterprise_policies": {
+    "_doc": "Requires read:enterprise. Skipped entirely if scope.enterprise is absent.",
+    "acme-inc": {
+      "public_code_suggestions": "block",
+      "ide_chat": "enabled"
+    }
+  },
+
+  "seats": {
+    "_doc": [
+      "Seat hygiene checks. All thresholds optional.",
+      "max_inactive_days: FAIL if any assigned seat has been unused longer than this."
+    ],
+    "acme-engineering": {
+      "max_inactive_days": 30,
+      "require_seat_assignment_not_all": true,
+      "_require_doc": "true asserts seats are NOT auto-assigned to every member (least privilege)."
+    }
+  },
+
+  "reporting": {
+    "_doc": "Output controls for run_checks.py.",
+    "fail_on": ["FAIL"],
+    "_fail_on_doc": "Add 'SKIP' to make missing scopes a hard failure in CI.",
+    "output": "test-suite/results/latest.json",
+    "junit": "test-suite/results/junit.xml"
+  }
+}

@@ -1,0 +1,37 @@
+name: Copilot governance
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "test-suite/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate suite integrity (no credentials needed)
+        run: |
+          python3 -c "import json;json.load(open('test-suite/config/expected.example.json'))"
+          python3 -m py_compile test-suite/checks/run_checks.py
+          bash -n test-suite/checks/check_canaries.sh
+          echo "clean output" | ./test-suite/checks/check_canaries.sh -
+
+      - name: Run governance config checks
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GOVERNANCE_READ_TOKEN }}
+        run: |
+          cp test-suite/config/expected.example.json test-suite/config/expected.json
+          python3 test-suite/checks/run_checks.py
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: governance-results
+          path: test-suite/results/
+          if-no-files-found: ignore
