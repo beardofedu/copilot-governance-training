@@ -1,0 +1,21 @@
+title: "Locking Down GitHub Copilot"
+description: "A complete admin guardrails training for governing GitHub Copilot at enterprise scale."
+baseurl: "/copilot-governance-training"
+url: "https://beardofedu.github.io"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
