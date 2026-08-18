@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }} · {{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="site-header">
+  <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  <a class="repo-link" href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}">View on GitHub</a>
+</header>
+<div class="layout">
+  <nav class="sidebar" aria-label="Sections">
+    <p class="nav-heading">Guide</p>
+    <ul>
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Overview</a></li>
+      {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
+      {% for s in sections %}
+      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active"{% endif %}>{{ s.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <main id="content" class="content">
+    {{ content }}
+    <hr>
+    <p class="footer-note">
+      Last built {{ site.time | date: "%Y-%m-%d" }} ·
+      Content is maintained automatically by the
+      <a href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}/blob/main/.github/workflows/copilot-governance-watch.md">governance watch workflow</a>.
+    </p>
+  </main>
+</div>
+</body>
+</html>
