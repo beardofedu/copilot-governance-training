@@ -22,7 +22,7 @@ tracker-id: copilot-governance-watch
 tools:
   cache-memory: true
   edit: null
-  web-fetch: null
+  web-fetch: {}
   bash:
     - "date *"
     - "ls *"
