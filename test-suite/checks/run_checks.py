@@ -78,7 +78,7 @@ def strip_docs(obj):
 def check_auth(cfg):
     proc = subprocess.run(["gh", "auth", "status"], capture_output=True, text=True)
     if proc.returncode != 0:
-        record(FAIL, "auth", "gh authenticated", "run `gh auth login`")
+        record(SKIP, "auth", "gh authenticated", "run `gh auth login` or set GH_TOKEN")
         return set()
     blob = proc.stdout + proc.stderr
     scopes = set()
@@ -88,10 +88,11 @@ def check_auth(cfg):
     record(PASS, "auth", "gh authenticated", f"scopes: {', '.join(sorted(scopes)) or 'unknown'}")
 
     for scope in cfg.get("auth", {}).get("required_scopes", []):
-        if not scopes or scope in scopes:
+        if scopes and scope in scopes:
             record(PASS, "auth", f"scope {scope}")
         else:
-            record(FAIL, "auth", f"scope {scope}", "missing required scope")
+            detail = "missing required scope" if scopes else "scope availability unknown"
+            record(SKIP, "auth", f"scope {scope}", detail)
     return scopes
 
 

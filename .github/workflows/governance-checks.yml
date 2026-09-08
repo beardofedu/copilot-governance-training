@@ -24,7 +24,7 @@ jobs:
       - name: Run governance config checks
         if: github.event_name != 'pull_request'
         env:
-          GH_TOKEN: ${{ secrets.GOVERNANCE_READ_TOKEN }}
+          GH_TOKEN: ${{ secrets.GOVERNANCE_READ_TOKEN || github.token }}
         run: |
           cp test-suite/config/expected.example.json test-suite/config/expected.json
           python3 test-suite/checks/run_checks.py
