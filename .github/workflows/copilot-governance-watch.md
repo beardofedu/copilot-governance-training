@@ -7,6 +7,7 @@ on:
     - cron: daily around 09:00
   workflow_dispatch: null
 permissions:
+  copilot-requests: write
   contents: read
   issues: read
   pull-requests: read
