@@ -51,7 +51,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  max-width: 1320px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 17px 32px;
 }
@@ -87,14 +87,23 @@ body {
 
 .layout {
   display: grid;
-  grid-template-columns: 248px minmax(0, 1fr);
-  gap: 56px;
-  max-width: 1320px;
+  grid-template-columns: minmax(190px, 232px) minmax(0, 1fr);
+  gap: 40px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 48px 32px 72px;
 }
 
-.sidebar { position: sticky; top: 28px; align-self: start; }
+.sidebar {
+  position: sticky;
+  top: 28px;
+  align-self: start;
+  padding: 20px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 5px 18px rgba(35, 45, 75, .04);
+}
 .nav-kicker {
   margin: 0 0 6px;
   color: var(--accent);
@@ -146,7 +155,7 @@ body {
 }
 .sidebar a.active .nav-number { color: rgba(255,255,255,.8); }
 
-.content { min-width: 0; }
+.content { min-width: 0; max-width: 840px; }
 .content h1 {
   font-size: 30px;
   line-height: 1.2;
@@ -324,19 +333,31 @@ body {
 
 @media (max-width: 800px) {
   .header-inner { padding: 15px 20px; }
-  .layout { grid-template-columns: 1fr; gap: 25px; padding: 30px 20px 52px; }
-  .sidebar { position: static; }
-  .sidebar ul { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 5px; }
-  .sidebar li { flex: 0 0 auto; margin: 0; }
-  .sidebar a { white-space: nowrap; }
+  .layout { display: block; padding: 24px 20px 52px; }
+  .sidebar {
+    position: static;
+    margin-bottom: 24px;
+    padding: 14px;
+  }
+  .sidebar ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .sidebar li { margin: 0; }
+  .sidebar a { height: 100%; }
   .nav-heading { margin-bottom: 8px; }
   .nav-kicker { display: none; }
-  .hero { margin: -30px -20px 32px; padding: 42px 24px 38px; border-radius: 0 0 20px 20px; }
+  .hero { margin: 0 -20px 32px; padding: 42px 24px 38px; border-radius: 20px; }
   .hero h1 { font-size: 42px; }
   .hero-lede { font-size: 16px; }
 }
 
 @media (max-width: 480px) {
+  .header-inner { gap: 10px; }
   .site-title span:last-child { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .repo-link span:first-child { display: none; }
+  .sidebar ul { grid-template-columns: 1fr; }
+  .hero { padding: 34px 20px 30px; }
+  .hero h1 { font-size: 36px; }
 }
