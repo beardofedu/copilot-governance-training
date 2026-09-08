@@ -88,10 +88,11 @@ def check_auth(cfg):
     record(PASS, "auth", "gh authenticated", f"scopes: {', '.join(sorted(scopes)) or 'unknown'}")
 
     for scope in cfg.get("auth", {}).get("required_scopes", []):
-        if not scopes or scope in scopes:
+        if scopes and scope in scopes:
             record(PASS, "auth", f"scope {scope}")
         else:
-            record(SKIP, "auth", f"scope {scope}", "missing required scope")
+            detail = "missing required scope" if scopes else "scope availability unknown"
+            record(SKIP, "auth", f"scope {scope}", detail)
     return scopes
 
 
