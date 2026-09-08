@@ -40,7 +40,7 @@ Doc: [MCP private registry enforcement](https://docs.github.com/en/copilot/refer
 
 - Host your own v0.1-spec MCP registry, or use **Azure API Center** as backing store.
 - Enterprise/org config: AI controls → MCP → set **MCP Registry URL**, then **Restrict MCP access to registry servers**: *Allow all* vs *Registry only*.
-- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the managed-settings allowlist (3b) for anything that must be airtight.
+- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the managed-settings allowlist (section b) for anything that must be airtight.
 - `Registry only` applies to remote and local servers; local server IDs must exactly match their registry IDs.
 
 | Client | Registry display | Registry-only enforcement |
