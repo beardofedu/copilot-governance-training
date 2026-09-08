@@ -9,7 +9,7 @@ permalink: /sections/course-outline/
 
 1. **Mental model** — policies vs. managed-settings vs. network vs. audit (10 min)
 2. **Live walkthrough**: AI controls UI — policies, models, MCP tab (15 min)
-3. **Hands-on**: draft a `managed-settings.json` with `strictKnownMarketplaces`, `allowedMcpServers`/`deniedMcpServers`, `enabledPlugins` (20 min)
+3. **Hands-on**: draft a `managed-settings.json` with `strictKnownMarketplaces`, `allowedMcpServers`/`deniedMcpServers`, `permissions.deny`/`ask`/`allow`, and `remoteControl` (20 min)
 4. **Cloud agent specifics**: firewall limitations, workflow approval gate (10 min)
 5. **Content exclusion + public code matching**, and their gaps re: CLI/agent mode (10 min)
 6. **Network layer**: allowlist reference, subscription routing, IP allow list caveat (10 min)

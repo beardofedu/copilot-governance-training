@@ -36,11 +36,26 @@ Doc: [Configuring an MCP server allowlist for your enterprise](https://docs.gith
 If multiple `managed-settings.json` sources apply, all settings apply cumulatively (deny from anywhere blocks; allow must match at every layer that defines one).
 
 ### c. MCP Registry (public preview — NOT the recommended method)
-Doc: [Restrict MCP server access to a custom registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry)
+Doc: [MCP private registry enforcement](https://docs.github.com/en/copilot/reference/enterprise-administrators/mcp-private-registry-enforcement)
 
 - Host your own v0.1-spec MCP registry, or use **Azure API Center** as backing store.
 - Enterprise/org config: AI controls → MCP → set **MCP Registry URL**, then **Restrict MCP access to registry servers**: *Allow all* vs *Registry only*.
-- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the managed-settings allowlist (3b) for anything that must be airtight.
+- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the managed-settings allowlist (section b) for anything that must be airtight.
+- `Registry only` applies to remote and local servers; local server IDs must exactly match their registry IDs.
+
+| Client | Registry display | Registry-only enforcement |
+|---|---|---|
+| Copilot CLI | ✅ | ✅ v1.0.11+ |
+| Copilot cloud agent | ❌ | ❌ |
+| Eclipse | ✅ | ✅ v4.38+ |
+| JetBrains | ✅ | ✅ v1.5.64+ |
+| Visual Studio | ✅ | ✅ v18.4.0+ |
+| VS Code | ✅ | ✅ v1.109.3+ |
+| Xcode | ✅ | ✅ v0.47.0+ |
+
+Eclipse, JetBrains, and Xcode require pre-release versions for MCP management features.
+
+For users with multiple Copilot seats, private-registry policy resolves in this order: parent-enterprise scope over organization scope, then stricter *Registry only* over *Allow all*, then the most recently uploaded registry when scope and strictness tie.
 
 ### d. Comparison
 
