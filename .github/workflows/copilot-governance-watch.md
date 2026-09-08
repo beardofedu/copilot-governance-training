@@ -15,6 +15,7 @@ network:
   allowed:
     - defaults
     - github
+    - github.blog
 engine: copilot
 timeout-minutes: 30
 max-daily-ai-credits: 5000
@@ -70,7 +71,7 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
 
 Review both of these, restricted to the window from Step 1.
 
-Use your **web-fetch tool** to retrieve every URL in this step — it is provided for exactly this purpose and is not restricted like the `bash` tool. Do **not** attempt to use `curl`, `wget`, or any other shell command to fetch these pages: `bash` access is intentionally limited to local, read-only commands (`date`, `ls`, `cat`, `grep`, `rg`, `find`) and does not include network fetch commands.
+Use the `web_fetch` tool to retrieve every URL in this step — it is provided for exactly this purpose and is not restricted like the `bash` tool. Do **not** attempt to use `curl`, `wget`, or any other shell command to fetch these pages: `bash` access is intentionally limited to local, read-only commands (`date`, `ls`, `cat`, `grep`, `rg`, `find`) and does not include network fetch commands.
 
 ### a. GitHub Blog + Changelog
 
