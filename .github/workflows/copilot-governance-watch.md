@@ -66,12 +66,16 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
    - If the file is missing or empty, review the last **14 days**.
    - Otherwise, review everything published since that date.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
+   - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability can change between runs — always attempt Step 2 yourself before deciding anything is blocked.
 
 ## Step 2 — Review the sources
 
 Review both of these, restricted to the window from Step 1.
 
-Use the `web_fetch` tool to retrieve every URL in this step — it is provided for exactly this purpose and is not restricted like the `bash` tool. Do **not** attempt to use `curl`, `wget`, or any other shell command to fetch these pages: `bash` access is intentionally limited to local, read-only commands (`date`, `ls`, `cat`, `grep`, `rg`, `find`) and does not include network fetch commands.
+You have a working `web_fetch` **tool call** (a first-class tool, distinct from the shell) — use it directly to retrieve every URL in this step. Call it as your very first action in this step, before doing anything else:
+
+- Do **not** "test network access" first with `curl`, `wget`, `ping`, or any other shell command — `bash` access is intentionally limited to local, read-only commands (`date`, `ls`, `cat`, `grep`, `rg`, `find`) and will always deny those, regardless of whether `web_fetch` works. A denied shell command does **not** mean `web_fetch` is unavailable.
+- Only conclude that `web_fetch` is missing, and report it via the `missing_tool` safe-output, if you actually invoke the `web_fetch` tool itself and it errors or is rejected. Never infer that it is missing from a blocked `bash` command or from a prior run's notes.
 
 ### a. GitHub Blog + Changelog
 
