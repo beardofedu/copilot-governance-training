@@ -25,6 +25,7 @@ tools:
   edit: null
   web-fetch: {}
   bash:
+    - "curl *"
     - "date *"
     - "ls *"
     - "cat *"
@@ -66,16 +67,22 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
    - If the file is missing or empty, review the last **14 days**.
    - Otherwise, review everything published since that date.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
-   - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability can change between runs — always attempt Step 2 yourself before deciding anything is blocked.
+   - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability can change between runs, and a `curl` fallback is now available — always attempt Step 2 yourself before deciding anything is blocked.
 
 ## Step 2 — Review the sources
 
 Review both of these, restricted to the window from Step 1.
 
-You have a working `web_fetch` **tool call** (a first-class tool, distinct from the shell) — use it directly to retrieve every URL in this step. Call it as your very first action in this step, before doing anything else:
+You have two ways to retrieve a URL. Use them in this order, starting with the first action of this step:
 
-- Do **not** "test network access" first with `curl`, `wget`, `ping`, or any other shell command — `bash` access is intentionally limited to local, read-only commands (`date`, `ls`, `cat`, `grep`, `rg`, `find`) and will always deny those, regardless of whether `web_fetch` works. A denied shell command does **not** mean `web_fetch` is unavailable.
-- Only conclude that `web_fetch` is missing, and report it via the `missing_tool` safe-output, if you actually invoke the `web_fetch` tool itself and it errors or is rejected. Never infer that it is missing from a blocked `bash` command or from a prior run's notes.
+1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
+2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, so pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+
+Rules:
+
+- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately and complete the review with it.
+- Only report `missing_tool` via the safe-output if **both** `web_fetch` and `curl` fail, and say which error each one returned.
+- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
 
 ### a. GitHub Blog + Changelog
 
