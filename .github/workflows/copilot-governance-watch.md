@@ -76,7 +76,7 @@ Review both of these, restricted to the window from Step 1.
 You have two ways to retrieve a URL. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
-2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, so pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
 
 Rules:
 
