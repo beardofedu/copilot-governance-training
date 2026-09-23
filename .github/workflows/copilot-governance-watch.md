@@ -73,16 +73,17 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
 
 Review both of these, restricted to the window from Step 1.
 
-You have two ways to retrieve a URL. Use them in this order, starting with the first action of this step:
+You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
-2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+3. The remote GitHub MCP `search_code` tool, which can search public GitHub Docs and GitHub-maintained blog/changelog source content without shell network access. Use this fallback only after the first two methods fail. Find source content that corresponds to each required rendered URL, and cite the rendered `docs.github.com` or `github.blog` URL rather than a repository source URL.
 
 Rules:
 
-- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately and complete the review with it.
-- Only report `missing_tool` via the safe-output if **both** `web_fetch` and `curl` fail, and say which error each one returned.
-- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
+- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately, then use the GitHub MCP fallback if `curl` also fails.
+- Only report `missing_tool` via the safe-output if `web_fetch`, `curl`, and the GitHub MCP fallback all fail, and say which error each one returned.
+- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try all three paths yourself.
 
 ### a. GitHub Blog + Changelog
 
