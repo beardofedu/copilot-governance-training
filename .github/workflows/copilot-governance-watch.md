@@ -73,16 +73,30 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
 
 Review both of these, restricted to the window from Step 1.
 
-You have two ways to retrieve a URL. Use them in this order, starting with the first action of this step:
+You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
-2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
+3. The remote GitHub MCP tools, which can search public source content without shell network access. Use this fallback only after the first two methods fail:
+    - For GitHub Docs, use `search_code` with `repo:github/docs`.
+    - For a Blog or changelog entry:
+        1. Use `search_repositories` scoped to the `github` organization to identify public repositories that might host the entry.
+        2. Select a candidate only if it meets every condition:
+            - It is owned by `github`.
+            - Its repository description identifies it as a GitHub Blog/changelog source.
+            - Its contents include the post title or URL slug.
+        3. If more than one candidate meets those conditions, treat the Blog fallback as failed rather than choosing arbitrarily.
+        4. Use `search_code` scoped to the selected repository and the post title.
+    - If no matching repository is identified, do not use an unrelated result: treat the Blog fallback as failed.
+    - Treat the fallback as failed if no result can be tied to the rendered entry.
+    - Cite the rendered `docs.github.com` or `github.blog` URL rather than a repository source URL.
 
 Rules:
 
-- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately and complete the review with it.
-- Only report `missing_tool` via the safe-output if **both** `web_fetch` and `curl` fail, and say which error each one returned.
-- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
+- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately, then use the GitHub MCP fallback if `curl` also fails.
+- If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
+- Only report `missing_tool` via the safe-output if `web_fetch`, `curl`, and the GitHub MCP fallback all fail, and say which error each one returned.
+- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try all three paths yourself.
 
 ### a. GitHub Blog + Changelog
 
