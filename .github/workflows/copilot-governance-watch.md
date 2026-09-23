@@ -82,6 +82,7 @@ You have three ways to retrieve source content. Use them in this order, starting
 Rules:
 
 - If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately, then use the GitHub MCP fallback if `curl` also fails.
+- If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
 - Only report `missing_tool` via the safe-output if `web_fetch`, `curl`, and the GitHub MCP fallback all fail, and say which error each one returned.
 - Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try all three paths yourself.
 
