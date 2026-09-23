@@ -77,7 +77,12 @@ You have three ways to retrieve source content. Use them in this order, starting
 
 1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
 2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
-3. The remote GitHub MCP tools, which can search public source content without shell network access. Use `search_code` with `repo:github/docs` for GitHub Docs pages. For a Blog or changelog entry, first use `search_repositories` scoped to the `github` organization to identify a public repository hosting the matching entry, then use `search_code` scoped to that repository and the post title. If no matching repository is identified, do not use an unrelated result: treat the Blog fallback as failed. Treat this fallback as failed if no result can be tied to the rendered entry. Use it only after the first two methods fail, and cite the rendered `docs.github.com` or `github.blog` URL rather than a repository source URL.
+3. The remote GitHub MCP tools, which can search public source content without shell network access. Use this fallback only after the first two methods fail:
+   - For GitHub Docs, use `search_code` with `repo:github/docs`.
+   - For a Blog or changelog entry, use `search_repositories` scoped to the `github` organization to identify a public repository hosting the entry. Then use `search_code` scoped to that repository and the post title.
+   - If no matching repository is identified, do not use an unrelated result: treat the Blog fallback as failed.
+   - Treat the fallback as failed if no result can be tied to the rendered entry.
+   - Cite the rendered `docs.github.com` or `github.blog` URL rather than a repository source URL.
 
 Rules:
 
