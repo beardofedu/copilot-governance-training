@@ -106,6 +106,23 @@
     </nav>
     {% endif %}
 
+    {% assign page_label = page.title | default: site.title | strip_html | replace: '`', '' %}
+    {% capture issue_title %}Feedback: {{ page_label }}{% endcapture %}
+    {% capture issue_body %}**Page:** {{ page_label }}
+**URL:** {{ page.url | absolute_url }}
+
+**What is wrong, missing, or out of date?**
+
+{% endcapture %}
+    <div class="page-actions">
+      <a class="button report-issue" href="https://github.com/{{ repo_nwo }}/issues/new?title={{ issue_title | strip | url_encode }}&amp;body={{ issue_body | url_encode }}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+          <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm9 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.25 4.25a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5Z"></path>
+        </svg>
+        <span>Report an issue with this page</span>
+      </a>
+    </div>
+
     <footer class="footer-note">
       Last built {{ site.time | date: "%Y-%m-%d" }} <span aria-hidden="true">·</span>
       Content is maintained automatically by the
