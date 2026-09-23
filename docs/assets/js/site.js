@@ -18,7 +18,6 @@
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
-    root.setAttribute('data-theme-choice', theme);
   }
 
   var select = document.getElementById('theme-select');

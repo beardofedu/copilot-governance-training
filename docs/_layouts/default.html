@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto" data-theme-choice="auto">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,6 @@
         var valid = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
         var choice = valid.indexOf(stored) === -1 ? 'auto' : stored;
         document.documentElement.setAttribute('data-theme', choice);
-        document.documentElement.setAttribute('data-theme-choice', choice);
       } catch (e) { /* storage unavailable: keep the auto default */ }
     })();
   </script>

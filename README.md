@@ -13,7 +13,7 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `docs/` | Jekyll source for the GitHub Pages site |
 | `docs/index.md` | Landing page and section index |
 | `docs/sections/*.md` | One page per guide section |
-| `docs/_layouts/default.html` | GitHub Docs–style shell: header, section nav, article, "In this article" TOC |
+| `docs/_layouts/default.html` | GitHub Docs-style shell: header, section nav, article, "In this article" TOC |
 | `docs/assets/css/style.css` | Theme tokens (system, light, dark, dark dimmed, high contrast) and page styles |
 | `docs/assets/js/site.js` | Theme picker persisted in `localStorage`, TOC generation, mobile nav |
 | `docs/CHANGELOG.md` | Dated record of automated content updates |
