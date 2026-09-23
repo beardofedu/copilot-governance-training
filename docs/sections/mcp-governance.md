@@ -9,10 +9,10 @@ permalink: /sections/mcp-governance/
 
 Doc: [MCP server usage in your company](https://docs.github.com/en/copilot/concepts/mcp-management)
 
-### a. Master switch
+### Master switch
 "MCP servers in Copilot" policy must be **Enabled everywhere** (enterprise or org) or no MCP servers run at all — under AI controls → **MCP**.
 
-### b. Allowlist/denylist via managed-settings (recommended)
+### Allowlist/denylist via managed-settings (recommended)
 Doc: [Configuring an MCP server allowlist for your enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-enterprise-allowlist)
 
 ```json
@@ -35,7 +35,7 @@ Doc: [Configuring an MCP server allowlist for your enterprise](https://docs.gith
 
 If multiple `managed-settings.json` sources apply, all settings apply cumulatively (deny from anywhere blocks; allow must match at every layer that defines one).
 
-### c. MCP Registry (public preview — NOT the recommended method)
+### MCP Registry (public preview — NOT the recommended method)
 Doc: [MCP private registry enforcement](https://docs.github.com/en/copilot/reference/enterprise-administrators/mcp-private-registry-enforcement)
 
 - Host your own v0.1-spec MCP registry, or use **Azure API Center** as backing store.
@@ -57,7 +57,7 @@ Eclipse, JetBrains, and Xcode require pre-release versions for MCP management fe
 
 For users with multiple Copilot seats, private-registry policy resolves in this order: parent-enterprise scope over organization scope, then stricter *Registry only* over *Allow all*, then the most recently uploaded registry when scope and strictness tie.
 
-### d. Comparison
+### Comparison
 
 | | `managed-settings.json` allowlist | Custom registry |
 |---|---|---|
