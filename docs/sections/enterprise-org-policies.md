@@ -26,6 +26,10 @@ Confirmed named policies ([policy-conflicts](https://docs.github.com/en/copilot/
 - Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement
 - Agent apps (single policy)
 - MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
+- Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents; see [supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
+- Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark — **not** IDEs or the Copilot app; see [supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
 - Models (enable specific/custom models, may add cost)
+
+**Enterprise-assigned users:** users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them ([policies doc](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)).
 
 **Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* (`managed-settings.json`, section 3) does the actual restricting.

@@ -12,7 +12,7 @@ Doc: [Excluding content from GitHub Copilot](https://docs.github.com/en/copilot/
 
 - Prevents specified files/paths from being used as Copilot context (fnmatch-style patterns, e.g. `*.cfg`, `/scripts/**`).
 - Configurable at repo level (and org/enterprise scope for broader reach).
-- **Critical limitation to flag in training:** *Copilot CLI and Agent mode in Copilot Chat (IDEs) do not honor content exclusion.* Don't rely on this alone if agentic surfaces are in scope.
+- **Critical limitation to flag in training:** *Agent mode in Copilot Chat (IDEs) does not honor content exclusion* ([exclude-content-from-copilot](https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot)). Third-party coding agents and Spark also don't support it ([supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)). Copilot CLI **does** honor content exclusion — don't assume it's an exception.
 
 ### b. Suggestions matching public code
 Docs: [Code suggestions](https://docs.github.com/en/copilot/concepts/completions/code-suggestions), [Finding matching public code](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/find-matching-code)
