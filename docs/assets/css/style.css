@@ -459,6 +459,9 @@ a { color: var(--accent-fg); }
   background: var(--accent-emphasis);
   color: #ffffff;
 }
+[data-theme="dark-high-contrast"] .button-primary {
+  color: #010409;
+}
 .button-primary:hover { filter: brightness(1.08); }
 .updated-note {
   display: inline-flex;
