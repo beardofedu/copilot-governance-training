@@ -20,6 +20,8 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
       - name: Delete merged branches
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
@@ -98,11 +100,38 @@ jobs:
                   continue;
                 }
 
-                await github.rest.git.deleteRef({
-                  owner,
-                  repo,
-                  ref: `heads/${branch.name}`,
-                });
+                const ref = `refs/heads/${branch.name}`;
+                const exitCode = await exec.exec(
+                  "git",
+                  [
+                    "push",
+                    `--force-with-lease=${ref}:${branch.commit.sha}`,
+                    "origin",
+                    `:${ref}`,
+                  ],
+                  { ignoreReturnCode: true },
+                );
+                if (exitCode !== 0) {
+                  const [currentRepository, currentBranch] = await Promise.all([
+                    github.rest.repos.get({ owner, repo }),
+                    github.rest.repos.getBranch({
+                      owner,
+                      repo,
+                      branch: branch.name,
+                    }),
+                  ]);
+                  if (
+                    currentRepository.data.default_branch !== defaultBranch ||
+                    currentBranch.data.protected ||
+                    currentBranch.data.commit.sha !== branch.commit.sha
+                  ) {
+                    core.warning(
+                      `Skipped ${branch.name} because it changed during deletion.`,
+                    );
+                    continue;
+                  }
+                  throw new Error(`Failed to delete ${branch.name}.`);
+                }
                 core.info(`Deleted merged branch ${branch.name}.`);
                 deleted += 1;
               } catch (error) {
