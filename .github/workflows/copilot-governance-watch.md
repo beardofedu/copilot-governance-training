@@ -81,7 +81,10 @@ You have three ways to retrieve source content. Use them in this order, starting
     - For GitHub Docs, use `search_code` with `repo:github/docs`.
     - For a Blog or changelog entry:
         1. Use `search_repositories` scoped to the `github` organization to identify public repositories that might host the entry.
-        2. Select a candidate only if it is owned by `github`, its repository description identifies it as a GitHub Blog/changelog source, and its contents include the post title or URL slug.
+        2. Select a candidate only if it meets every condition:
+            - It is owned by `github`.
+            - Its repository description identifies it as a GitHub Blog/changelog source.
+            - Its contents include the post title or URL slug.
         3. If more than one candidate meets those conditions, treat the Blog fallback as failed rather than choosing arbitrarily.
         4. Use `search_code` scoped to the selected repository and the post title.
     - If no matching repository is identified, do not use an unrelated result: treat the Blog fallback as failed.
