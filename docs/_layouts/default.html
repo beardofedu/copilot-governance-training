@@ -1,46 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | default: site.title }} · {{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <script>
+    // Applied before first paint so the stored theme never flashes the wrong colors.
+    (function () {
+      try {
+        var stored = localStorage.getItem('cgt-theme');
+        var valid = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
+        var choice = valid.indexOf(stored) === -1 ? 'auto' : stored;
+        document.documentElement.setAttribute('data-theme', choice);
+      } catch (e) { /* storage unavailable: keep the auto default */ }
+    })();
+  </script>
 </head>
 <body>
-<a class="skip-link" href="#content">Skip to content</a>
+<a class="skip-link" href="#content">Skip to main content</a>
+
+{% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
+{% assign repo_nwo = site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' %}
+
 <header class="site-header">
   <div class="header-inner">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+      <span>Menu</span>
+    </button>
     <a class="site-title" href="{{ '/' | relative_url }}">
-      <span class="site-mark" aria-hidden="true">✦</span>
-      <span>{{ site.title }}</span>
+      <svg class="site-mark" viewBox="0 0 16 16" width="24" height="24" aria-hidden="true" fill="currentColor">
+        <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+      </svg>
+      <span class="site-title-text">{{ site.title }}</span>
     </a>
-    <a class="repo-link" href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}">
-      <span>View on GitHub</span><span aria-hidden="true">↗</span>
-    </a>
+    <div class="header-actions">
+      <div class="theme-picker">
+        <label class="visually-hidden" for="theme-select">Theme</label>
+        <svg class="theme-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+          <path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-1.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm5.657-8.157a.75.75 0 0 1 0 1.061l-1.061 1.06a.749.749 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0Zm-9.193 9.193a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 1 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0ZM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0ZM3 8a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 3 8Zm13 0a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 16 8ZM8 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13ZM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.751.751 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06Zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061Z"></path>
+        </svg>
+        <select id="theme-select">
+          <option value="auto">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="dark-dimmed">Dark dimmed</option>
+          <option value="light-high-contrast">Light high contrast</option>
+          <option value="dark-high-contrast">Dark high contrast</option>
+        </select>
+      </div>
+      <a class="repo-link" href="https://github.com/{{ repo_nwo }}">
+        <span>View on GitHub</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
   </div>
 </header>
+
 <div class="layout">
-  <nav class="sidebar" aria-label="Sections">
-    <p class="nav-kicker">Admin training</p>
+  <nav id="sidebar" class="sidebar" aria-label="Guide sections">
     <p class="nav-heading">Guide contents</p>
-    <ul>
-      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}><span class="nav-dot"></span>Overview</a></li>
-      {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
+    <ul class="nav-list">
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active" aria-current="page"{% endif %}>Overview</a></li>
       {% for s in sections %}
-      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active"{% endif %}><span class="nav-number">{{ s.nav_order }}</span>{{ s.title }}</a></li>
+      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active" aria-current="page"{% endif %}>{% if s.nav_order < 90 %}<span class="nav-number">{{ s.nav_order }}</span>{% else %}<span class="nav-number" aria-hidden="true">·</span>{% endif %}{{ s.title | strip_html | replace: '`', '' }}</a></li>
       {% endfor %}
     </ul>
   </nav>
+
   <main id="content" class="content">
-    {{ content }}
-    <hr>
-    <p class="footer-note">
+    {% unless page.url == '/' %}
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ page.title | strip_html | replace: '`', '' }}</span>
+    </nav>
+    {% endunless %}
+
+    <article class="markdown-body">
+      {{ content }}
+    </article>
+
+    {% assign idx = nil %}
+    {% for s in sections %}
+      {% if s.url == page.url %}
+        {% assign idx = forloop.index0 %}
+      {% endif %}
+    {% endfor %}
+    {% if idx %}
+    <nav class="pager" aria-label="Section navigation">
+      {% if idx > 0 %}
+        {% assign prev_idx = idx | minus: 1 %}
+        {% assign prev = sections[prev_idx] %}
+        <a class="pager-link" href="{{ prev.url | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">{{ prev.title | strip_html | replace: '`', '' }}</span></a>
+      {% else %}
+        <a class="pager-link" href="{{ '/' | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">Overview</span></a>
+      {% endif %}
+      {% assign next_idx = idx | plus: 1 %}
+      {% if next_idx < sections.size %}
+        {% assign next = sections[next_idx] %}
+        <a class="pager-link pager-next" href="{{ next.url | relative_url }}"><span class="pager-label">Next</span><span class="pager-title">{{ next.title | strip_html | replace: '`', '' }}</span></a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+    <footer class="footer-note">
       Last built {{ site.time | date: "%Y-%m-%d" }} <span aria-hidden="true">·</span>
       Content is maintained automatically by the
-      <a href="https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' }}/blob/main/.github/workflows/copilot-governance-watch.md">governance watch workflow</a>.
-    </p>
+      <a href="https://github.com/{{ repo_nwo }}/blob/main/.github/workflows/copilot-governance-watch.md">governance watch workflow</a>.
+    </footer>
   </main>
+
+  <aside class="toc" aria-label="Table of contents">
+    <div class="toc-inner">
+      <p class="toc-heading">In this article</p>
+      <ul id="toc-list"></ul>
+    </div>
+  </aside>
 </div>
+
+<script src="{{ '/assets/js/site.js' | relative_url }}"></script>
 </body>
 </html>

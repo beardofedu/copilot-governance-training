@@ -9,7 +9,7 @@ permalink: /
   <h1>Locking Down<br><span>GitHub Copilot</span></h1>
   <p class="hero-lede">A practical guide to the controls, policies, and audit layers that keep Copilot useful, secure, and aligned with your organization.</p>
   <div class="hero-actions">
-    <a class="button button-primary" href="#where-controls-live">Start with the mental model <span aria-hidden="true">→</span></a>
+    <a class="button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
     <span class="updated-note"><span class="status-dot"></span>Kept current automatically</span>
   </div>
 </section>
@@ -31,7 +31,7 @@ permalink: /
 <ul class="cards">
 {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
 {% for s in sections %}
-  <li><a href="{{ s.url | relative_url }}"><span class="card-index">{{ s.nav_order | prepend: '0' | slice: -2, 2 }}</span><strong>{{ s.title }}</strong><span class="card-arrow" aria-hidden="true">↗</span><small>Explore this guide</small></a></li>
+  <li><a href="{{ s.url | relative_url }}"><span class="card-index">{% if s.nav_order < 90 %}{{ s.nav_order | prepend: '0' | slice: -2, 2 }}{% else %}··{% endif %}</span><strong>{{ s.title | strip_html | replace: '`', '' }}</strong><small>Read section <span aria-hidden="true">→</span></small></a></li>
 {% endfor %}
 </ul>
 
