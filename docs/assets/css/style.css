@@ -534,6 +534,19 @@ a { color: var(--accent-fg); }
 .pager-label { color: var(--fg-muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
 .pager-title { color: var(--accent-fg); font-size: 14px; font-weight: 600; }
 
+.page-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.report-issue {
+  padding: 6px 12px;
+  background: var(--canvas-subtle);
+  color: var(--fg);
+  font-size: 13px;
+}
+.report-issue:hover { border-color: var(--accent-emphasis); color: var(--accent-fg); }
+
 .footer-note {
   margin-top: 40px;
   padding-top: 16px;
