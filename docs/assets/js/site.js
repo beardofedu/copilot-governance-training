@@ -63,21 +63,23 @@
   var headings = [];
 
   Array.prototype.forEach.call(article.querySelectorAll('h2, h3'), function (heading) {
+    var text = heading.textContent.trim();
     var id = heading.id;
     if (!id) {
-      id = slugify(heading.textContent) || 'section';
-      if (used[id]) {
-        id = id + '-' + used[id]++;
-      } else {
-        used[id] = 1;
+      var base = slugify(text) || 'section';
+      id = base;
+      var suffix = 1;
+      while (used[id]) {
+        id = base + '-' + suffix++;
       }
       heading.id = id;
     }
+    used[id] = true;
 
     var anchor = document.createElement('a');
     anchor.className = 'heading-anchor';
     anchor.href = '#' + id;
-    anchor.setAttribute('aria-label', 'Permalink to ' + heading.textContent);
+    anchor.setAttribute('aria-label', 'Permalink to ' + text);
     anchor.textContent = '#';
     heading.appendChild(anchor);
 
@@ -85,7 +87,7 @@
     item.className = 'toc-' + heading.tagName.toLowerCase();
     var link = document.createElement('a');
     link.href = '#' + id;
-    link.textContent = heading.textContent.replace(/#$/, '').trim();
+    link.textContent = text;
     item.appendChild(link);
     tocList.appendChild(item);
     headings.push({ heading: heading, link: link });

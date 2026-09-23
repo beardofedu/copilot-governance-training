@@ -84,13 +84,14 @@
       {{ content }}
     </article>
 
-    {% if page.nav_order %}
+    {% assign idx = nil %}
+    {% for s in sections %}
+      {% if s.url == page.url %}
+        {% assign idx = forloop.index0 %}
+      {% endif %}
+    {% endfor %}
+    {% if idx %}
     <nav class="pager" aria-label="Section navigation">
-      {% for s in sections %}
-        {% if s.url == page.url %}
-          {% assign idx = forloop.index0 %}
-        {% endif %}
-      {% endfor %}
       {% if idx > 0 %}
         {% assign prev_idx = idx | minus: 1 %}
         {% assign prev = sections[prev_idx] %}
