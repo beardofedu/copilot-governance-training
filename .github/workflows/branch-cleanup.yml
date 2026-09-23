@@ -1,0 +1,119 @@
+name: Delete merged branches
+
+on:
+  pull_request:
+    types: [closed]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: branch-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged branches
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const repository = await github.rest.repos.get({ owner, repo });
+            const defaultBranch = repository.data.default_branch;
+            const branches = await github.paginate(
+              github.rest.repos.listBranches,
+              { owner, repo, protected: false, per_page: 100 },
+            );
+            let deleted = 0;
+
+            for (const branch of branches) {
+              if (branch.name === defaultBranch || branch.protected) {
+                continue;
+              }
+
+              let merged = false;
+              try {
+                const comparison =
+                  await github.rest.repos.compareCommitsWithBasehead({
+                    owner,
+                    repo,
+                    basehead: `${branch.name}...${defaultBranch}`,
+                  });
+                merged =
+                  comparison.data.status === "ahead" ||
+                  comparison.data.status === "identical";
+              } catch (error) {
+                if (error.status !== 409) {
+                  throw error;
+                }
+              }
+
+              if (!merged) {
+                const pullRequests = await github.paginate(
+                  github.rest.repos.listPullRequestsAssociatedWithCommit,
+                  {
+                    owner,
+                    repo,
+                    commit_sha: branch.commit.sha,
+                    per_page: 100,
+                  },
+                );
+                merged = pullRequests.some(
+                  (pullRequest) =>
+                    pullRequest.merged_at &&
+                    pullRequest.base.ref === defaultBranch &&
+                    pullRequest.head.ref === branch.name &&
+                    pullRequest.head.repo?.full_name === `${owner}/${repo}`,
+                );
+              }
+
+              if (!merged) {
+                continue;
+              }
+
+              try {
+                const [latestRepository, latestBranch] = await Promise.all([
+                  github.rest.repos.get({ owner, repo }),
+                  github.rest.repos.getBranch({
+                    owner,
+                    repo,
+                    branch: branch.name,
+                  }),
+                ]);
+                if (
+                  latestRepository.data.default_branch !== defaultBranch ||
+                  latestBranch.data.protected ||
+                  latestBranch.data.commit.sha !== branch.commit.sha
+                ) {
+                  core.warning(
+                    `Skipped ${branch.name} because it changed during cleanup.`,
+                  );
+                  continue;
+                }
+
+                await github.rest.git.deleteRef({
+                  owner,
+                  repo,
+                  ref: `heads/${branch.name}`,
+                });
+                core.info(`Deleted merged branch ${branch.name}.`);
+                deleted += 1;
+              } catch (error) {
+                if (error.status === 404 || error.status === 422) {
+                  core.warning(
+                    `Skipped ${branch.name} because it is no longer deletable.`,
+                  );
+                  continue;
+                }
+                throw error;
+              }
+            }
+
+            core.info(`Deleted ${deleted} merged branch(es).`);
