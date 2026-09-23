@@ -7,6 +7,4 @@ permalink: /sections/known-gaps/
 
 # Known Gaps to Verify
 
-- Cloud agent custom instructions / `AGENTS.md` handling — not directly confirmed in docs during this research pass.
-- Exact CLI plugin source-type syntax (`OWNER/REPO:PATH`, git URL, local dir) — confirm against `copilot/reference/copilot-cli-reference/cli-plugin-reference`.
-- Full SAML SSO enforcement page wasn't fetched verbatim — confirm final language before quoting.
+- The `model` and `permissions.*` managed-settings keys support per-team overrides via `{ "overridable": ... }` syntax and `copilot/team-mappings.json` (documented in `managed-settings.md`), but the exact set of *other* keys enterprises can mark overridable beyond the ones already listed (`allowedMcpServers`, `deniedMcpServers`) wasn't independently re-verified this pass — treat the current site list as the source of truth until the next full re-check.

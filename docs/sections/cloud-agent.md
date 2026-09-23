@@ -24,3 +24,8 @@ Doc: [Configuring cloud agent settings](https://docs.github.com/en/copilot/how-t
 
 ### c. MCP + cloud agent
 Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via managed-settings, but is **excluded** from MCP private-registry enforcement (4c) and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
+
+### d. Custom instructions honored by cloud agent
+Doc: [Best practices for using Copilot to work on tasks](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results#adding-custom-instructions-to-your-repository)
+
+Cloud agent reads, in addition to org-wide custom instructions: `.github/copilot-instructions.md` (repo-wide), `.github/instructions/**/*.instructions.md` (path-specific), `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` — all discovered automatically, no managed-settings toggle required.
