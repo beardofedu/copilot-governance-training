@@ -23,7 +23,7 @@ Doc: [Configuring cloud agent settings](https://docs.github.com/en/copilot/how-t
 - Agent changes always land as a PR requiring human review/merge.
 
 ### MCP + cloud agent
-Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via managed-settings, but is **excluded** from MCP private-registry enforcement (4c) and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
+Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via managed-settings, but is **excluded** from MCP private-registry enforcement and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
 
 ### Custom instructions honored by cloud agent
 Doc: [Best practices for using Copilot to work on tasks](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results#adding-custom-instructions-to-your-repository)
