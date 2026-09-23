@@ -7,14 +7,14 @@ permalink: /sections/content-controls/
 
 # Content & Suggestion Controls
 
-### a. Content exclusion
+### Content exclusion
 Doc: [Excluding content from GitHub Copilot](https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot)
 
 - Prevents specified files/paths from being used as Copilot context (fnmatch-style patterns, e.g. `*.cfg`, `/scripts/**`).
 - Configurable at repo level (and org/enterprise scope for broader reach).
 - **Critical limitation to flag in training:** *Agent mode in Copilot Chat (IDEs) does not honor content exclusion* ([exclude-content-from-copilot](https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot)). Third-party coding agents and Spark also don't support it ([supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)). Copilot CLI **does** honor content exclusion — don't assume it's an exception.
 
-### b. Suggestions matching public code
+### Suggestions matching public code
 Docs: [Code suggestions](https://docs.github.com/en/copilot/concepts/completions/code-suggestions), [Finding matching public code](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/find-matching-code)
 
 - Org/enterprise policy: **Block** (suppress ~150+ char matches to public code) vs **Allow** (show with code-reference/license transparency).
