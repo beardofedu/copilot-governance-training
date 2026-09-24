@@ -15,7 +15,7 @@ Doc: [Enterprise managed settings reference](https://docs.github.com/en/copilot/
 3. File-based settings
 4. User-level settings
 
-Exception: in Copilot CLI, the `sandbox` key doesn't follow precedence — MDM, server, file, and user sandbox restrictions **combine in the most-restrictive direction** (only ever tightens).
+Exception: in Copilot CLI and the Copilot app, the `sandbox` key doesn't follow precedence — MDM, server, file, and user sandbox restrictions **combine in the most-restrictive direction** (only ever tightens).
 
 ### Supported keys
 
