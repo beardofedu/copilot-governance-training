@@ -31,7 +31,7 @@ Exception: in Copilot CLI, the `sandbox` key doesn't follow precedence — MDM, 
 | `permissions.ask` | Require fresh approval for specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
-| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (CLI only; cumulative-restrictive) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ❌ | ✅ (public preview) | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector | ✅ | ✅ | ❌ | ❌ | ✅ |
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
 
@@ -65,6 +65,11 @@ Rules use `Shell(...)` (or compatibility alias `Bash(...)`) for commands, `Read(
   }
 }
 ```
+
+### `sandbox` sub-properties
+Doc: [Enterprise managed settings reference — `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)
+
+`sandbox` restricts rather than defaults: force-on flags require `true` to enforce (`false`/omitted leaves user config alone), capability flags require `false` to prohibit, and path lists narrow (read/write, read-only) or add to (denied) user-configured grants. Sub-properties: `enabled`, `failIfUnavailable` (fail closed instead of running unsandboxed), `allowBypass`, `addCurrentWorkingDirectory`, `sandboxMcpServers`, `sandboxLspServers`, `gitAuth`/`ghAuth` (block token injection for Git/`gh` operations in the sandbox), `allowDevToolAccess` (block auto access to dev-tool configs/caches/registries — disabling can break authenticated package restores), and `userPolicy` (`filesystem.readwritePaths`/`readonlyPaths`/`deniedPaths`, `network.allowOutbound`/`allowLocalNetwork`/`allowedHosts`/`blockedHosts`/`proxy`, macOS `seatbelt.keychainAccess`).
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.

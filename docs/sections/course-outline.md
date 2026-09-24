@@ -13,5 +13,5 @@ permalink: /sections/course-outline/
 4. **Cloud agent specifics**: firewall limitations, workflow approval gate (10 min)
 5. **Content exclusion + public code matching**, and the IDE agent-mode gap (10 min)
 6. **Network layer**: allowlist reference, subscription routing, IP allow list caveat (10 min)
-7. **Audit & metrics**: what's visible vs. what needs custom telemetry (10 min)
+7. **Audit & metrics**: what's visible vs. what needs custom telemetry; session data sync/sharing/retention policy (10 min)
 8. **Q&A / apply to your org's actual `managed-settings.json`** (15 min)
