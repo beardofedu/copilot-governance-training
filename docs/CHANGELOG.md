@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-09-24
+
+- **Corrected** — The `sandbox` managed-settings key is no longer CLI-only: it now also enforces on the GitHub Copilot app (public preview), and the site's sub-property list was missing `gitAuth`, `ghAuth`, `allowDevToolAccess`, `addCurrentWorkingDirectory`, and `userPolicy` (filesystem/network/macOS Seatbelt) ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox))
+- **Added** — Session data governance for Copilot CLI and the Copilot app: local storage location, the "Store local sessions in the Cloud" sync policy, default share/visibility differences between local and cloud-agent sessions, and available retention controls (share/delete/archive) ([session-data](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/session-data))
+
 ## 2026-09-23
 
 - **Corrected** — Content exclusion is honored by Copilot CLI; only Agent mode in IDE Chat (and third-party agents/Spark) don't support it ([exclude-content-from-copilot](https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot), [supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
