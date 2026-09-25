@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-09-25
+
+- **Added** — New "Default policy for new features" and "Default availability for released models" enterprise/org policies documented: the models policy is already active (auto-enables new/unconfigured GA models), while the features policy is configurable now but activates October 22, 2026 for unconfigured GA features, preview→GA transitions, and existing unconfigured GA features — including the Copilot code review and MCP servers policies, but excluding preview features, the data-residency/FedRAMP restrictive model policies, and Store local sessions in the Cloud ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability))
+
 ## 2026-09-24
 
 - **Corrected** — The `sandbox` managed-settings key is no longer CLI-only: it now also enforces on the GitHub Copilot app (public preview), and the site's sub-property list was missing `gitAuth`, `ghAuth`, `allowDevToolAccess`, `addCurrentWorkingDirectory`, and `userPolicy` (filesystem/network/macOS Seatbelt) ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox))
