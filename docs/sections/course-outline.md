@@ -8,7 +8,7 @@ permalink: /sections/course-outline/
 # Suggested Training Course Outline
 
 1. **Mental model** — policies vs. managed-settings vs. network vs. audit (10 min)
-2. **Live walkthrough**: AI controls UI — policies, models, MCP tab (15 min)
+2. **Live walkthrough**: AI controls UI — policies, models, MCP tab, and the new Default availability policies (15 min)
 3. **Hands-on**: draft a `managed-settings.json` with `strictKnownMarketplaces`, `allowedMcpServers`/`deniedMcpServers`, `permissions.deny`/`ask`/`allow`, and `remoteControl` (20 min)
 4. **Cloud agent specifics**: firewall limitations, workflow approval gate (10 min)
 5. **Content exclusion + public code matching**, and the IDE agent-mode gap (10 min)

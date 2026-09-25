@@ -32,4 +32,9 @@ Confirmed named policies ([policy-conflicts](https://docs.github.com/en/copilot/
 
 **Enterprise-assigned users:** users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them ([policies doc](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)).
 
+**Default availability of new features and models:** two enterprise/org policies control whether unconfigured GA (general availability) items are enabled by default ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)):
+- **Default policy for new features** — configurable now but **not yet active**; starts applying October 22, 2026 to new GA features, features moving preview→GA, and existing GA features left **Unconfigured**. Enabled by default (if left unconfigured, it defaults to auto-enabling those features on that date). Covers everything on the enterprise "Features & clients" page, plus the **Copilot code review** policy (Agents page) and the **MCP servers in Copilot** policy (MCP page). Does **not** apply to preview features, the data-residency/FedRAMP restrictive model policies, or **Store local sessions in the Cloud**.
+- **Default availability for released models** — already active; auto-enables new/unconfigured GA models.
+- Disable either policy at the enterprise or org level to stop auto-enablement; individual features/models can still be explicitly disabled to opt them out while the default policy stays on.
+
 **Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* (`managed-settings.json`, section 3) does the actual restricting.
