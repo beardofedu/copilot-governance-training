@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-09-26
+
+- **Corrected** — The overridable-keys list for enterprise team overrides was incomplete: `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `sandbox` (wrapped as a whole object) are also override-eligible, not just `model`, `permissions.*`, `allowedMcpServers`, and `deniedMcpServers` ([override-settings-for-teams#supported-keys](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/override-settings-for-teams#supported-keys))
+- **Added** — Server-managed deployments now get automatic settings validation surfaced in the enterprise **Agents** tab ("Copilot settings validation"), checking `managed-settings.json`, `team-mappings.json`, and referenced team files for errors/warnings by file and JSON path ([get-started#4-validate-and-check-the-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings))
+
 ## 2026-09-25
 
 - **Added** — New "Default policy for new features" and "Default availability for released models" enterprise/org policies documented: the models policy is already active (auto-enables new/unconfigured GA models labeled "Delegate to Default Policy", but **not** pre-GA models, open-weight models, models outside GitHub's data-retention agreement, or models conflicting with data-residency/FedRAMP restrictions), while the features policy is configurable now but activates October 22, 2026 for unconfigured GA features, preview→GA transitions, and existing unconfigured GA features — including the Copilot code review and MCP servers policies, but excluding preview features, the data-residency/FedRAMP restrictive model policies, and Store local sessions in the Cloud ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability))
