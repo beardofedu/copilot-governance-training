@@ -67,17 +67,16 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
    - If the file is missing or empty, review the last **14 days**.
    - Otherwise, review everything published since that date.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
-   - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability can change between runs, and a `curl` fallback is now available — always attempt Step 2 yourself before deciding anything is blocked.
+   - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
 
 ## Step 2 — Review the sources
 
 Review both of these, restricted to the window from Step 1.
 
-You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
+You have two ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
-1. The `web_fetch` **tool call** (a first-class tool, distinct from the shell), when the session exposes it.
-2. `curl` in `bash`, which is allowed for this workflow — e.g. `curl -sSL --max-time 60 "https://docs.github.com/en/copilot/concepts/policies"`. Invoke `curl` directly as the whole command: the allowlist entry is `shell(curl:*)`, which permits `curl` invocations with arguments; pipes, redirections, or `bash -c` wrappers are denied. Outbound traffic is restricted by the workflow firewall to `github.blog`, `docs.github.com`, and the other allowed domains, which covers every URL below.
-3. The remote GitHub MCP tools, which can search public source content without shell network access. Use this fallback only after the first two methods fail:
+1. The `web_fetch` **tool call**. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. **Always make at least one real `web_fetch` call before concluding that fetching is unavailable** — do not decide from the tool list, from a shell probe, or from a prior run's notes.
+2. The remote GitHub MCP tools, which can search public source content without network access from the shell. Use this fallback only after `web_fetch` fails:
     - For GitHub Docs, use `search_code` with `repo:github/docs`.
     - For a Blog or changelog entry:
         1. Use `search_repositories` scoped to the `github` organization to identify public repositories that might host the entry.
@@ -93,10 +92,11 @@ You have three ways to retrieve source content. Use them in this order, starting
 
 Rules:
 
-- If `web_fetch` is absent from your toolset, do **not** stop and do **not** report a missing tool — fall back to `curl` immediately, then use the GitHub MCP fallback if `curl` also fails.
+- Do **not** try to fetch URLs from `bash`. The agent sandbox denies outbound network access from shell commands, so `curl https://…` always fails with "Permission denied and could not request permission from user". Retrying it only burns turns — use `web_fetch` instead.
+- Likewise, write files with the file-editing tool rather than shell redirection or heredocs, which the sandbox also denies.
 - If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
-- Only report `missing_tool` via the safe-output if `web_fetch`, `curl`, and the GitHub MCP fallback all fail, and say which error each one returned.
-- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try all three paths yourself.
+- Only report `missing_tool` via the safe-output if both `web_fetch` and the GitHub MCP fallback fail, and say which error each one returned.
+- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
 
 ### a. GitHub Blog + Changelog
 
@@ -134,7 +134,7 @@ Only act on changes you can cite to a specific GitHub Blog post or docs page. **
 
 ## Step 4 — Make the edits
 
-If you found nothing actionable, emit **noop** with a one-line explanation. Do not open an empty pull request.
+If you found nothing actionable, emit **noop** with a one-line explanation. Do not open an empty pull request. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, report that instead of a bare `noop`, and say which error each path returned.
 
 Otherwise edit files under `docs/`:
 
