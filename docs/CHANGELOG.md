@@ -14,6 +14,11 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 - **Added** — Copilot code review setting "Only allow Copilot code review to be triggered by authorized users" (org/repo) blocks reviews requested with external Copilot licenses ([code-review](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license))
 - **Added** — Local sandbox credential masking (`sandbox.credentials.envVars` / `injectHosts`) and the bypass caveat ([configuring-local-sandbox-settings](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/configuring-local-sandbox-settings#masking-environment-variables))
 
+## 2026-10-08
+
+- **Corrected** — `sandbox` now also supports VS Code Agent Host sessions (1.138.0+; `enabled: true` removes the session toggle from 1.140.0), `gitAuth`/`ghAuth` are now `auth.git`/`auth.gh`, `/sandbox disable` is a session-only opt-out unless `allowBypass: false`, and `allowedHosts`/`allowLocalNetwork`/proxy semantics were clarified ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox))
+- **Added** — `forceRemoteSettingsRefresh` key (CLI and VS Code) and Windows-only `sandbox.learningMode` ([forceRemoteSettingsRefresh](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#forceremotesettingsrefresh), [sandbox.learningMode](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandboxlearningmode))
+
 ## 2026-10-02
 
 - **Added** — New `autoTier` managed-settings key (CLI and VS Code only) sets the default Auto routing tier; a non-`unmanaged` string locks it, `{ "overridable": ... }` allows overrides, and it is override-eligible for enterprise teams ([enterprise-managed-settings#autotier](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier), [override-settings-for-teams#supported-keys](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/override-settings-for-teams#supported-keys))

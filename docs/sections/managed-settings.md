@@ -15,7 +15,7 @@ Doc: [Enterprise managed settings reference](https://docs.github.com/en/copilot/
 3. File-based settings
 4. User-level settings
 
-Exception: in Copilot CLI and the Copilot app, the `sandbox` key doesn't follow precedence — MDM, server, file, and user sandbox restrictions **combine in the most-restrictive direction** (only ever tightens).
+Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the `sandbox` key doesn't follow precedence — MDM, server, file, and user sandbox restrictions **combine in the most-restrictive direction** (only ever tightens).
 
 ### Supported keys
 
@@ -32,7 +32,7 @@ Exception: in Copilot CLI and the Copilot app, the `sandbox` key doesn't follow 
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier)) | ✅ | ✅ | ❌ | ❌ | ❌ |
-| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ❌ | ✅ (public preview) | ❌ | ❌ |
+| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ (public preview) | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector | ✅ | ✅ | ❌ | ❌ | ✅ |
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
 
@@ -70,7 +70,12 @@ Rules use `Shell(...)` (or compatibility alias `Bash(...)`) for commands, `Read(
 ### `sandbox` sub-properties
 Doc: [Enterprise managed settings reference — `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)
 
-`sandbox` restricts rather than defaults: force-on flags require `true` to enforce (`false`/omitted leaves user config alone), capability flags require `false` to prohibit, read/write and read-only path lists narrow user-configured grants, and denied path lists add to user-configured denials. Sub-properties: `enabled`, `failIfUnavailable` (fail closed instead of running unsandboxed), `allowBypass`, `addCurrentWorkingDirectory`, `sandboxMcpServers`, `sandboxLspServers`, `gitAuth`/`ghAuth` (block token injection for Git/`gh` operations in the sandbox), `allowDevToolAccess` (block auto access to dev-tool configs/caches/registries — disabling can break authenticated package restores), and `userPolicy` (`filesystem.readwritePaths`/`readonlyPaths`/`deniedPaths`, `network.allowOutbound`/`allowLocalNetwork`/`allowedHosts`/`blockedHosts`/`proxy`, macOS `seatbelt.keychainAccess`).
+`sandbox` restricts rather than defaults: force-on flags require `true` to enforce (`false`/omitted leaves user config alone), capability flags require `false` to prohibit, read/write and read-only path lists narrow user-configured grants, and denied path lists add to user-configured denials. Sub-properties: `enabled`, `failIfUnavailable` (fail closed instead of running unsandboxed), `allowBypass`, `addCurrentWorkingDirectory`, `sandboxMcpServers`, `sandboxLspServers`, `auth.git`/`auth.gh` (renamed from `gitAuth`/`ghAuth`; block token injection for Git/`gh` operations in the sandbox), `allowDevToolAccess` (block auto access to dev-tool configs/caches/registries — disabling can break authenticated package restores), `learningMode` (Windows only: `"deny"` default records blocked access; `"allow"` records and allows it, is accepted only via native Windows device management such as Intune/registry, is ignored in `managed-settings.json`, and a `"deny"` from any managed source wins), and `userPolicy` (`filesystem.readwritePaths`/`readonlyPaths`/`deniedPaths`, `network.allowOutbound`/`allowLocalNetwork`/`allowedHosts`/`blockedHosts`/`proxy`, macOS `seatbelt.keychainAccess`). In VS Code, enforcement covers Agent Host's built-in sandbox only (not every chat session or terminal); from 1.140.0, `enabled: true` also removes the session sandbox toggle. A session-only bypass remains possible via a sandbox-bypass prompt (and `/sandbox disable` in the CLI) unless `allowBypass: false`. Network notes: `*.example.com` in `allowedHosts` excludes the root domain, user and managed allowlists combine restrictively (no overlap = all hosts denied), and on Windows host rules/proxies rely on programs honoring proxy settings, so they don't block direct connections as they do on macOS/Linux ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)).
+
+### `forceRemoteSettingsRefresh`
+Doc: [Enterprise managed settings reference — `forceRemoteSettingsRefresh`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#forceremotesettingsrefresh)
+
+Set `true` to require a fresh download of server-managed settings at startup in Copilot CLI and VS Code. In the CLI it skips the one-hour cache and blocks fallback to an older cached policy (a failed refresh leaves the policy unconfirmed, so affected operations are restricted); in VS Code, Copilot features are blocked until the refresh succeeds, so users need network at startup. To apply from first startup, deliver it via device management or `managed-settings.json`; policy helper scripts can't set it. In the Windows registry/macOS managed preferences, store it as the string `true`/`false`, not a DWORD or native Boolean.
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.
