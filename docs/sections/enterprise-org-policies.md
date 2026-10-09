@@ -16,6 +16,7 @@ Confirmed named policies ([policy-conflicts](https://docs.github.com/en/copilot/
 - Copilot Chat in the IDE / Chat agent mode / Chat in GitHub Mobile
 - "Copilot can search the web"
 - Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com)
+- Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run ([code-review#reviews-requested-with-an-external-copilot-license](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license), [configure-code-review](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review))
 - Suggestions matching public code (privacy)
 - Semantic indexing for non-GitHub repos
 - Copilot Metrics API access

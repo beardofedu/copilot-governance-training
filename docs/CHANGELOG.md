@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-10-09
+
+- **Added** — Copilot code review setting "Only allow Copilot code review to be triggered by authorized users" (org/repo) blocks reviews requested with external Copilot licenses ([code-review](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license))
+- **Added** — Local sandbox credential masking (`sandbox.credentials.envVars` / `injectHosts`) and the bypass caveat ([configuring-local-sandbox-settings](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/configuring-local-sandbox-settings#masking-environment-variables))
+
 ## 2026-10-08
 
 - **Corrected** — `sandbox` now also supports VS Code Agent Host sessions (1.138.0+; `enabled: true` removes the session toggle from 1.140.0), `gitAuth`/`ghAuth` are now `auth.git`/`auth.gh`, `/sandbox disable` is a session-only opt-out unless `allowBypass: false`, and `allowedHosts`/`allowLocalNetwork`/proxy semantics were clarified ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox))
