@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-10-16
+
+- **Corrected** — `telemetry` is now supported in the Copilot app (previously listed as unsupported) ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings))
+- **Added** — `telemetry.capture` fine-grained classes (`identity`, `prompts`, `responses`, `toolArguments`, `toolOutput`, `policyDetail`), legacy `captureContent` semantics, and managed-telemetry precedence ([capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity))
+
 ## 2026-10-14
 
 - **Corrected** — `telemetry` is now supported in the Copilot app, and `forceRemoteSettingsRefresh` also applies to the Copilot app and has its own row in the supported-keys table ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings), [deploy-managed-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings))

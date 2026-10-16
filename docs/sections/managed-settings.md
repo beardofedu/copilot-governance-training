@@ -33,7 +33,7 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier)) | ✅ | ✅ | ❌ | ❌ | ❌ |
 | `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ (public preview) | ❌ | ❌ |
-| `telemetry` | Route usage data to your own OpenTelemetry collector; `capture` sub-object controls identity/content capture | ✅ | ✅ | ✅ | ❌ | ✅ |
+| `telemetry` | Route usage data to your own OpenTelemetry collector; fine-grained `capture` classes for identity and content ([details](#telemetry-capture-controls)) | ✅ | ✅ | ✅ | ❌ | ✅ |
 | `forceRemoteSettingsRefresh` | Require a fresh server-managed settings fetch at startup | ✅ | ✅ | ✅ | ❌ | ❌ |
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
 
@@ -95,7 +95,7 @@ Doc: [Enterprise managed settings reference — `telemetry`](https://docs.github
 | `toolOutput` | Tool results and execution error details |
 | `policyDetail` | Unbounded policy detail such as raw sandbox filesystem paths |
 
-`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs ([enterprise-managed-settings#capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity)).
+`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. To attribute activity without collecting content, set only `capture.identity: true`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs ([enterprise-managed-settings#capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity)).
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.
