@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first.
 
+## 2026-10-16
+
+- **Corrected** — `telemetry` is now supported in the Copilot app (previously listed as unsupported) ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings))
+- **Added** — `telemetry.capture` fine-grained classes (`identity`, `prompts`, `responses`, `toolArguments`, `toolOutput`, `policyDetail`), legacy `captureContent`/`lockCaptureContent` semantics, and managed-telemetry precedence ([capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity))
+
 ## 2026-10-09
 
 - **Added** — Copilot code review setting "Only allow Copilot code review to be triggered by authorized users" (org/repo) blocks reviews requested with external Copilot licenses ([code-review](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license))
