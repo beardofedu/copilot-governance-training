@@ -349,7 +349,7 @@ img { max-width: 100%; }
    Article content
    ========================================================================== */
 
-.markdown-body { max-width: 900px; overflow-wrap: anywhere; }
+.markdown-body { max-width: 900px; overflow-wrap: break-word; }
 .markdown-body > :first-child { margin-top: 0; }
 
 .markdown-body h1 {
