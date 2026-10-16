@@ -499,7 +499,7 @@ img { max-width: 100%; }
 [data-theme="dark-high-contrast"] .button-primary {
   color: #010409;
 }
-.button-primary:hover { filter: brightness(1.08); }
+.button-primary:hover { filter: brightness(1.04); }
 .updated-note {
   display: inline-flex;
   align-items: center;
