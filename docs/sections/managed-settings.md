@@ -32,7 +32,7 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier)) | ✅ | ✅ | ❌ | ❌ | ❌ |
-| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ (public preview) | ❌ | ❌ |
+| `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector; fine-grained `capture` classes for identity and content ([details](#telemetry-capture-controls)) | ✅ | ✅ | ✅ | ❌ | ✅ |
 | `forceRemoteSettingsRefresh` | Require a fresh server-managed settings fetch at startup | ✅ | ✅ | ✅ | ❌ | ❌ |
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
