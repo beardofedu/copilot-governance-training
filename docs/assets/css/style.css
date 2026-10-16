@@ -401,6 +401,7 @@ img { max-width: 100%; }
   vertical-align: top;
 }
 .markdown-body th { background: var(--canvas-subtle); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.markdown-body th code { text-transform: none; }
 .markdown-body td { background: var(--canvas-inset); }
 .markdown-body tbody tr:nth-child(2n) { background: var(--canvas-subtle); }
 
