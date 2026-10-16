@@ -22,6 +22,15 @@
     var entries = [];
     pages.forEach(function (page) {
       var document = new DOMParser().parseFromString(page.html, 'text/html');
+      Array.prototype.forEach.call(document.body.querySelectorAll('br'), function (br) {
+        br.replaceWith(' ');
+      });
+      var blockSelector = 'p, div, section, article, ul, ol, li, dl, dt, dd, table, tr, th, td, pre, ' +
+        'blockquote, h1, h2, h3, h4, h5, h6, hr';
+      Array.prototype.forEach.call(document.body.querySelectorAll(blockSelector), function (block) {
+        block.before(' ');
+        block.after(' ');
+      });
       var entry = { title: page.title, heading: '', url: page.url, text: '' };
       var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
       var node;
@@ -35,7 +44,7 @@
             text: ''
           };
         } else if (node.nodeType === Node.TEXT_NODE) {
-          entry.text += node.textContent + ' ';
+          entry.text += node.textContent;
         }
       }
       if (normalize(entry.text)) { entries.push(entry); }
