@@ -211,6 +211,7 @@
     timer = setTimeout(search, 120);
   });
   input.addEventListener('keydown', function (event) {
+    if (event.isComposing) { return; }
     if (event.key === 'Escape') {
       event.preventDefault();
       dialog.close();
