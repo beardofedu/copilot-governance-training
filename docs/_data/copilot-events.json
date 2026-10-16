@@ -1,0 +1,40 @@
+{
+  "events": [
+    {
+      "name": "GitHub Universe",
+      "source": "https://github.blog/news-insights/company-news/your-guide-to-github-universe-2026-is-here-the-schedule-just-launched/",
+      "start_date": "2026-10-28",
+      "end_date": "2026-10-29"
+    },
+    {
+      "name": "Microsoft Ignite",
+      "source": "https://partner.microsoft.com/en-us/blog/article/ignite-2026-overview",
+      "start_date": "2026-11-17",
+      "end_date": "2026-11-20"
+    },
+    {
+      "name": "Microsoft Build",
+      "source": "https://microsoft.github.io/build26-next-steps/microsoft-build-info/",
+      "start_date": "2026-06-02",
+      "end_date": "2026-06-03"
+    },
+    {
+      "name": "GitHub Galaxy",
+      "source": "https://github.com/resources/events",
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "VS Code Live",
+      "source": "https://code.visualstudio.com/livestream",
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Microsoft AI Tour",
+      "source": "https://aitour.microsoft.com/",
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}
