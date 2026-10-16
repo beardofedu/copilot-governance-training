@@ -16,6 +16,8 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `docs/_layouts/default.html` | Control Plane shell: header, numbered section nav, article, "In this article" TOC |
 | `docs/assets/css/style.css` | Theme tokens (system, light, dark, dark dimmed, high contrast) and page styles |
 | `docs/assets/js/site.js` | Theme picker persisted in `localStorage`, TOC generation, mobile nav |
+| `docs/assets/js/search.js` | Local full-text search, heading links, highlighting, and keyboard navigation |
+| `docs/search.json` | Liquid-generated search index for the overview, guide sections, and changelog |
 | `docs/CHANGELOG.md` | Dated record of automated content updates |
 | `test-suite/` | Automated and behavioral governance control tests |
 | `.github/workflows/pages.yml` | Builds and deploys the site on push to `main` |
@@ -28,6 +30,13 @@ theme choices retain their existing `cgt-theme` preference; mobile navigation,
 article permalinks, the table of contents, and page feedback remain available.
 The control map links to guide sections rather than displaying sample configuration
 or claiming live enforcement status.
+
+Use **Search controls** in the header, **Cmd+K** / **Ctrl+K**, or **/** to search
+page titles, headings, and content. All query words must match; results prioritize
+headings and titles and link to the matching section. Use the arrow keys and
+Enter to open a result, or Escape to close search. Search runs locally in the
+browser against a lazily loaded, Jekyll-generated index, with no external service
+or custom Jekyll plugins.
 
 ## Governance test suite
 

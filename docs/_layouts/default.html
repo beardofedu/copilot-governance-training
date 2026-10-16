@@ -37,6 +37,10 @@
       <span class="site-title-text">{{ site.title }}</span>
     </a>
     <div class="header-actions">
+      <button class="search-toggle" type="button" aria-haspopup="dialog" aria-controls="search-dialog" hidden>
+        <span>Search controls...</span>
+        <kbd aria-hidden="true">⌘K</kbd>
+      </button>
       <div class="theme-picker">
         <label class="visually-hidden" for="theme-select">Theme</label>
         <svg class="theme-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
@@ -58,6 +62,18 @@
     </div>
   </div>
 </header>
+
+<dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title" data-index-url="{{ '/search.json' | relative_url }}">
+  <div class="search-heading">
+    <h2 id="search-title">Search the guide</h2>
+    <button class="search-close" type="button" aria-label="Close search">Esc</button>
+  </div>
+  <label class="visually-hidden" for="search-input">Search controls</label>
+  <input id="search-input" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" aria-describedby="search-status" autocomplete="off" spellcheck="false" placeholder="Search controls..." autofocus>
+  <p id="search-status" class="search-status" role="status">Type to search page titles, headings, and content.</p>
+  <ul id="search-results" class="search-results" role="listbox" aria-label="Search results"></ul>
+  <p class="search-help">Use ↑ ↓ to select, Enter to open, and Esc to close.</p>
+</dialog>
 
 <div class="layout{% if page.url == '/' %} layout-overview{% endif %}">
   <nav id="sidebar" class="sidebar" aria-label="Guide sections">
@@ -143,5 +159,6 @@
 </div>
 
 <script src="{{ '/assets/js/site.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 </body>
 </html>
