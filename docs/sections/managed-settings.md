@@ -7,7 +7,9 @@ permalink: /sections/managed-settings/
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
 
-Doc: [Enterprise managed settings reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings) | [Configuring enterprise-managed settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/configure-enterprise-managed-settings)
+> **Official documentation**
+> - [Enterprise managed settings reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings)
+> - [Configuring enterprise-managed settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/configure-enterprise-managed-settings)
 
 ### Precedence
 1. MDM-managed settings
@@ -31,7 +33,7 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `permissions.ask` | Require fresh approval for specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
-| `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier)) | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector; fine-grained `capture` classes for identity and content ([details](#telemetry-capture-controls)) | ✅ | ✅ | ✅ | ❌ | ✅ |
 | `forceRemoteSettingsRefresh` | Require a fresh server-managed settings fetch at startup | ✅ | ✅ | ✅ | ❌ | ❌ |
@@ -69,20 +71,30 @@ Rules use `Shell(...)` (or compatibility alias `Bash(...)`) for commands, `Read(
 ```
 
 ### `sandbox` sub-properties
-Doc: [Enterprise managed settings reference — `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)
+> **Official documentation**
+> - [Enterprise managed settings reference: `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)
 
-`sandbox` restricts rather than defaults: force-on flags require `true` to enforce (`false`/omitted leaves user config alone), capability flags require `false` to prohibit, read/write and read-only path lists narrow user-configured grants, and denied path lists add to user-configured denials. Sub-properties: `enabled`, `failIfUnavailable` (fail closed instead of running unsandboxed), `allowBypass`, `addCurrentWorkingDirectory`, `sandboxMcpServers`, `sandboxLspServers`, `auth.git`/`auth.gh` (renamed from `gitAuth`/`ghAuth`; block token injection for Git/`gh` operations in the sandbox), `allowDevToolAccess` (block auto access to dev-tool configs/caches/registries — disabling can break authenticated package restores), `learningMode` (Windows only: `"deny"` default records blocked access; `"allow"` records and allows it, is accepted only via native Windows device management such as Intune/registry, is ignored in `managed-settings.json`, and a `"deny"` from any managed source wins), and `userPolicy` (`filesystem.readwritePaths`/`readonlyPaths`/`deniedPaths`, `network.allowOutbound`/`allowLocalNetwork`/`allowedHosts`/`blockedHosts`/`proxy`, macOS `seatbelt.keychainAccess`). In VS Code, enforcement covers Agent Host's built-in sandbox only (not every chat session or terminal); from 1.140.0, `enabled: true` also removes the session sandbox toggle. A session-only bypass remains possible via a sandbox-bypass prompt (and `/sandbox disable` in the CLI) unless `allowBypass: false`. Network notes: `*.example.com` in `allowedHosts` excludes the root domain, user and managed allowlists combine restrictively (no overlap = all hosts denied), and on Windows host rules/proxies rely on programs honoring proxy settings, so they don't block direct connections as they do on macOS/Linux ([enterprise-managed-settings#sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#sandbox)).
+`sandbox` restricts rather than defaults: force-on flags require `true` to enforce (`false`/omitted leaves user config alone), capability flags require `false` to prohibit, read/write and read-only path lists narrow user-configured grants, and denied path lists add to user-configured denials. Sub-properties: `enabled`, `failIfUnavailable` (fail closed instead of running unsandboxed), `allowBypass`, `addCurrentWorkingDirectory`, `sandboxMcpServers`, `sandboxLspServers`, `auth.git`/`auth.gh` (renamed from `gitAuth`/`ghAuth`; block token injection for Git/`gh` operations in the sandbox), `allowDevToolAccess` (block auto access to dev-tool configs/caches/registries — disabling can break authenticated package restores), `learningMode` (Windows only: `"deny"` default records blocked access; `"allow"` records and allows it, is accepted only via native Windows device management such as Intune/registry, is ignored in `managed-settings.json`, and a `"deny"` from any managed source wins), and `userPolicy` (`filesystem.readwritePaths`/`readonlyPaths`/`deniedPaths`, `network.allowOutbound`/`allowLocalNetwork`/`allowedHosts`/`blockedHosts`/`proxy`, macOS `seatbelt.keychainAccess`). In VS Code, enforcement covers Agent Host's built-in sandbox only (not every chat session or terminal); from 1.140.0, `enabled: true` also removes the session sandbox toggle. A session-only bypass remains possible via a sandbox-bypass prompt (and `/sandbox disable` in the CLI) unless `allowBypass: false`. Network notes: `*.example.com` in `allowedHosts` excludes the root domain, user and managed allowlists combine restrictively (no overlap = all hosts denied), and on Windows host rules/proxies rely on programs honoring proxy settings, so they don't block direct connections as they do on macOS/Linux.
 
 ### `forceRemoteSettingsRefresh`
-Doc: [Enterprise managed settings reference — `forceRemoteSettingsRefresh`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#forceremotesettingsrefresh)
+> **Official documentation**
+> - [Enterprise managed settings reference: `forceRemoteSettingsRefresh`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#forceremotesettingsrefresh)
+> - [Deploying enterprise-managed settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings)
 
-Set `true` to require a fresh download of server-managed settings at startup in Copilot CLI, VS Code, and the Copilot app. In the CLI and app it skips the one-hour cache and blocks fallback to an older cached policy (a failed refresh leaves the policy unconfirmed, so affected operations are restricted); in VS Code, Copilot features are blocked until the refresh succeeds, so users need network at startup. To apply from first startup, deliver it via MDM-managed or file-based settings (a server-managed value only takes effect on subsequent startups after first receipt; [deploy-managed-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings)); policy helper scripts can't set it. In the Windows registry/macOS managed preferences, store it as the string `true`/`false`, not a DWORD or native Boolean.
+Set `true` to require a fresh download of server-managed settings at startup in Copilot CLI, VS Code, and the Copilot app. In the CLI and app it skips the one-hour cache and blocks fallback to an older cached policy (a failed refresh leaves the policy unconfirmed, so affected operations are restricted); in VS Code, Copilot features are blocked until the refresh succeeds, so users need network at startup. To apply from first startup, deliver it via MDM-managed or file-based settings (a server-managed value only takes effect on subsequent startups after first receipt); policy helper scripts can't set it. In the Windows registry/macOS managed preferences, store it as the string `true`/`false`, not a DWORD or native Boolean.
 
 ### Sandbox minimum client versions
-Adding `sandbox` to managed settings activates a minimum client-version gate: clients below the minimum version are **blocked from connecting to Copilot** until updated: VS Code 1.141.0, Copilot CLI 1.0.93, GitHub Copilot app 1.1.26 ([enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox)).
+> **Official documentation**
+> - [Enterprise managed settings reference: minimum client version enforcement for `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox)
+
+Adding `sandbox` to managed settings activates a minimum client-version gate: clients below the minimum version are **blocked from connecting to Copilot** until updated: VS Code 1.141.0, Copilot CLI 1.0.93, GitHub Copilot app 1.1.26.
 
 ### `telemetry` capture controls
-Doc: [Enterprise managed settings reference — `telemetry`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#telemetry) | [OpenTelemetry for Copilot](https://docs.github.com/en/copilot/concepts/enterprise/opentelemetry)
+> **Official documentation**
+> - [Enterprise managed settings reference: `telemetry`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#telemetry)
+> - [OpenTelemetry for Copilot](https://docs.github.com/en/copilot/concepts/enterprise/opentelemetry)
+> - [Enterprise managed settings reference: telemetry capture controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls)
+> - [Monitoring agentic activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity)
 
 `telemetry` sub-properties: `enabled`, `endpoint`, `protocol` (`http/json` or `http/protobuf`), `capture`, `captureContent` (legacy), `lockCaptureContent`, `serviceName`, `resourceAttributes`, `headers` (literal values; requires `endpoint` in the same object; use HTTPS for credentials). Managed values beat local settings, SDK config, and environment variables; if several managed sources define `telemetry`, the highest-precedence source supplies the whole object (no merging).
 
@@ -95,7 +107,7 @@ Doc: [Enterprise managed settings reference — `telemetry`](https://docs.github
 | `toolOutput` | Tool results and execution error details |
 | `policyDetail` | Unbounded policy detail such as raw sandbox filesystem paths |
 
-`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. To attribute activity without collecting content, set only `capture.identity: true`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs ([enterprise-managed-settings#capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity)).
+`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. To attribute activity without collecting content, set only `capture.identity: true`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs.
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.
@@ -103,10 +115,16 @@ Doc: [Enterprise managed settings reference — `telemetry`](https://docs.github
 - **File-based:** OS-specific JSON path (macOS `/Library/Application Support/GitHubCopilot/managed-settings.json`, Windows `%ProgramFiles%\GitHubCopilot\`, Linux `/etc/github-copilot/`). Local clients only. On macOS/Linux, CLI requires root ownership, no group/world-write, not a symlink — else rejected outright.
 
 ### Team overrides
-`copilot/team-mappings.json` + `copilot/teams/*` let enterprise teams get different values for keys explicitly marked `{ "overridable": <VALUE> }` in the base file. Override-eligible keys: `model`, `autoTier` (team files may only set more restrictive values), every `permissions` subkey (`disableBypassPermissionsMode`, `deny`, `ask`, `allow`), `allowedMcpServers`, `deniedMcpServers`, `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `sandbox` (the whole object must be wrapped — sub-properties can't be individually overridable). `enabledPlugins` is additive-only for teams (a team file adds plugins on top of the enterprise baseline, it doesn't replace it). Multi-team users get the least-restrictive combination of team values, still capped by platform-level decisions ([override-settings-for-teams](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/override-settings-for-teams#supported-keys)).
+> **Official documentation**
+> - [Overriding managed settings for teams: supported keys](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/override-settings-for-teams#supported-keys)
+
+`copilot/team-mappings.json` + `copilot/teams/*` let enterprise teams get different values for keys explicitly marked `{ "overridable": <VALUE> }` in the base file. Override-eligible keys: `model`, `autoTier` (team files may only set more restrictive values), every `permissions` subkey (`disableBypassPermissionsMode`, `deny`, `ask`, `allow`), `allowedMcpServers`, `deniedMcpServers`, `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `sandbox` (the whole object must be wrapped — sub-properties can't be individually overridable). `enabledPlugins` is additive-only for teams (a team file adds plugins on top of the enterprise baseline, it doesn't replace it). Multi-team users get the least-restrictive combination of team values, still capped by platform-level decisions.
 
 ### Settings validation
-For server-managed deployments, GitHub automatically validates `copilot/managed-settings.json`, `copilot/team-mappings.json`, and any referenced team-settings files. Configuration errors/warnings — identifying the affected file and JSON path — surface in the enterprise's **Agents** tab under "Copilot settings validation." If validation is temporarily unavailable, existing settings continue to apply ([get-started#4-validate-and-check-the-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)).
+> **Official documentation**
+> - [Getting started with enterprise-managed settings: validate and check settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)
+
+For server-managed deployments, GitHub automatically validates `copilot/managed-settings.json`, `copilot/team-mappings.json`, and any referenced team-settings files. Configuration errors/warnings — identifying the affected file and JSON path — surface in the enterprise's **Agents** tab under "Copilot settings validation." If validation is temporarily unavailable, existing settings continue to apply.
 
 ### Malformed/unreachable policy behavior (fail-safe)
 - Malformed JSON → treated as an **empty allowlist** (blocks all non-built-in MCP servers).

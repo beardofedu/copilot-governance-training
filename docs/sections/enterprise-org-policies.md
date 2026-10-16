@@ -8,15 +8,24 @@ permalink: /sections/enterprise-org-policies/
 # Enterprise & Org Policies (AI controls)
 
 **Where:** Enterprise → **AI controls** tab → **Copilot** → *Policies* / *Models*. Org → Settings → Copilot → *Policies* / *Models*.
-Doc: [GitHub Copilot policies for enterprises and organizations](https://docs.github.com/en/copilot/concepts/policies)
+
+> **Official documentation**
+> - [GitHub Copilot policies for enterprises and organizations](https://docs.github.com/en/copilot/concepts/policies)
 
 Each policy is set to **Enabled everywhere / Disabled everywhere / Let organizations decide** (enterprise level). Orgs cannot override an enterprise "everywhere" setting.
 
-Confirmed named policies ([policy-conflicts](https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts), [supported-surfaces](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)):
+### Confirmed named policies
+
+> **Official documentation**
+> - [Policy conflicts across organizations and enterprises](https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts)
+> - [Supported surfaces for Copilot policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)
+> - [Copilot code review: reviews requested with an external license](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license)
+> - [Configuring Copilot code review](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review)
+
 - Copilot Chat in the IDE / Chat agent mode / Chat in GitHub Mobile
 - "Copilot can search the web"
 - Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com)
-- Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run ([code-review#reviews-requested-with-an-external-copilot-license](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license), [configure-code-review](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review))
+- Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run.
 - Suggestions matching public code (privacy)
 - Semantic indexing for non-GitHub repos
 - Copilot Metrics API access
@@ -27,15 +36,25 @@ Confirmed named policies ([policy-conflicts](https://docs.github.com/en/copilot/
 - Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement
 - Agent apps (single policy)
 - MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
-- Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents; see [supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
-- Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark — **not** IDEs or the Copilot app; see [supported-surfaces-for-policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
+- Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents)
+- Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark — **not** IDEs or the Copilot app)
 - Models (enable specific/custom models, may add cost)
 
-**Enterprise-assigned users:** users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them ([policies doc](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)).
+### Enterprise-assigned users
 
-**Default availability of new features and models:** two enterprise/org policies control whether unconfigured GA (general availability) items are enabled by default ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)):
+> **Official documentation**
+> - [How policies work for enterprise-assigned users](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)
+
+Users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them.
+
+### Default availability of new features and models
+
+> **Official documentation**
+> - [Default availability for Copilot features and models](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)
+
+Two enterprise/org policies control whether unconfigured GA (general availability) items are enabled by default:
 - **Default policy for new features** — configurable now but **not yet active**; starts applying October 22, 2026 to new GA features, features moving preview→GA, and existing GA features left **Unconfigured**. Enabled by default (if left unconfigured, it defaults to auto-enabling those features on that date). Covers everything on the enterprise "Features & clients" page, plus the **Copilot code review** policy (Agents page) and the **MCP servers in Copilot** policy (MCP page). Does **not** apply to preview features, the data-residency/FedRAMP restrictive model policies, or **Store local sessions in the Cloud**.
 - **Default availability for released models** — already active; auto-enables new/unconfigured GA models (those labeled **Delegate to Default Policy**). Out of scope and disabled by default regardless of this setting: pre-GA models, open-weight models (DeepSeek, Kimi K2.7 Code, Kimi K3), models not covered by GitHub's data-retention agreement (Claude Fable 5, Claude Fable 5.1), and — for enterprises restricted to data-residency or FedRAMP models — any model that doesn't respect those restrictions.
 - Disable either policy at the enterprise or org level to stop auto-enablement; individual features/models can still be explicitly disabled to opt them out while the default policy stays on.
 
-**Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* (`managed-settings.json`, section 3) does the actual restricting.
+**Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* ([`managed-settings.json`]({{ '/sections/managed-settings/' | relative_url }})) does the actual restricting.

@@ -32,11 +32,11 @@ permalink: /
 
 | Layer | Examples | Applies to |
 |---|---|---|
-| **Enterprise/Org Policies** ("AI controls") | Feature enable/disable, model access, cloud agent per-org allow | Whatever surfaces the policy covers |
-| **`managed-settings.json`** | MCP allow/deny, marketplaces, plugins, sandbox, permissions | CLI, VS Code, Copilot app, cloud agent, JetBrains |
-| **Content controls** | Content exclusion, public-code matching | Suggestion/context generation |
-| **Network controls** | IP allow lists, subscription routing, cloud agent firewall | Access to GitHub/Copilot infra |
-| **Visibility/audit** | Audit log, streaming, usage metrics | Governance/monitoring, not prevention |
+| [**Enterprise/Org Policies**]({{ '/sections/enterprise-org-policies/' | relative_url }}) ("AI controls") | Feature enable/disable, model access, cloud agent per-org allow | Whatever surfaces the policy covers |
+| [**`managed-settings.json`**]({{ '/sections/managed-settings/' | relative_url }}) | MCP allow/deny, marketplaces, plugins, sandbox, permissions | CLI, VS Code, Copilot app, cloud agent, JetBrains |
+| [**Content controls**]({{ '/sections/content-controls/' | relative_url }}) | Content exclusion, public-code matching | Suggestion/context generation |
+| [**Network controls**]({{ '/sections/network-controls/' | relative_url }}) | IP allow lists, subscription routing, cloud agent firewall | Access to GitHub/Copilot infra |
+| [**Visibility/audit**]({{ '/sections/audit-visibility/' | relative_url }}) | Audit log, streaming, usage metrics | Governance/monitoring, not prevention |
 
 > **Golden rule for conflicts:** enterprise beats org; across multiple orgs in one enterprise, least-restrictive usually wins *except* for a sensitive shortlist; across multiple enterprises, most-restrictive wins.
 
