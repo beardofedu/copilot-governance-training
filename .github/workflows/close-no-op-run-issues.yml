@@ -1,0 +1,47 @@
+---
+name: Close No-Op Run Issues
+
+"on":
+  issues:
+    types: [opened]
+  workflow_run:
+    workflows: ["Copilot Governance Watch"]
+    types: [completed]
+
+permissions:
+  issues: write
+
+jobs:
+  close-no-op-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close No-Op run issue
+        # v9.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
+        with:
+          script: |
+            const title = "[aw] No-Op Runs";
+            const closeIssue = async (issueNumber) => {
+              await github.rest.issues.update({
+                ...context.repo,
+                issue_number: issueNumber,
+                state: "closed",
+              });
+            };
+
+            if (context.eventName === "issues") {
+              if (context.payload.issue.title === title) {
+                await closeIssue(context.issue.number);
+              }
+              return;
+            }
+
+            const openIssues = await github.paginate(
+              github.rest.issues.listForRepo,
+              { ...context.repo, state: "open", per_page: 100 },
+            );
+            for (const issue of openIssues) {
+              if (issue.title === title && !issue.pull_request) {
+                await closeIssue(issue.number);
+              }
+            }
