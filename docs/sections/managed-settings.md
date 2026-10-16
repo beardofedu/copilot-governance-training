@@ -33,7 +33,8 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#autotier)) | ✅ | ✅ | ❌ | ❌ | ❌ |
 | `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ (public preview) | ❌ | ❌ |
-| `telemetry` | Route usage data to your own OpenTelemetry collector | ✅ | ✅ | ❌ | ❌ | ✅ |
+| `telemetry` | Route usage data to your own OpenTelemetry collector; `capture` sub-object controls identity/content capture | ✅ | ✅ | ✅ | ❌ | ✅ |
+| `forceRemoteSettingsRefresh` | Require a fresh server-managed settings fetch at startup | ✅ | ✅ | ✅ | ❌ | ❌ |
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
 
 `permissions.model` is a legacy fallback only; use the top-level `model` key in new configurations.
@@ -75,7 +76,26 @@ Doc: [Enterprise managed settings reference — `sandbox`](https://docs.github.c
 ### `forceRemoteSettingsRefresh`
 Doc: [Enterprise managed settings reference — `forceRemoteSettingsRefresh`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#forceremotesettingsrefresh)
 
-Set `true` to require a fresh download of server-managed settings at startup in Copilot CLI and VS Code. In the CLI it skips the one-hour cache and blocks fallback to an older cached policy (a failed refresh leaves the policy unconfirmed, so affected operations are restricted); in VS Code, Copilot features are blocked until the refresh succeeds, so users need network at startup. To apply from first startup, deliver it via device management or `managed-settings.json`; policy helper scripts can't set it. In the Windows registry/macOS managed preferences, store it as the string `true`/`false`, not a DWORD or native Boolean.
+Set `true` to require a fresh download of server-managed settings at startup in Copilot CLI, VS Code, and the Copilot app. In the CLI and app it skips the one-hour cache and blocks fallback to an older cached policy (a failed refresh leaves the policy unconfirmed, so affected operations are restricted); in VS Code, Copilot features are blocked until the refresh succeeds, so users need network at startup. To apply from first startup, deliver it via MDM-managed or file-based settings (a server-managed value only takes effect on subsequent startups after first receipt; [deploy-managed-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings)); policy helper scripts can't set it. In the Windows registry/macOS managed preferences, store it as the string `true`/`false`, not a DWORD or native Boolean.
+
+### Sandbox minimum client versions
+Adding `sandbox` to managed settings activates a minimum client-version gate: clients below the minimum version are **blocked from connecting to Copilot** until updated: VS Code 1.141.0, Copilot CLI 1.0.93, GitHub Copilot app 1.1.26 ([enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox)).
+
+### `telemetry` capture controls
+Doc: [Enterprise managed settings reference — `telemetry`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#telemetry) | [OpenTelemetry for Copilot](https://docs.github.com/en/copilot/concepts/enterprise/opentelemetry)
+
+`telemetry` sub-properties: `enabled`, `endpoint`, `protocol` (`http/json` or `http/protobuf`), `capture`, `captureContent` (legacy), `lockCaptureContent`, `serviceName`, `resourceAttributes`, `headers` (literal values; requires `endpoint` in the same object; use HTTPS for credentials). Managed values beat local settings, SDK config, and environment variables; if several managed sources define `telemetry`, the highest-precedence source supplies the whole object (no merging).
+
+| `capture` class (all default `false`) | Captures |
+|---|---|
+| `identity` | Copilot account name (`user.name`, currently the GitHub login), OS account (`process.user.name`), machine name (`host.name`) |
+| `prompts` | User/system/developer prompts and model input |
+| `responses` | Assistant responses and supported reasoning content |
+| `toolArguments` | Raw tool arguments, commands, schemas, and MCP server/plugin/hook identifiers |
+| `toolOutput` | Tool results and execution error details |
+| `policyDetail` | Unbounded policy detail such as raw sandbox filesystem paths |
+
+`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs ([enterprise-managed-settings#capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity)).
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.
