@@ -5,6 +5,7 @@ permalink: /
 ---
 
 <section class="hero">
+  <div class="hero-copy">
   <p class="eyebrow">Enterprise governance playbook</p>
   <h1>Locking Down<br><span>GitHub Copilot</span></h1>
   <p class="hero-lede">A practical guide to the controls, policies, and audit layers that keep Copilot useful, secure, and aligned with your organization.</p>
@@ -12,6 +13,19 @@ permalink: /
     <a class="button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
     <span class="updated-note"><span class="status-dot"></span>Kept current automatically</span>
   </div>
+  </div>
+  <aside class="control-map" aria-label="Governance guide navigation">
+    <div class="control-map-bar"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span> governance / control-map</div>
+    <p class="control-map-comment">// Find the layer that owns the control.</p>
+    <ol>
+      <li><a href="{{ '/sections/enterprise-org-policies/' | relative_url }}"><span>01</span>Enterprise &amp; org policies <b aria-hidden="true">→</b></a></li>
+      <li><a href="{{ '/sections/managed-settings/' | relative_url }}"><span>02</span>Managed settings <b aria-hidden="true">→</b></a></li>
+      <li><a href="{{ '/sections/content-controls/' | relative_url }}"><span>03</span>Content controls <b aria-hidden="true">→</b></a></li>
+      <li><a href="{{ '/sections/network-controls/' | relative_url }}"><span>04</span>Network controls <b aria-hidden="true">→</b></a></li>
+      <li><a href="{{ '/sections/audit-visibility/' | relative_url }}"><span>05</span>Visibility &amp; audit <b aria-hidden="true">→</b></a></li>
+    </ol>
+    <a class="control-map-footer" href="{{ '/changelog/' | relative_url }}">View content changelog <span aria-hidden="true">↗</span></a>
+  </aside>
 </section>
 
 ## Where controls live
@@ -24,7 +38,7 @@ permalink: /
 | **Network controls** | IP allow lists, subscription routing, cloud agent firewall | Access to GitHub/Copilot infra |
 | **Visibility/audit** | Audit log, streaming, usage metrics | Governance/monitoring, not prevention |
 
-**Golden rule for conflicts:** enterprise beats org; across multiple orgs in one enterprise, least-restrictive usually wins *except* for a sensitive shortlist; across multiple enterprises, most-restrictive wins.
+> **Golden rule for conflicts:** enterprise beats org; across multiple orgs in one enterprise, least-restrictive usually wins *except* for a sensitive shortlist; across multiple enterprises, most-restrictive wins.
 
 ## Sections
 

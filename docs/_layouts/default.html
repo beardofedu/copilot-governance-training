@@ -59,13 +59,13 @@
   </div>
 </header>
 
-<div class="layout">
+<div class="layout{% if page.url == '/' %} layout-overview{% endif %}">
   <nav id="sidebar" class="sidebar" aria-label="Guide sections">
     <p class="nav-heading">Guide contents</p>
     <ul class="nav-list">
-      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active" aria-current="page"{% endif %}>Overview</a></li>
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active" aria-current="page"{% endif %}><span class="nav-number">00</span>Overview</a></li>
       {% for s in sections %}
-      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active" aria-current="page"{% endif %}>{% if s.nav_order < 90 %}<span class="nav-number">{{ s.nav_order }}</span>{% else %}<span class="nav-number" aria-hidden="true">·</span>{% endif %}{{ s.title | strip_html | replace: '`', '' }}</a></li>
+      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active" aria-current="page"{% endif %}>{% if s.nav_order < 90 %}<span class="nav-number">{{ s.nav_order | prepend: '0' | slice: -2, 2 }}</span>{% else %}<span class="nav-number" aria-hidden="true">·</span>{% endif %}{{ s.title | strip_html | replace: '`', '' }}</a></li>
       {% endfor %}
     </ul>
   </nav>
@@ -78,6 +78,10 @@
       <span>{{ page.title | strip_html | replace: '`', '' }}</span>
     </nav>
     {% endunless %}
+
+    {% if page.nav_order %}
+    <p class="eyebrow article-eyebrow">Section {{ page.nav_order | prepend: '0' | slice: -2, 2 }} / Governance guide</p>
+    {% endif %}
 
     <article class="markdown-body">
       {{ content }}

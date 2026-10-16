@@ -13,7 +13,7 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `docs/` | Jekyll source for the GitHub Pages site |
 | `docs/index.md` | Landing page and section index |
 | `docs/sections/*.md` | One page per guide section |
-| `docs/_layouts/default.html` | GitHub Docs-style shell: header, section nav, article, "In this article" TOC |
+| `docs/_layouts/default.html` | Control Plane shell: header, numbered section nav, article, "In this article" TOC |
 | `docs/assets/css/style.css` | Theme tokens (system, light, dark, dark dimmed, high contrast) and page styles |
 | `docs/assets/js/site.js` | Theme picker persisted in `localStorage`, TOC generation, mobile nav |
 | `docs/CHANGELOG.md` | Dated record of automated content updates |
@@ -21,6 +21,13 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `.github/workflows/pages.yml` | Builds and deploys the site on push to `main` |
 | `.github/workflows/copilot-governance-watch.md` | Agentic workflow source ([gh-aw](https://github.com/github/gh-aw)) |
 | `.github/workflows/copilot-governance-watch.lock.yml` | Compiled workflow — do not edit by hand |
+
+The site uses the **Control Plane** design: a blueprint grid, monospace navigation
+and labels, green control accents, and a terminal-inspired control map. All six
+theme choices retain their existing `cgt-theme` preference; mobile navigation,
+article permalinks, the table of contents, and page feedback remain available.
+The control map links to guide sections rather than displaying sample configuration
+or claiming live enforcement status.
 
 ## Governance test suite
 
