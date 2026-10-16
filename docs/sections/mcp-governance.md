@@ -7,13 +7,19 @@ permalink: /sections/mcp-governance/
 
 # MCP Server Governance (Deep Dive)
 
-Doc: [MCP server usage in your company](https://docs.github.com/en/copilot/concepts/mcp-management)
+> **Official documentation**
+> - [MCP server usage in your company](https://docs.github.com/en/copilot/concepts/mcp-management)
+>
+> **Related sections:** [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }}) · [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
 
 ### Master switch
 "MCP servers in Copilot" policy must be **Enabled everywhere** (enterprise or org) or no MCP servers run at all — under AI controls → **MCP**.
 
 ### Allowlist/denylist via managed-settings (recommended)
-Doc: [Configuring an MCP server allowlist for your enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-enterprise-allowlist)
+> **Official documentation**
+> - [Configuring an MCP server allowlist for your enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-enterprise-allowlist)
+>
+> **Related section:** [Managed Settings: supported keys]({{ '/sections/managed-settings/#supported-keys' | relative_url }})
 
 ```json
 {
@@ -36,11 +42,12 @@ Doc: [Configuring an MCP server allowlist for your enterprise](https://docs.gith
 If multiple `managed-settings.json` sources apply, all settings apply cumulatively (deny from anywhere blocks; allow must match at every layer that defines one).
 
 ### MCP Registry (public preview — NOT the recommended method)
-Doc: [MCP private registry enforcement](https://docs.github.com/en/copilot/reference/enterprise-administrators/mcp-private-registry-enforcement)
+> **Official documentation**
+> - [MCP private registry enforcement](https://docs.github.com/en/copilot/reference/enterprise-administrators/mcp-private-registry-enforcement)
 
 - Host your own v0.1-spec MCP registry, or use **Azure API Center** as backing store.
 - Enterprise/org config: AI controls → MCP → set **MCP Registry URL**, then **Restrict MCP access to registry servers**: *Allow all* vs *Registry only*.
-- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the managed-settings allowlist (section b) for anything that must be airtight.
+- **Limitation:** enforcement matches by server name/ID only — bypassable by editing local config. **Not supported for cloud agent at all.** Prefer the [managed-settings allowlist]({{ '/sections/mcp-governance/#allowlistdenylist-via-managed-settings-recommended' | relative_url }}) for anything that must be airtight.
 - `Registry only` applies to remote and local servers; local server IDs must exactly match their registry IDs.
 
 | Client | Registry display | Registry-only enforcement |
