@@ -14,6 +14,12 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 - **Corrected** — `telemetry` is now supported in the Copilot app (previously listed as unsupported) ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings))
 - **Added** — `telemetry.capture` fine-grained classes (`identity`, `prompts`, `responses`, `toolArguments`, `toolOutput`, `policyDetail`), legacy `captureContent`/`lockCaptureContent` semantics, and managed-telemetry precedence ([capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls), [monitor-agentic-activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity))
 
+## 2026-10-14
+
+- **Corrected** — `telemetry` is now supported in the Copilot app, and `forceRemoteSettingsRefresh` also applies to the Copilot app and has its own row in the supported-keys table ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings), [deploy-managed-settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings))
+- **Added** — `telemetry.capture` classes (`identity`, `prompts`, `responses`, `toolArguments`, `toolOutput`, `policyDetail`) and telemetry precedence/`headers` rules ([capture-controls](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#capture-controls))
+- **Added** — Minimum client versions enforced when `sandbox` is set: VS Code 1.141.0, CLI 1.0.93, Copilot app 1.1.26 ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox))
+
 ## 2026-10-09
 
 - **Added** — Copilot code review setting "Only allow Copilot code review to be triggered by authorized users" (org/repo) blocks reviews requested with external Copilot licenses ([code-review](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license))
