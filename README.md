@@ -64,7 +64,8 @@ python3 test-suite/checks/run_checks.py          # assert against baseline
 `copilot-governance-watch` runs daily, and hourly during confirmed GitHub/Microsoft live events. It reviews the GitHub Blog changelog and the GitHub Copilot documentation, diffs them against the published guide, and opens a pull request with corrections, newly shipped controls, and resolved known gaps. Every claim it adds must cite a docs page or blog post; when sources are ambiguous it files the item under *Known Gaps to Verify* instead of asserting behavior.
 
 An inexpensive calendar gate runs at minute 34 each hour. Outside event windows,
-only the 08:34 UTC run activates the agent; manual runs always activate it.
+only the daily 08:34 UTC trigger activates the agent, even if execution is delayed;
+the other hours use a separate event-only trigger. Manual runs always activate it.
 [`docs/_data/copilot-events.json`](docs/_data/copilot-events.json) defines inclusive UTC
 start/end dates with explicit years and official source URLs. It tracks Universe,
 Ignite, Build, Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.

@@ -4,7 +4,8 @@ description: Reviews Copilot governance daily, hourly during live events, and ma
 emoji: 🛡️
 on:
   schedule:
-    - cron: "34 * * * *"
+    - cron: "34 8 * * *"
+    - cron: "34 0-7,9-23 * * *"
   workflow_dispatch: null
 jobs:
   event_schedule:
@@ -20,6 +21,8 @@ jobs:
           persist-credentials: false
       - name: Check live event calendar
         id: schedule
+        env:
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: python3 .github/scripts/governance_watch_schedule.py
   activation:
     needs: [event_schedule]
