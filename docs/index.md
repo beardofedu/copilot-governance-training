@@ -51,4 +51,4 @@ permalink: /
 
 ## How this site stays current
 
-A scheduled [agentic workflow](https://github.com/github/gh-aw) runs daily, reviews the GitHub Blog changelog and GitHub Copilot documentation, and opens a pull request when governance guidance needs updating or a new control has shipped.
+A scheduled [agentic workflow](https://github.com/github/gh-aw) runs daily (hourly during confirmed GitHub/Microsoft live events), reviews the GitHub Blog changelog and GitHub Copilot documentation, and opens a pull request when governance guidance needs updating or a new control has shipped.

@@ -1,11 +1,32 @@
 ---
 name: Copilot Governance Watch
-description: Reviews the GitHub Blog changelog and GitHub Copilot documentation daily and opens a pull request updating the governance training site.
+description: Reviews Copilot governance daily, hourly during live events, and maintains the event calendar through pull requests.
 emoji: 🛡️
 on:
   schedule:
-    - cron: daily around 09:00
+    - cron: "34 8 * * *"
+    - cron: "34 0-7,9-23 * * *"
   workflow_dispatch: null
+jobs:
+  event_schedule:
+    needs: []
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_run: ${{ steps.schedule.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check live event calendar
+        id: schedule
+        env:
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: python3 .github/scripts/governance_watch_schedule.py
+  activation:
+    needs: [event_schedule]
+    if: needs.event_schedule.outputs.should_run == 'true'
 permissions:
   copilot-requests: write
   contents: read
@@ -16,6 +37,15 @@ network:
     - defaults
     - github
     - github.blog
+    - githubuniverse.com
+    - microsoft.com
+    - www.microsoft.com
+    - partner.microsoft.com
+    - ignite.microsoft.com
+    - mybuild.microsoft.com
+    - aitour.microsoft.com
+    - microsoft.github.io
+    - code.visualstudio.com
 engine: copilot
 timeout-minutes: 30
 max-daily-ai-credits: 5000
@@ -38,6 +68,8 @@ tools:
       - default
 safe-outputs:
   create-pull-request:
+    allowed-files:
+      - "docs/**"
     draft: false
     title-prefix: "[governance] "
     labels:
@@ -51,7 +83,16 @@ safe-outputs:
 
 You maintain the **Locking Down GitHub Copilot** enterprise guardrails training site published from `docs/` in this repository via GitHub Pages.
 
-Your job runs once per day: find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
+Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live event dates in `docs/_data/copilot-events.json` (inclusive UTC calendar days). Manual runs always proceed. Find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
+
+## Step 0 — Keep the live event calendar current
+
+On every review, use `web_fetch` to check the official event sources in `docs/_data/copilot-events.json`, plus `https://github.com/resources/events` and `https://www.microsoft.com/en-us/events`. Follow official links to discover other GitHub- or Microsoft-hosted events whose agendas include GitHub Copilot, VS Code, developer AI, or enterprise Copilot administration. Track GitHub Universe, Microsoft Ignite, Microsoft Build, GitHub Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.
+
+- Add or correct confirmed occurrences in `docs/_data/copilot-events.json`, including next year's dates as soon as the organizer announces them. Each entry has `name`, `source` (official evidence URL), `start_date`, and `end_date` (`YYYY-MM-DD`, including the year). Multiple occurrences of a series may coexist.
+- Never repeat dates by month/day each year or infer dates from historical patterns. Use `null` for both dates when the next occurrence is unannounced; keep that series on the discovery list. Retire past dated occurrences when a confirmed successor is added.
+- Only enable bounded event windows supported by official sources. If a source is inaccessible or ambiguous, retain the existing entry and explain the uncertainty in the PR review notes; do not invent dates or mark them verified.
+- Do not change the calendar merely to record that it was checked. Calendar-only corrections warrant a PR even if the training content is unchanged. The calendar takes effect after the PR is merged; never edit workflow code or merge your own PR.
 
 ## Current context
 
@@ -66,8 +107,10 @@ Your job runs once per day: find what changed in GitHub Copilot governance, and 
 2. Read `docs/CHANGELOG.md`. The most recent entry tells you the last date this workflow reviewed sources.
    - If the file is missing or empty, review the last **14 days**.
    - Otherwise, review everything published since that date.
+   - Include that entire date, including today on hourly runs, so announcements published later on the same day are not missed.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
    - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
+4. Check open `[governance]` pull requests before proposing edits. Do not duplicate a pending content or calendar change. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
 
 ## Step 2 — Review the sources
 
@@ -134,7 +177,7 @@ Only act on changes you can cite to a specific GitHub Blog post or docs page. **
 
 ## Step 4 — Make the edits
 
-If you found nothing actionable, emit **noop** with a one-line explanation. Do not open an empty pull request. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, report that instead of a bare `noop`, and say which error each path returned.
+If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, report that instead of a bare `noop`, and say which error each path returned.
 
 Otherwise edit files under `docs/`:
 
@@ -153,7 +196,7 @@ Otherwise edit files under `docs/`:
 - **Added** — <what is new> ([source](url))
 ```
 
-Do not touch files outside `docs/`.
+Do not touch files outside `docs/`. Calendar-only PRs do not need a site changelog entry.
 
 ## Step 5 — Open the pull request
 
@@ -166,7 +209,7 @@ Create a pull request with:
   - A **Review notes** section calling out anything you were unsure about or deliberately left as a known gap.
   - The review window dates you used.
 
-Save a short note to cache-memory recording the date reviewed and the sources you evaluated, so tomorrow's run does not duplicate work.
+Save a short note to cache-memory recording the UTC timestamp reviewed and the sources you evaluated, so later runs do not duplicate work.
 
 ## Guardrails
 

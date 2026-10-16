@@ -61,7 +61,32 @@ python3 test-suite/checks/run_checks.py          # assert against baseline
 
 ## Keeping content current
 
-`copilot-governance-watch` runs daily. It reviews the GitHub Blog changelog and the GitHub Copilot documentation, diffs them against the published guide, and opens a pull request with corrections, newly shipped controls, and resolved known gaps. Every claim it adds must cite a docs page or blog post; when sources are ambiguous it files the item under *Known Gaps to Verify* instead of asserting behavior.
+`copilot-governance-watch` runs daily, and hourly during confirmed GitHub/Microsoft live events. It reviews the GitHub Blog changelog and the GitHub Copilot documentation, diffs them against the published guide, and opens a pull request with corrections, newly shipped controls, and resolved known gaps. Every claim it adds must cite a docs page or blog post; when sources are ambiguous it files the item under *Known Gaps to Verify* instead of asserting behavior.
+
+An inexpensive calendar gate runs at minute 34 each hour. Outside event windows,
+only the daily 08:34 UTC trigger activates the agent, even if execution is delayed;
+the other hours use a separate event-only trigger. Manual runs always activate it.
+[`docs/_data/copilot-events.json`](docs/_data/copilot-events.json) defines inclusive UTC
+start/end dates with explicit years and official source URLs. It tracks Universe,
+Ignite, Build, Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.
+Unknown dates stay `null` and never enable hourly runs.
+
+On each active review, the watcher checks official event listings for changed
+dates, next-year announcements, and additional Copilot-relevant GitHub/Microsoft
+events. It proposes calendar updates through reviewed PRs, including calendar-only
+PRs; **merge those PRs before an event starts** to enable its hourly window.
+Dates are never extrapolated annually. If an organizer has not announced dates
+or its site is unavailable, the watcher retains the existing data rather than
+guessing. Maintainers can update the same JSON manually using official evidence.
+Hourly reviews recheck same-day announcements and avoid duplicating open PRs.
+GitHub Actions schedules are best-effort and may be delayed; the existing
+5,000 daily AI-credit cap still applies and can stop further reviews that day.
+
+Run the offline scheduling tests with:
+
+```bash
+python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_schedule.py'
+```
 
 After editing the workflow markdown, recompile it:
 
