@@ -1,0 +1,19 @@
+---
+layout: null
+permalink: /search.json
+---
+[
+{%- assign searchable_pages = site.pages | sort: 'url' -%}
+{%- assign separator = '' -%}
+{%- for entry in searchable_pages -%}
+  {%- if entry.url == '/' or entry.nav_order -%}
+    {{ separator }}
+    {
+      "title": {{ entry.title | strip_html | replace: '`', '' | jsonify }},
+      "url": {{ entry.url | relative_url | jsonify }},
+      "html": {{ entry.content | markdownify | jsonify }}
+    }
+    {%- assign separator = ',' -%}
+  {%- endif -%}
+{%- endfor -%}
+]
