@@ -87,7 +87,11 @@ Set `true` to require a fresh download of server-managed settings at startup in 
 > **Official documentation**
 > - [Enterprise managed settings reference: minimum client version enforcement for `sandbox`](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#minimum-client-version-enforcement-for-sandbox)
 
-Adding `sandbox` to managed settings activates a minimum client-version gate: clients below the minimum version are **blocked from connecting to Copilot** until updated: VS Code 1.141.0, Copilot CLI 1.0.93, GitHub Copilot app 1.1.26.
+Adding `sandbox` to managed settings activates a minimum client-version gate: clients below the minimum version are **blocked from connecting to Copilot** until updated:
+
+- VS Code 1.141.0
+- Copilot CLI 1.0.93
+- GitHub Copilot app 1.1.26
 
 ### `telemetry` capture controls
 > **Official documentation**
