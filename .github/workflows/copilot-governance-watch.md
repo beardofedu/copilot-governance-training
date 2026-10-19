@@ -192,9 +192,11 @@ Otherwise edit files under `docs/`:
 ```markdown
 ## YYYY-MM-DD
 
-- **Corrected** — <what changed> ([source](url))
-- **Added** — <what is new> ([source](url))
+- **Corrected** — <what changed> ([source](url)) — Updated: [<Page name>]({{ '/sections/<slug>/' | relative_url }})
+- **Added** — <what is new> ([source](url)) — Updated: [<Page name>]({{ '/sections/<slug>/' | relative_url }}), [<Page name>]({{ '/sections/<slug>/' | relative_url }})
 ```
+
+Every changelog bullet must end with `— Updated:` followed by links to each training page under `docs/` that you modified for that change (use the page's `permalink` with the `relative_url` filter, exactly as shown; use `'/'` for `docs/index.md`). Never list only the official GitHub docs source.
 
 Do not touch files outside `docs/`. Calendar-only PRs do not need a site changelog entry.
 
