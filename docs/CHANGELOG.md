@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-20
+
+- **Added** — Copilot model policy REST API (GA) for enterprises, enterprise teams, enterprise apps, and organizations, including delegation of model control in organization mode and enterprise teams mode ([changelog](https://github.blog/changelog/2026-10-19-copilot-model-policy-api-for-enterprise-orgs-and-teams/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-10-16
 
 - **Corrected** — `telemetry` is now supported in the Copilot app (previously listed as unsupported) ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
