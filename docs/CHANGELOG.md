@@ -11,6 +11,8 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-20
 
+- **Added** — `features.computerUse` managed-settings key: `false` blocks users from enabling computer use in Copilot CLI and the Copilot app, and local settings cannot override it ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#featurescomputeruse)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
+- **Corrected** — The `model` managed-settings key now applies in JetBrains IDEs ([changelog](https://github.blog/changelog/2026-10-10-new-controls-and-chat-improvements-in-copilot-for-jetbrains/)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
 - **Added** — Copilot model policy REST API (GA) for enterprises, enterprise teams, enterprise apps, and organizations, including delegation of model control in organization mode and enterprise teams mode ([changelog](https://github.blog/changelog/2026-10-19-copilot-model-policy-api-for-enterprise-orgs-and-teams/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 
 ## 2026-10-16
