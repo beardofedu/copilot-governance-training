@@ -32,7 +32,8 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `permissions.deny` | Block specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.ask` | Require fresh approval for specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
-| `model` | Set the default model for new conversations | ✅ | ✅ | ✅ | ✅ | ❌ |
+| `features.computerUse` | Set `false` to prevent users enabling [computer use](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#featurescomputeruse) (local settings can't override); `true` or omitted leaves it to users | ✅ | ❌ | ✅ | ❌ | ❌ |
+| `model` | Set the default model for new conversations ([JetBrains support](https://github.blog/changelog/2026-10-10-new-controls-and-chat-improvements-in-copilot-for-jetbrains/)) | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector; fine-grained `capture` classes for identity and content ([details](#telemetry-capture-controls)) | ✅ | ✅ | ✅ | ❌ | ✅ |
