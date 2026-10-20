@@ -31,6 +31,36 @@
       "end_date": null
     },
     {
+      "name": "Microsoft AI Tour: Paris",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-10-20",
+      "end_date": "2026-10-20"
+    },
+    {
+      "name": "Microsoft AI Tour: London",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-10-21",
+      "end_date": "2026-10-21"
+    },
+    {
+      "name": "Microsoft AI Tour: Philadelphia",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-10-22",
+      "end_date": "2026-10-22"
+    },
+    {
+      "name": "Microsoft AI Tour: Cologne",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-10-22",
+      "end_date": "2026-10-22"
+    },
+    {
+      "name": "Microsoft AI Tour: Mexico City",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-10-29",
+      "end_date": "2026-10-29"
+    },
+    {
       "name": "Microsoft AI Tour",
       "source": "https://aitour.microsoft.com/",
       "start_date": null,
