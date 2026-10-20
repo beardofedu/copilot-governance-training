@@ -204,6 +204,10 @@ Every changelog bullet must end with `— Updated:` followed by links to each tr
 
 Do not touch files outside `docs/`. Calendar-only PRs do not need a site changelog entry.
 
+## Completion signal
+
+Before ending, select and emit the safe output that matches the completed review: create a pull request for actionable changes, or emit `noop` when the review found none. Use `missing_tool` only when both retrieval paths failed. Reserve `report_incomplete` for an interruption or blocker that prevented reaching one of those outcomes; do not use it for an empty diff, an ambiguous source, or a source that can be documented as a known gap.
+
 ## Step 5 — Open the pull request
 
 Create a pull request with:
