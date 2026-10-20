@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Test live-event scheduling (no credentials needed)
-        run: python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_schedule.py'
+        run: python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_*.py'
 
       - name: Validate suite integrity (no credentials needed)
         run: |

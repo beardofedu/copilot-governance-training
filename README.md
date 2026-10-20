@@ -85,7 +85,7 @@ GitHub Actions schedules are best-effort and may be delayed; the existing
 Run the offline scheduling tests with:
 
 ```bash
-python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_schedule.py'
+python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_*.py'
 ```
 
 After editing the workflow markdown, recompile it:
