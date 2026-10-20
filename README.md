@@ -80,7 +80,7 @@ or its site is unavailable, the watcher retains the existing data rather than
 guessing. Maintainers can update the same JSON manually using official evidence.
 Hourly reviews recheck same-day announcements and avoid duplicating open PRs.
 GitHub Actions schedules are best-effort and may be delayed; the existing
-5,000 daily AI-credit cap still applies and can stop further reviews that day.
+10,000 daily AI-credit cap still applies and can stop further reviews that day.
 
 Run the offline scheduling tests with:
 

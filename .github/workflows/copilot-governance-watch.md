@@ -46,9 +46,12 @@ network:
     - aitour.microsoft.com
     - microsoft.github.io
     - code.visualstudio.com
-engine: copilot
+engine:
+  id: copilot
+  copilot-sdk: true
 timeout-minutes: 30
-max-daily-ai-credits: 5000
+max-ai-credits: 1500
+max-daily-ai-credits: 10000
 tracker-id: copilot-governance-watch
 tools:
   cache-memory: true
@@ -138,6 +141,7 @@ Rules:
 - Do **not** try to fetch URLs from `bash`. The agent sandbox denies outbound network access from shell commands, so `curl https://…` always fails with "Permission denied and could not request permission from user". Retrying it only burns turns — use `web_fetch` instead.
 - Likewise, write files with the file-editing tool rather than shell redirection or heredocs, which the sandbox also denies.
 - If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
+- GitHub `search_code` has a strict secondary rate limit, and a 429 response says when to retry. Keep fallback searches few and targeted, and never fire several in parallel. On a 429, do not report `missing_tool` immediately. Continue with other work that does not need search, such as reading the site, the calendar, or sources already fetched. Then retry the rate-limited query once after the stated interval. Treat the fallback as failed only if that retry also fails, and quote both errors.
 - Only report `missing_tool` via the safe-output if both `web_fetch` and the GitHub MCP fallback fail, and say which error each one returned.
 - Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
 
