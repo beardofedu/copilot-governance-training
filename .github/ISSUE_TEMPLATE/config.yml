@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/beardofedu/copilot-governance-training/security/advisories/new
+    about: Report vulnerabilities privately. Don't open a public issue.
+  - name: Copilot product support
+    url: https://support.github.com/
+    about: For problems with GitHub Copilot itself, contact GitHub Support.
+  - name: GitHub Community discussions
+    url: https://github.com/orgs/community/discussions/categories/copilot-conversations
+    about: Ask general Copilot questions and share feedback with the community.

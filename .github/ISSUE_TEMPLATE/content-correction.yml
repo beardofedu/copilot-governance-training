@@ -1,0 +1,47 @@
+name: Content correction
+description: Report outdated, incorrect, or missing details in an existing guide section.
+title: "[Correction]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the guide accurate. Please link an official GitHub source so the change can be verified.
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      description: Link to the affected page or heading on the published site.
+      placeholder: https://beardofedu.github.io/copilot-governance-training/sections/...
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What the guide says
+      description: Quote or summarize the content that needs to change.
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: What it should say
+      description: Describe the current behavior, including the plan and scope (enterprise, organization, repository, or client) it applies to.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources
+      description: Link GitHub Docs pages or GitHub Blog changelog posts that support the correction.
+      placeholder: |
+        - https://docs.github.com/copilot/...
+        - https://github.blog/changelog/...
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'm willing to open a pull request with this correction.

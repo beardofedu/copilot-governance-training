@@ -1,0 +1,37 @@
+name: Site bug
+description: Report a problem with the site's layout, search, navigation, themes, or accessibility.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the page
+        2. Select the dark high contrast theme
+        3. ...
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, operating system, and theme
+      placeholder: Firefox 140 on macOS, dark dimmed theme
+  - type: checkboxes
+    id: a11y
+    attributes:
+      label: Accessibility
+      options:
+        - label: This problem creates a barrier for people using assistive technology, keyboard navigation, or high contrast settings.
