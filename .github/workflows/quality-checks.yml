@@ -140,6 +140,9 @@ jobs:
   section-freshness:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    concurrency:
+      group: section-review-reminder-${{ github.repository }}
+      cancel-in-progress: false
     permissions:
       contents: read
       issues: write
