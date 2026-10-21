@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-21
+
+- **Added** — GitHub package firewall (public preview, GitHub Enterprise Cloud, npm only) with enterprise cooldown, advisory, and attestation-downgrade policy controls for endpoints such as Actions runners and coding agents ([changelog](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/)) — Updated: [Network Controls]({{ '/sections/network-controls/' | relative_url }})
+
 ## 2026-10-20
 
 - **Added** — `features.computerUse` managed-settings key: `false` blocks users from enabling computer use in Copilot CLI and the Copilot app, and local settings cannot override it ([enterprise-managed-settings](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#featurescomputeruse)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})

@@ -19,6 +19,12 @@ Use `gh api meta -q '.domains | .website, .copilot'` to pull current wildcard do
 
 Allow only `*.business.githubcopilot.com` / `*.enterprise.githubcopilot.com`; block `*.individual.githubcopilot.com` — stops employees from using personal Copilot Pro/Free accounts on the corporate network. Requires min client versions.
 
+### Package firewall (public preview)
+> **Official documentation**
+> - [GitHub package firewall in public preview](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/)
+
+Sits between endpoints such as Actions runners and coding agents and upstream package registries, inspecting metadata requests and package downloads. Enterprise policy controls today: a configurable cooldown period, GitHub Advisory Database malware/vulnerability checks, and supply-chain checks such as attestation downgrades. Endpoints must be configured to route through the firewall. Public preview for GitHub Enterprise Cloud (including data residency), npm only, free during preview and metered at GA ([changelog](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/)). This is separate from the Copilot cloud agent firewall.
+
 ### IP allow lists
 > **Official documentation**
 > - [Restricting network traffic with an IP allow list](https://docs.github.com/en/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/restricting-network-traffic-to-your-enterprise-with-an-ip-allow-list)
