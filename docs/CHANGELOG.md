@@ -11,6 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-21
 
+- **Added** — Copilot code review org billing setting ("Choose how members with a Copilot license are billed": Member vs. Organization) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
 - **Added** — GitHub package firewall (public preview, GitHub Enterprise Cloud, npm only) with enterprise cooldown, advisory, and attestation-downgrade policy controls for endpoints such as Actions runners and coding agents ([changelog](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/)) — Updated: [Network Controls]({{ '/sections/network-controls/' | relative_url }})
 
 ## 2026-10-20

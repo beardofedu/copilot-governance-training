@@ -26,6 +26,7 @@ Each policy is set to **Enabled everywhere / Disabled everywhere / Let organizat
 - "Copilot can search the web"
 - Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com)
 - Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run.
+- Copilot code review — **"Choose how members with a Copilot license are billed"** (org setting under Copilot → Policies): **Member** (default) bills the member's own Copilot entitlement, and the review fails if their quota is exhausted; **Organization** bills the repository-owning org's cost center and requires AI Credits paid usage to be enabled (a budget is optional) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)).
 - Suggestions matching public code (privacy)
 - Semantic indexing for non-GitHub repos
 - Copilot Metrics API access
