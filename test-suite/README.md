@@ -117,6 +117,12 @@ pre-commit hooks.
 
 ## Running in CI
 
+The weekly governance workflow (and manual runs from `main`) runs a live Copilot CLI
+canary check against the fake secret fixtures and confirms an allowed fixture remains
+readable. It uses the built-in Actions `GITHUB_TOKEN` with `copilot-requests: write`,
+so no additional secret is needed; the organization must allow Copilot CLI usage
+billed to the organization. The check is skipped on pull requests.
+
 ```yaml
 name: Copilot governance
 on:
