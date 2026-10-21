@@ -1,0 +1,200 @@
+name: Repository quality checks
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/aw/**"
+      - ".github/dependabot.yml"
+      - ".github/scripts/**"
+      - ".github/requirements-ci.txt"
+      - ".github/workflows/**"
+      - "package.json"
+      - "package-lock.json"
+      - "test-suite/**"
+      - "docs/_data/copilot-events.schema.json"
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build GitHub Pages site
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
+        with:
+          source: ./docs
+          destination: ./_site
+
+      - name: Verify generated search index
+        run: python3 -m json.tool _site/search.json > /dev/null
+
+      - name: Install browser-test dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run accessibility checks in all themes
+        run: |
+          mkdir -p "$RUNNER_TEMP/site/copilot-governance-training"
+          cp -R _site/. "$RUNNER_TEMP/site/copilot-governance-training/"
+          python3 -m http.server 4173 --directory "$RUNNER_TEMP/site" > "$RUNNER_TEMP/site-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in $(seq 1 30); do
+            echo "Waiting for the site server ($attempt/30)"
+            if curl --fail --silent http://127.0.0.1:4173/copilot-governance-training/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          npm run test:a11y
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check documentation links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
+        with:
+          args: --verbose --no-progress --max-retries 3 --timeout 30 --accept 200,206,403,429 --exclude '.*%7B%7B.*' './docs/**/*.md'
+          fail: true
+
+  workflow-lint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install actionlint
+        run: |
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Lint GitHub Actions workflows
+        run: find .github/workflows -maxdepth 1 -name '*.yml' ! -name '*.lock.yml' -print0 | xargs -0 actionlint
+
+      - name: Run zizmor security analysis
+        uses: zizmorcore/zizmor-action@85b2b9fb8e3325e7a23d7d0a9d7ba5ae0f999e3e # v0.7.1
+        with:
+          inputs: .github/workflows
+          advanced-security: false
+          annotations: true
+          min-severity: high
+          version: 1.31.1
+
+  compile-governance-watch:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up gh-aw
+        uses: github/gh-aw-actions/setup@458b269006dcf88e3b5496b6fbecabe4b9a0f954 # v0.92.0
+
+      - name: Check compiled workflow is current
+        run: |
+          gh aw compile --no-check-update
+          git diff --exit-code -- .github/workflows/copilot-governance-watch.lock.yml
+
+  validate-calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install JSON Schema validator
+        run: python3 -m pip install --requirement .github/requirements-ci.txt
+
+      - name: Validate Copilot event calendar
+        run: check-jsonschema --schemafile docs/_data/copilot-events.schema.json docs/_data/copilot-events.json
+
+      - name: Run calendar and section freshness tests
+        run: python3 -m unittest discover -s test-suite/checks -p 'test_*.py'
+
+  section-freshness:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Find sections due for review
+        id: freshness
+        run: |
+          python3 .github/scripts/check_section_freshness.py > "$RUNNER_TEMP/stale-sections.json"
+          echo "stale=$(cat "$RUNNER_TEMP/stale-sections.json")" >> "$GITHUB_OUTPUT"
+
+      - name: Update section review reminder
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          STALE_SECTIONS: ${{ steps.freshness.outputs.stale }}
+        with:
+          script: |
+            const title = "[docs] Section review reminders";
+            const marker = "<!-- section-review-reminder -->";
+            const stale = JSON.parse(process.env.STALE_SECTIONS);
+            const openIssues = await github.paginate(
+              github.rest.issues.listForRepo,
+              { ...context.repo, state: "open", per_page: 100 },
+            );
+            const reminder = openIssues.find(
+              issue => !issue.pull_request && issue.title === title &&
+                issue.body?.includes(marker),
+            );
+
+            if (stale.length === 0) {
+              if (reminder) {
+                await github.rest.issues.update({
+                  ...context.repo,
+                  issue_number: reminder.number,
+                  state: "closed",
+                  state_reason: "completed",
+                  body: `${marker}\nAll guide sections have been reviewed within the last 90 days.`,
+                });
+              }
+              return;
+            }
+
+            const rows = stale.map(section =>
+              `- [ ] [${section.title}](${section.url}) - last reviewed ${section.last_reviewed}`,
+            ).join("\n");
+            const body = `${marker}\nThe following guide sections have not been reviewed in the last 90 days. Update the section's \`last_reviewed\` front matter date after reviewing it.\n\n${rows}\n`;
+            if (reminder) {
+              await github.rest.issues.update({
+                ...context.repo,
+                issue_number: reminder.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                ...context.repo,
+                title,
+                body,
+              });
+            }

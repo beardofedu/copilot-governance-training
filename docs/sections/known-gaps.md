@@ -3,6 +3,7 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
+last_reviewed: 2026-10-16
 ---
 
 # Known Gaps to Verify

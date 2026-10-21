@@ -3,6 +3,7 @@ layout: default
 title: "Copilot CLI & App Sandboxing"
 nav_order: 7
 permalink: /sections/cli-sandboxing/
+last_reviewed: 2026-10-16
 ---
 
 # Copilot CLI & App Sandboxing

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Copilot-related GitHub and Microsoft events",
+  "type": "object",
+  "required": ["events"],
+  "additionalProperties": false,
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "source", "start_date", "end_date"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "start_date": {
+            "type": ["string", "null"],
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "end_date": {
+            "type": ["string", "null"],
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "start_date": { "type": "null" },
+              "end_date": { "type": "null" }
+            }
+          },
+          {
+            "properties": {
+              "start_date": { "type": "string" },
+              "end_date": { "type": "string" }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

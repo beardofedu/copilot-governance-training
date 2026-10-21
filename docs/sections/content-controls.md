@@ -3,6 +3,7 @@ layout: default
 title: "Content & Suggestion Controls"
 nav_order: 8
 permalink: /sections/content-controls/
+last_reviewed: 2026-10-16
 ---
 
 # Content & Suggestion Controls

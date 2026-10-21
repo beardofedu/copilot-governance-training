@@ -7,8 +7,10 @@ on:
   pull_request:
     paths:
       - "test-suite/**"
+      - "docs/sections/**"
       - "docs/_data/copilot-events.json"
       - ".github/scripts/governance_watch_schedule.py"
+      - ".github/scripts/check_section_freshness.py"
       - ".github/workflows/copilot-governance-watch.*"
       - ".github/workflows/governance-checks.yml"
 
@@ -19,10 +21,12 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Test live-event scheduling (no credentials needed)
-        run: python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_*.py'
+        run: python3 -m unittest discover -s test-suite/checks -p 'test_*.py'
 
       - name: Validate suite integrity (no credentials needed)
         run: |
@@ -39,7 +43,7 @@ jobs:
           cp test-suite/config/expected.example.json test-suite/config/expected.json
           python3 test-suite/checks/run_checks.py
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: governance-results

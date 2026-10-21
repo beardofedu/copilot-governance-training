@@ -3,6 +3,7 @@ layout: default
 title: "Plugin Marketplace Governance"
 nav_order: 5
 permalink: /sections/plugin-marketplaces/
+last_reviewed: 2026-10-16
 ---
 
 # Plugin Marketplace Governance

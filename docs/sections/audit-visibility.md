@@ -3,6 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
+last_reviewed: 2026-10-16
 ---
 
 # Visibility & Audit (governance, not prevention)

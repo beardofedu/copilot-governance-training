@@ -3,6 +3,7 @@ layout: default
 title: "Plan-Tier Gating"
 nav_order: 12
 permalink: /sections/plan-tier-gating/
+last_reviewed: 2026-08-18
 ---
 
 # Plan-Tier Gating
