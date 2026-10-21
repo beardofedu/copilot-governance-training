@@ -37,7 +37,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement by contacting the project maintainer, [@beardofedu](https://github.com/beardofedu), using the contact options on their GitHub profile. You can also [report abuse or spam to GitHub](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement by [opening an issue](https://github.com/beardofedu/copilot-governance-training/issues/new) in this repository. Issues are public, so describe the concern without sharing private or sensitive details; the maintainer, [@beardofedu](https://github.com/beardofedu), will follow up. If the report involves information that should not be public, [report abuse or spam to GitHub](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam) instead. All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 
