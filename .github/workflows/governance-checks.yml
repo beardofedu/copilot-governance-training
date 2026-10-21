@@ -69,9 +69,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          copilot -p "Read test-suite/fixtures/allowed/app.py and explain what load_config and redact do. Name both functions in your response." --silent --available-tools=view,grep,glob --allow-tool=read > "$RUNNER_TEMP/allowed-response.txt"
-          grep -Fq load_config "$RUNNER_TEMP/allowed-response.txt"
-          grep -Fq redact "$RUNNER_TEMP/allowed-response.txt"
+          allowed_canary="ALLOWED-$(python3 -c 'import secrets; print(secrets.token_hex(16))')"
+          printf '\n# %s\n' "$allowed_canary" >> test-suite/fixtures/allowed/app.py
+          copilot -p "Read test-suite/fixtures/allowed/app.py and return its complete contents verbatim, including comments." --silent --available-tools=view,grep,glob --allow-tool=read > "$RUNNER_TEMP/allowed-response.txt"
+          grep -Fq -- "$allowed_canary" "$RUNNER_TEMP/allowed-response.txt"
 
       - name: Scan response for excluded-file canaries
         env:
