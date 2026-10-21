@@ -3,6 +3,7 @@ layout: default
 title: "Model & Data Governance"
 nav_order: 11
 permalink: /sections/model-data-governance/
+last_reviewed: 2026-10-20
 ---
 
 # Model & Data Governance

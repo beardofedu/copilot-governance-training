@@ -4,7 +4,7 @@ name: Close No-Op Run Issues
 "on":
   issues:
     types: [opened]
-  workflow_run:
+  workflow_run: # zizmor: ignore[dangerous-triggers] - This handler only closes the fixed no-op issue and never consumes run artifacts or checks out run-controlled code.
     workflows: ["Copilot Governance Watch"]
     types: [completed]
 

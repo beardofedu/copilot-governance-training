@@ -1,3 +1,4 @@
 test-suite/config/expected.json
 test-suite/results/
 __pycache__/
+node_modules/

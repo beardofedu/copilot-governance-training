@@ -3,6 +3,7 @@ layout: default
 title: "Suggested Training Course Outline"
 nav_order: 13
 permalink: /sections/course-outline/
+last_reviewed: 2026-10-16
 ---
 
 # Suggested Training Course Outline

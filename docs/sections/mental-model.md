@@ -3,6 +3,7 @@ layout: default
 title: "Mental Model: Where Controls Live"
 nav_order: 1
 permalink: /sections/mental-model/
+last_reviewed: 2026-10-16
 ---
 
 # Mental Model: Where Controls Live

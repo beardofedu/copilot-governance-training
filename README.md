@@ -78,6 +78,25 @@ PRs; **merge those PRs before an event starts** to enable its hourly window.
 Dates are never extrapolated annually. If an organizer has not announced dates
 or its site is unavailable, the watcher retains the existing data rather than
 guessing. Maintainers can update the same JSON manually using official evidence.
+
+## Repository automation
+
+Pull requests that change documentation or repository automation build the
+GitHub Pages site, check documentation links, scan the rendered pages for WCAG
+2.1 A/AA accessibility issues in all six themes, lint Actions workflows, verify
+the compiled Governance Watch workflow, and validate the event calendar against
+its JSON Schema. The link and calendar checks also run weekly. Dependabot checks
+GitHub Actions and the CI test dependencies weekly.
+
+Every Monday, an automated reminder issue lists guide sections whose
+`last_reviewed` front-matter date is more than 90 days old. Update that date
+after reviewing a section; the reminder is updated or closed automatically.
+The weekly governance workflow (and manual runs from `main`) runs a Copilot CLI
+canary test against the excluded fake-secret fixtures, verifies an allowed fixture
+remains readable, and creates or updates one issue if either check fails. The issue
+closes after a later successful run. The canary job uses the built-in Actions
+`GITHUB_TOKEN` with `copilot-requests: write`, so no additional secret is needed;
+organization policy must allow Copilot CLI usage billed to the organization.
 Hourly reviews recheck same-day announcements and avoid duplicating open PRs.
 GitHub Actions schedules are best-effort and may be delayed; the existing
 10,000 daily AI-credit cap still applies and can stop further reviews that day.

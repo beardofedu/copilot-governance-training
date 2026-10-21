@@ -3,6 +3,7 @@ layout: default
 title: "Copilot Coding (Cloud) Agent Restrictions"
 nav_order: 6
 permalink: /sections/cloud-agent/
+last_reviewed: 2026-10-16
 ---
 
 # Copilot Coding (Cloud) Agent Restrictions
