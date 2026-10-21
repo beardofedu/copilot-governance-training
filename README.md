@@ -23,6 +23,9 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `.github/workflows/pages.yml` | Builds and deploys the site on push to `main` |
 | `.github/workflows/copilot-governance-watch.md` | Agentic workflow source ([gh-aw](https://github.com/github/gh-aw)) |
 | `.github/workflows/copilot-governance-watch.lock.yml` | Compiled workflow — do not edit by hand |
+| `.github/ISSUE_TEMPLATE/` | Issue forms for content corrections, content requests, and site bugs |
+| `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | Community guidelines and vulnerability reporting |
+| `LICENSE`, `LICENSE-docs` | MIT License for code; CC BY 4.0 for `docs/` content |
 
 The site uses the **Control Plane** design: a blueprint grid, monospace navigation
 and labels, green control accents, and a terminal-inspired control map. All six
@@ -119,3 +122,19 @@ Commit both the `.md` and the regenerated `.lock.yml`.
 ## Enabling GitHub Pages
 
 Repository **Settings → Pages → Source: GitHub Actions**. The site builds from `docs/`.
+
+## Contributing
+
+Corrections and new content are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md)
+for content guidelines and local development steps, and follow the
+[Code of Conduct](CODE_OF_CONDUCT.md). Report vulnerabilities privately as
+described in [SECURITY.md](SECURITY.md).
+
+## License
+
+- Training content in `docs/` is licensed under
+  [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-docs).
+  Attribute reuse to "Copilot Governance Training by beardofedu" with a link to
+  this repository.
+- All other files, including scripts, workflows, and the test suite, are licensed
+  under the [MIT License](LICENSE).

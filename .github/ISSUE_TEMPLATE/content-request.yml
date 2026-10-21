@@ -1,0 +1,45 @@
+name: New content request
+description: Suggest a Copilot control, topic, or test case the guide doesn't cover yet.
+title: "[Content]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: topic
+    attributes:
+      label: Control or topic
+      description: What should the guide or test suite cover?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: What governance, security, or compliance question does this help administrators answer?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Enterprise and organization policies
+        - Content exclusion and data governance
+        - Models, MCP, plugins, and extensions
+        - Copilot cloud agent or CLI
+        - Network and client controls
+        - Audit, metrics, and visibility
+        - Governance test suite
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources
+      description: Link any GitHub Docs pages or changelog posts that describe the feature.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'm willing to open a pull request for this content.
