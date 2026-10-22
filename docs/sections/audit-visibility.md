@@ -28,6 +28,8 @@ last_reviewed: 2026-10-22
 
   Other client-side gaps in metrics: IDE telemetry disabled, proxies/firewalls blocking the Copilot telemetry endpoint, outdated IDE/extension versions. Per-user reports expose `last_known_ide_version` and `last_known_plugin_version` in `totals_by_ide` to spot outdated clients ([source](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)).
 
+- **Industry comparison (Copilot impact dashboard):** opt-in, disabled by default, governed by the **"Copilot metrics industry comparison"** policy, which can be set from the dashboard or centrally in enterprise/organization Copilot policies (same policy in both places; turning it off stops contributing data and viewing comparisons). Requires the Copilot usage metrics policy to be enabled. Enterprise owners (or owners of organizations not owned by an enterprise) can opt in and set the peer group; organizations owned by an enterprise participate through it, and enterprises used only to assign Copilot Business licenses can't participate. Comparisons appear only in the dashboard, not in the metrics API, NDJSON exports or downloads. Aggregated benchmarks contain no identifying data and are deleted after 30 days; opting out excludes your data from the next daily update. With data residency, comparison is limited to participants in the same region ([source](https://github.blog/changelog/2026-10-22-industry-comparisons-in-the-copilot-impact-dashboard/)).
+
 ### Session data governance (CLI & Copilot app)
 > **Official documentation**
 > - [About GitHub Copilot session data](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/session-data)
