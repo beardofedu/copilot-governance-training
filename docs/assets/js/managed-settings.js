@@ -15,11 +15,10 @@
   // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-22).
   var modelCatalog = [
     { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)']] },
-    { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'], ['gpt-5.4-nano', 'GPT-5.4 nano'],
+    { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
       ['gpt-5.6-luna', 'GPT-5.6 Luna'], ['gpt-5.6-sol', 'GPT-5.6 Sol'], ['gpt-5.6-terra', 'GPT-5.6 Terra'],
       ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'], ['gpt-6.1-sol', 'GPT-6.1 Sol']] },
-    { provider: 'Anthropic', models: [['claude-fable-5', 'Claude Fable 5'], ['claude-fable-5.1', 'Claude Fable 5.1'],
-      ['claude-haiku-4.5', 'Claude Haiku 4.5'], ['claude-haiku-5.5', 'Claude Haiku 5.5'], ['claude-opus-4.8', 'Claude Opus 4.8'],
+    { provider: 'Anthropic', models: [['claude-haiku-4.5', 'Claude Haiku 4.5'], ['claude-haiku-5.5', 'Claude Haiku 5.5'],
       ['claude-opus-5', 'Claude Opus 5'], ['claude-opus-5.5', 'Claude Opus 5.5'], ['claude-sonnet-4.6', 'Claude Sonnet 4.6'],
       ['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-sonnet-5.5', 'Claude Sonnet 5.5']] },
     { provider: 'Google', models: [['gemini-3.8-flash', 'Gemini 3.8 Flash'], ['gemini-4-argon', 'Gemini 4 Argon']] },
