@@ -3,7 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-22
 ---
 
 # Visibility & Audit (governance, not prevention)
@@ -17,6 +17,16 @@ last_reviewed: 2026-10-16
 - **Does not capture local IDE/CLI prompt content** — that needs a custom telemetry pipeline (see the [`telemetry` key]({{ '/sections/managed-settings/#telemetry-capture-controls' | relative_url }})).
 - 180-day retention in UI; stream to SIEM (Splunk, Sentinel) for longer retention/alerting.
 - Separate Copilot usage metrics dashboard/API for adoption/usage reporting (access itself gated by the "Copilot Metrics API" policy).
+- **IDE agent-activity undercounting:** IDE versions that moved agent mode to the Copilot SDK didn't identify their IDE, so most agent activity (and agent lines of code) was left out of usage metrics, and some was counted as Copilot CLI activity. Billing isn't affected, and GitHub can't backfill missing data. Fix status per [GitHub's notice](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/):
+
+  | IDE | Fixed version | Availability (as announced Oct 6, 2026) |
+  |---|---|---|
+  | Visual Studio Code | 1.139.0+ | Available |
+  | Visual Studio | 18.12 | Expected October 2026 |
+  | JetBrains IDEs | Next plugin release | Expected by late October 2026 |
+  | Eclipse, Xcode | Next plugin release | Expected by November 2026 |
+
+  Other client-side gaps in metrics: IDE telemetry disabled, proxies/firewalls blocking the Copilot telemetry endpoint, outdated IDE/extension versions. Per-user reports expose `last_known_ide_version` and `last_known_plugin_version` in `totals_by_ide` to spot outdated clients ([source](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)).
 
 ### Session data governance (CLI & Copilot app)
 > **Official documentation**
