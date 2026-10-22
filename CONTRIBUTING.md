@@ -70,7 +70,10 @@ The managed settings generator is defined in `docs/assets/js/managed-settings.js
 Keep its field definitions, input validation, and source links aligned with the
 official enterprise managed settings reference. Each wizard step needs an area
 intro, and each setting needs "why" and "why not" guidance; unit tests enforce
-both. `test:settings` runs offline;
+both. The Copilot Governance Watch workflow is instructed to keep these
+definitions and the `modelCatalog` list in sync with the managed settings
+reference and supported models page, but it cannot edit `test-suite/`; update
+any hard-coded test expectations its pull requests call out. `test:settings` runs offline;
 `test:settings-browser` uses the same locally served site as the accessibility
 checks and exercises all controls, exports, invalid inputs, and themes.
 
