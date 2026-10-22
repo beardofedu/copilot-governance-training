@@ -111,7 +111,7 @@ On every review, use `web_fetch` to check the official event sources in `docs/_d
 2. Read `docs/_data/governance-watch-state.json`. Each source (`blog` = GitHub Blog + changelog, `docs` = GitHub Copilot documentation) records `reviewed_through`, the last date that source was **actually retrieved and reviewed**. Each source has its own review window:
    - Start at the earlier of that source's `reviewed_through` date and **14 days before today**, so late-published or backdated posts are not missed. Review everything published from that start date through today.
    - Include the start date in full, and today on hourly runs, so announcements published later on the same day are not missed.
-   - If the file or a source entry is missing, start at the earlier of the most recent entry in `docs/CHANGELOG.md` and **14 days before today** (or 14 days before today if the changelog is missing or empty).
+   - If the file or a source entry is missing or invalid, start at the earlier of the most recent entry in `docs/CHANGELOG.md` and **14 days before today** (or 14 days before today if the changelog is missing or empty).
    - `docs/CHANGELOG.md` records content changes, not review coverage. Never use it to shorten a source's window.
    - A long window is expected after an outage. Work through it oldest first, and skip items the site or an open `[governance]` PR already covers.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
@@ -189,6 +189,7 @@ If neither the calendar nor the site needs an actionable change, emit **noop** w
 
 Otherwise edit files under `docs/`:
 
+- Update `docs/_data/governance-watch-state.json` only for sources fully reviewed through today. Keep the existing cutoff for any source whose review was incomplete.
 - Update the relevant existing section page(s) in place, preserving their YAML frontmatter (`layout`, `title`, `nav_order`, `permalink`) exactly.
 - For a genuinely new topic that fits no existing section, create `docs/sections/<slug>.md` with frontmatter matching the existing pattern and the next available `nav_order`, placing it before `course-outline`. Renumber `nav_order` on later pages if needed.
 - Keep the existing voice: dense, table-driven, admin-focused, with inline doc links.
