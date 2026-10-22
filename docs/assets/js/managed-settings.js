@@ -300,22 +300,14 @@
     });
     target[parts[parts.length - 1]] = value;
   }
-  // autoTier only applies to auto; a locked non-auto model leaves users no way to choose auto.
-  function autoTierBlocked(entries) {
-    var model = entries.model && entries.model.include ? entries.model :
-      entries['permissions.model'] && entries['permissions.model'].include ? entries['permissions.model'] : null;
-    return !!model && !model.override && model.raw !== 'auto' && modelIds.indexOf(model.raw) !== -1;
-  }
   function build(entries, sandboxOverride) {
     var settings = {};
     var errors = [];
     var warnings = [];
     var plain = {};
-    var tierBlocked = autoTierBlocked(entries);
     fields.forEach(function (def) {
       var entry = entries[def.path];
       if (!entry || !entry.include) { return; }
-      if (def.path === 'autoTier' && tierBlocked) { return; }
       try {
         var value = parse(def, entry.raw);
         setPath(plain, def.path, value);
@@ -580,14 +572,6 @@
       control.error.textContent = '';
       control.input.removeAttribute('aria-invalid');
     });
-    var tier = controls.autoTier;
-    var blocked = autoTierBlocked(entries);
-    tier.include.disabled = blocked;
-    tier.input.disabled = tier.override.disabled = blocked || !tier.include.checked;
-    tier.card.classList.toggle('settings-field-blocked', blocked);
-    tier.help.textContent = blocked ?
-      'Unavailable: the default model is locked to a specific model, so the Auto routing tier would never apply. Select auto or allow team overrides on the default model to set a tier.' :
-      tier.def.help;
     latest = build(entries, document.getElementById('sandbox-overridable').checked && areas.sandbox.checked);
     issues.replaceChildren();
     latest.errors.forEach(function (error) {
@@ -607,7 +591,7 @@
     summary.replaceChildren();
     groups.forEach(function (group) {
       if (!areas[group.id].checked) { return; }
-      var chosen = fields.filter(function (def) { return def.group === group.id && entries[def.path].include && !(def.path === 'autoTier' && blocked); });
+      var chosen = fields.filter(function (def) { return def.group === group.id && entries[def.path].include; });
       var item = node('li');
       item.appendChild(node('strong', stepTitle(group) + ': '));
       item.appendChild(document.createTextNode(chosen.length ? chosen.map(function (def) { return def.label; }).join(', ') + ' ' : 'nothing included (left unmanaged) '));

@@ -41,9 +41,12 @@ test('model fields are dropdowns of documented model identifiers', () => {
   }
 });
 
-test('autoTier is withheld when the effective model is locked to a specific model', () => {
-  assert.deepEqual(build({ model: entry('gpt-5.6-sol'), autoTier: entry('balance') }).settings, { model: 'gpt-5.6-sol' });
-  assert.deepEqual(build({ 'permissions.model': entry('gpt-5.6-sol'), autoTier: entry('balance') }).settings, { permissions: { model: 'gpt-5.6-sol' } });
+test('included autoTier is preserved with a fixed default model and reports its applicability', () => {
+  const fixedModel = build({ model: entry('gpt-5.6-sol'), autoTier: entry('balance') });
+  assert.deepEqual(fixedModel.settings, { model: 'gpt-5.6-sol', autoTier: 'balance' });
+  assert.ok(fixedModel.warnings.some(warning => /switch to auto/.test(warning)));
+  assert.deepEqual(build({ 'permissions.model': entry('gpt-5.6-sol'), autoTier: entry('balance') }).settings,
+    { permissions: { model: 'gpt-5.6-sol' }, autoTier: 'balance' });
   assert.deepEqual(build({ model: entry('auto'), autoTier: entry('balance') }).settings, { model: 'auto', autoTier: 'balance' });
   assert.deepEqual(build({ autoTier: entry('balance') }).settings, { autoTier: 'balance' });
   const overridable = build({ model: entry('gpt-5.6-sol', true), autoTier: entry('balance') });

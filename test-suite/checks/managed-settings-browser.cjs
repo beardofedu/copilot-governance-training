@@ -151,10 +151,10 @@ async function main() {
     assert.equal(await page.locator(id('model') + ' optgroup[label="Anthropic"] option[value="claude-opus-5.5"]').count(), 1);
     await configure('model', 'gpt-6.1-sol');
     assert.equal((await output()).model, 'gpt-6.1-sol');
-    assert.ok(await page.locator(id('autoTier') + '-include').isDisabled());
-    assert.match(await page.locator(id('autoTier') + '-help').textContent(), /Unavailable/);
-    await page.locator(id('model')).locator('..').getByLabel('Allow enterprise team overrides').check();
     assert.ok(!(await page.locator(id('autoTier') + '-include').isDisabled()));
+    await configure('autoTier', 'balance');
+    assert.deepEqual(await output(), { model: 'gpt-6.1-sol', autoTier: 'balance' });
+    assert.match(await page.locator('#settings-issues').textContent(), /Auto tier applies only when users switch to auto/);
     await page.locator(id('model') + '-include').uncheck();
     await configure('telemetry.serviceName', '</textarea><script>window.injected=true</script>');
     assert.equal(await page.evaluate(() => window.injected), undefined);
