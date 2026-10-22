@@ -11,6 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-22
 
+- **Added** — Usage metrics now report named skills, custom agents, MCP servers, slash commands, and plugins (up to 25 per record) with coverage and client version requirements ([changelog](https://github.blog/changelog/2026-10-22-custom-skills-agents-and-mcp-servers-in-usage-metrics-api/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 - **Added** — Usage-metrics undercounting of IDE agent activity (Copilot SDK-based agent mode), fixed-version table per IDE, and client-side causes of metrics gaps ([changelog](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 - **Added** — Default policy for new features: the scheduled October 22 start date has arrived but the docs still describe it as not active, so it remains a known gap ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)) — Updated: [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
 - **Added** — `forceRemoteSettingsRefresh` fail-closed and delivery-timing behavior, and minimum client version enforcement when the `sandbox` key is present in managed settings ([changelog](https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates/)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
