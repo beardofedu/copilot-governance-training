@@ -103,14 +103,17 @@ On every review, use `web_fetch` to check the official event sources in `docs/_d
 - **Run ID**: ${{ github.run_id }}
 - **Site source**: `docs/` (Jekyll). Section pages live in `docs/sections/*.md`, the landing page is `docs/index.md`.
 - **Change log of prior runs**: `docs/CHANGELOG.md`
+- **Per-source review coverage**: `docs/_data/governance-watch-state.json`
 
 ## Step 1 — Establish the review window
 
 1. Run `date -u "+%Y-%m-%d"` to get today's date.
-2. Read `docs/CHANGELOG.md`. The most recent entry tells you the last date this workflow reviewed sources.
-   - If the file is missing or empty, review the last **14 days**.
-   - Otherwise, review everything published since that date.
-   - Include that entire date, including today on hourly runs, so announcements published later on the same day are not missed.
+2. Read `docs/_data/governance-watch-state.json`. Each source (`blog` = GitHub Blog + changelog, `docs` = GitHub Copilot documentation) records `reviewed_through`, the last date that source was **actually retrieved and reviewed**. Each source has its own review window:
+   - Start at the earlier of that source's `reviewed_through` date and **14 days before today**, so late-published or backdated posts are not missed. Review everything published from that start date through today.
+   - Include the start date in full, and today on hourly runs, so announcements published later on the same day are not missed.
+   - If the file or a source entry is missing, use the most recent entry in `docs/CHANGELOG.md` as the start date (or the last 14 days if that is missing too).
+   - `docs/CHANGELOG.md` records content changes, not review coverage. Never use it to shorten a source's window.
+   - A long window is expected after an outage. Work through it oldest first, and skip items the site or an open `[governance]` PR already covers.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
    - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
 4. Check open `[governance]` pull requests before proposing edits. Do not duplicate a pending content or calendar change. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
@@ -181,7 +184,7 @@ Only act on changes you can cite to a specific GitHub Blog post or docs page. **
 
 ## Step 4 — Make the edits
 
-If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, report that instead of a bare `noop`, and say which error each path returned.
+If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. A change to `docs/_data/governance-watch-state.json` alone is not actionable; only update it alongside another change. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, report that instead of a bare `noop`, and say which error each path returned.
 
 Otherwise edit files under `docs/`:
 
@@ -191,6 +194,7 @@ Otherwise edit files under `docs/`:
 - Every factual claim you add or change must carry a markdown link to its source docs page or blog post.
 - Update `docs/sections/known-gaps.md` — remove resolved items, add new ambiguities.
 - Update the training outline in `docs/sections/course-outline.md` if a new section materially changes what should be taught.
+- Update `docs/_data/governance-watch-state.json`: for each source you actually retrieved and reviewed across its whole window, set `reviewed_through` to today. Leave a source's date unchanged if you could not retrieve it (for example, the blog fallback failed) or reviewed only part of its window. A docs-only review must never advance `blog`.
 - Prepend a dated entry to `docs/CHANGELOG.md` (create it if absent) in this shape:
 
 ```markdown
@@ -217,7 +221,7 @@ Create a pull request with:
   - A one-paragraph summary of what changed upstream and why the site needed updating.
   - A table of every edit: file, change type (Correction/Addition/Gap resolution), and the source link.
   - A **Review notes** section calling out anything you were unsure about or deliberately left as a known gap.
-  - The review window dates you used.
+  - The review window dates for each source (`blog`, `docs`), and whether each was fully reviewed.
 
 Save a short note to cache-memory recording the UTC timestamp reviewed and the sources you evaluated, so later runs do not duplicate work.
 

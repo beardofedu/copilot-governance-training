@@ -13,6 +13,7 @@ on:
       - "package-lock.json"
       - "test-suite/**"
       - "docs/_data/copilot-events.schema.json"
+      - "docs/_data/governance-watch-state.schema.json"
   schedule:
     - cron: "0 9 * * 1"
   workflow_dispatch:
@@ -131,6 +132,9 @@ jobs:
 
       - name: Validate Copilot event calendar
         run: check-jsonschema --schemafile docs/_data/copilot-events.schema.json docs/_data/copilot-events.json
+
+      - name: Validate Governance Watch review state
+        run: check-jsonschema --schemafile docs/_data/governance-watch-state.schema.json docs/_data/governance-watch-state.json
 
       - name: Run calendar and section freshness tests
         run: |
