@@ -107,10 +107,10 @@ On every review, use `web_fetch` to check the official event sources in `docs/_d
 ## Step 1 — Establish the review window
 
 1. Run `date -u "+%Y-%m-%d"` to get today's date.
-2. Read `docs/CHANGELOG.md`. The most recent entry tells you the last date this workflow reviewed sources.
-   - If the file is missing or empty, review the last **14 days**.
-   - Otherwise, review everything published since that date.
-   - Include that entire date, including today on hourly runs, so announcements published later on the same day are not missed.
+2. Read `docs/_data/governance-watch-state.json`. Establish an independent review window for each source from its `sources.<source>.reviewed_through` date through today.
+   - Include the `reviewed_through` date itself, including today on hourly runs, so announcements published later on the same day are not missed.
+   - If the state file or a source's cutoff is missing or invalid, review the last **14 days** for that source.
+   - Do **not** use `docs/CHANGELOG.md` as a review checkpoint; it records content changes, not source coverage.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
    - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
 4. Check open `[governance]` pull requests before proposing edits. Do not duplicate a pending content or calendar change. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
@@ -185,6 +185,7 @@ If neither the calendar nor the site needs an actionable change, emit **noop** w
 
 Otherwise edit files under `docs/`:
 
+- Update `docs/_data/governance-watch-state.json` only for sources fully reviewed through today. Keep the existing cutoff for any source whose review was incomplete.
 - Update the relevant existing section page(s) in place, preserving their YAML frontmatter (`layout`, `title`, `nav_order`, `permalink`) exactly.
 - For a genuinely new topic that fits no existing section, create `docs/sections/<slug>.md` with frontmatter matching the existing pattern and the next available `nav_order`, placing it before `course-outline`. Renumber `nav_order` on later pages if needed.
 - Keep the existing voice: dense, table-driven, admin-focused, with inline doc links.
