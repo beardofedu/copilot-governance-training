@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-22
+
+- **Added** — Usage-metrics undercounting of IDE agent activity (Copilot SDK-based agent mode), fixed-version table per IDE, and client-side causes of metrics gaps ([changelog](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+- **Added** — Default policy for new features: the scheduled October 22 start date has arrived but the docs still describe it as not active, so it remains a known gap ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)) — Updated: [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+
 ## 2026-10-21
 
 - **Added** — Copilot code review org billing setting ("Choose how members with a Copilot license are billed": Member vs. Organization) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})

@@ -1,0 +1,12 @@
+{
+  "sources": {
+    "blog": {
+      "reviewed_through": "2026-10-22",
+      "note": "GitHub Blog and changelog. Backlog from 2026-09-20 through 2026-10-22 reviewed via web_fetch on the changelog index and September archive."
+    },
+    "docs": {
+      "reviewed_through": "2026-10-21",
+      "note": "GitHub Copilot documentation, reviewed through web_fetch or the github/docs MCP fallback."
+    }
+  }
+}
