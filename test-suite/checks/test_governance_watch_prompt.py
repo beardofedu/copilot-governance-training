@@ -15,8 +15,9 @@ class GovernanceWatchPromptTests(unittest.TestCase):
     def test_review_windows_use_per_source_coverage_state(self):
         for instruction in (
             "docs/_data/governance-watch-state.json",
-            "independent review window",
-            "Do **not** use `docs/CHANGELOG.md` as a review checkpoint",
+            "Each source has its own review window",
+            "Never use it to shorten a source's window",
+            "14 days before today",
             "Keep the existing cutoff for any source whose review was incomplete",
         ):
             with self.subTest(instruction=instruction):

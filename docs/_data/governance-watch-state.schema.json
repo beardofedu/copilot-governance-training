@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Copilot Governance Watch per-source review state",
+  "type": "object",
+  "required": ["sources"],
+  "additionalProperties": false,
+  "properties": {
+    "sources": {
+      "type": "object",
+      "required": ["blog", "docs"],
+      "additionalProperties": false,
+      "properties": {
+        "blog": { "$ref": "#/$defs/source" },
+        "docs": { "$ref": "#/$defs/source" }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["reviewed_through"],
+      "additionalProperties": false,
+      "properties": {
+        "reviewed_through": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
