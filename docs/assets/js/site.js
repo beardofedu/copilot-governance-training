@@ -75,12 +75,14 @@
     }
     used[id] = true;
 
-    var anchor = document.createElement('a');
-    anchor.className = 'heading-anchor';
-    anchor.href = '#' + id;
-    anchor.setAttribute('aria-label', 'Permalink to ' + text);
-    anchor.textContent = '#';
-    heading.appendChild(anchor);
+    if (!heading.closest('summary')) {
+      var anchor = document.createElement('a');
+      anchor.className = 'heading-anchor';
+      anchor.href = '#' + id;
+      anchor.setAttribute('aria-label', 'Permalink to ' + text);
+      anchor.textContent = '#';
+      heading.appendChild(anchor);
+    }
 
     var item = document.createElement('li');
     item.className = 'toc-' + heading.tagName.toLowerCase();

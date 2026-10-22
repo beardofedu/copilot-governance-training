@@ -160,6 +160,7 @@ Fetch and compare against the current site content, focusing on:
 
 - `https://docs.github.com/en/copilot/concepts/policies`
 - `https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings`
+- `https://docs.github.com/en/copilot/reference/ai-models/supported-models` (model list used by the managed settings generator)
 - `https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts`
 - `https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies`
 - `https://docs.github.com/en/copilot/concepts/mcp-management`
@@ -196,6 +197,7 @@ Otherwise edit files under `docs/`:
 - Update `docs/sections/known-gaps.md` — remove resolved items, add new ambiguities.
 - Update the training outline in `docs/sections/course-outline.md` if a new section materially changes what should be taught.
 - Update `docs/_data/governance-watch-state.json`: for each source you actually retrieved and reviewed across its whole window, set `reviewed_through` to today. Leave a source's date unchanged if you could not retrieve it (for example, the blog fallback failed) or reviewed only part of its window. A docs-only review must never advance `blog`.
+- Keep the managed settings generator in sync (see below) whenever a change touches managed-settings keys, values, or the supported models list.
 - Prepend a dated entry to `docs/CHANGELOG.md` (create it if absent) in this shape:
 
 ```markdown
@@ -206,6 +208,19 @@ Otherwise edit files under `docs/`:
 ```
 
 Every changelog bullet must end with `— Updated:` followed by links to each training page under `docs/` that you modified for that change (use the page's `permalink` with the `relative_url` filter, exactly as shown; use `'/'` for `docs/index.md`). Never list only the official GitHub docs source.
+
+### Managed settings generator sync
+
+The wizard at `docs/sections/managed-settings-generator.md` is driven by hand-written definitions in `docs/assets/js/managed-settings.js`. It does not read the docs at runtime, so it drifts unless you update it. Each run, compare that file against the enterprise managed settings reference and the supported models page:
+
+- **New key or nested control**: add a `field(...)` (or `bool(...)`) entry in the matching wizard step. Pick the right type (`boolean`, `enum`, `text`, `url`, or a list/JSON type). Set `overridable` only if the reference says the key accepts an `{ "overridable": … }` wrapper. Every field **must** also get a `reasons` entry keyed by its path: `'path': ['Why you would set it', 'Why you might not']`. A field without one breaks the whole wizard. Write both reasons in the same plain, admin-focused voice as neighbouring entries. If a new area needs its own step, add it to `groups` with an intro explaining whether to configure that area.
+- **Changed allowed values, defaults, or semantics**: update `options`, help text, validation in `parse()`, and any related warning or error in `build()`.
+- **Removed or deprecated key**: do not delete it silently. Mark it as legacy in its help text and move it to that step's advanced settings, or remove it only if the reference no longer documents it at all, and note this in the PR.
+- **Models**: update the `modelCatalog` array, grouped by provider, with `auto` kept first. Add or remove entries to match the supported models table. Use an identifier only if a GitHub docs page or changelog post shows it exactly; otherwise leave the model out and list it in the PR's Review notes.
+- Update the `// Source: … (reviewed YYYY-MM-DD)` comment above `modelCatalog`, and set the generator page's `last_reviewed` frontmatter to today when you change either file.
+- You cannot edit `test-suite/`. If a change makes a hard-coded expectation in `test-suite/checks/managed-settings.test.cjs` out of date (for example, the list of top-level keys), say so in the PR's Review notes so a maintainer can update it.
+- Keep the file plain ES5, matching the existing style: no build step, no imports, and preserve the UMD export of `{ groups, fields, build, parse, modelCatalog }`.
+- In the changelog bullet, link the generator page (`'/sections/managed-settings-generator/'`) in the `— Updated:` list.
 
 Do not touch files outside `docs/`. Calendar-only PRs do not need a site changelog entry.
 

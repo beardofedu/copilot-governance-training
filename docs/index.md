@@ -11,6 +11,7 @@ permalink: /
   <p class="hero-lede">A practical guide to the controls, policies, and audit layers that keep Copilot useful, secure, and aligned with your organization.</p>
   <div class="hero-actions">
     <a class="button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
+    <a class="button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>
     <span class="updated-note"><span class="status-dot"></span>Kept current automatically</span>
   </div>
   </div>

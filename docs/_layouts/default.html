@@ -75,7 +75,7 @@
   <p class="search-help">Use ↑ ↓ to select, Enter to open, and Esc to close.</p>
 </dialog>
 
-<div class="layout{% if page.url == '/' %} layout-overview{% endif %}">
+<div class="layout{% if page.url == '/' %} layout-overview{% endif %}{% if page.wide_content %} layout-tool{% endif %}">
   <nav id="sidebar" class="sidebar" aria-label="Guide sections">
     <p class="nav-heading">Guide contents</p>
     <ul class="nav-list">

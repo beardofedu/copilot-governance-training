@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "test:settings": "node --test test-suite/checks/managed-settings.test.cjs",
+    "test:settings-browser": "node test-suite/checks/managed-settings-browser.cjs",
     "test:a11y": "node .github/scripts/check-accessibility.cjs"
   },
   "devDependencies": {
