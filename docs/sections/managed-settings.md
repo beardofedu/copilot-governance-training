@@ -3,10 +3,12 @@ layout: default
 title: "`managed-settings.json` — The Core Enterprise Lockdown File"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-10-20
+last_reviewed: 2026-10-22
 ---
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
+
+**Build your policy:** use the [managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }}) for guided controls, advanced settings, and copy-ready JSON with deployment instructions.
 
 > **Official documentation**
 > - [Enterprise managed settings reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings)

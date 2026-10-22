@@ -57,12 +57,22 @@ python3 .github/scripts/check_section_freshness.py
 # Run accessibility checks against a locally served site
 npm ci
 npx playwright install chromium
+npm run test:settings
+npm run test:settings-browser
 npm run test:a11y
 ```
 
 The accessibility script expects the site at
 `http://127.0.0.1:4173/copilot-governance-training/`; see
 `.github/workflows/quality-checks.yml` for how CI serves it.
+
+The managed settings generator is defined in `docs/assets/js/managed-settings.js`.
+Keep its field definitions, input validation, and source links aligned with the
+official enterprise managed settings reference. Each wizard step needs an area
+intro, and each setting needs "why" and "why not" guidance; unit tests enforce
+both. `test:settings` runs offline;
+`test:settings-browser` uses the same locally served site as the accessibility
+checks and exercises all controls, exports, invalid inputs, and themes.
 
 ### Agentic workflow changes
 
