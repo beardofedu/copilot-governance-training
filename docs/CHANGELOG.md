@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-22
+
+- **Added** — `forceRemoteSettingsRefresh` fail-closed and delivery-timing behavior, and minimum client version enforcement when the `sandbox` key is present in managed settings ([changelog](https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates/)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
+
 ## 2026-10-21
 
 - **Added** — Copilot code review org billing setting ("Choose how members with a Copilot license are billed": Member vs. Organization) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
