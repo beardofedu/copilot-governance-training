@@ -19,6 +19,7 @@ A training site covering every enterprise/org-level mechanism to restrict, gover
 | `docs/assets/js/search.js` | Local full-text search, heading links, highlighting, and keyboard navigation |
 | `docs/search.json` | Liquid-generated search index for the overview, guide sections, and changelog |
 | `docs/CHANGELOG.md` | Dated record of automated content updates |
+| `docs/_data/governance-watch-state.json` | Last date Governance Watch actually reviewed each source (blog, docs); sets each source's review window |
 | `test-suite/` | Automated and behavioral governance control tests |
 | `.github/workflows/pages.yml` | Builds and deploys the site on push to `main` |
 | `.github/workflows/copilot-governance-watch.md` | Agentic workflow source ([gh-aw](https://github.com/github/gh-aw)) |
