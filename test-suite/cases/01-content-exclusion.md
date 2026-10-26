@@ -5,7 +5,7 @@ Config checks prove rules *exist*. These prove they're *enforced*.
 Run each case in every surface you support, and record the result in
 [`../templates/results-template.md`](../templates/results-template.md).
 
-**Surfaces:** IDE completions · IDE Chat · github.com Chat · Coding agent
+**Surfaces:** IDE completions · IDE Chat (Ask mode) · github.com Chat
 
 **Copilot CLI does not support content exclusion.** Do not use it for these tests; it may
 return excluded file contents. Run them only in a client that supports content exclusion.
