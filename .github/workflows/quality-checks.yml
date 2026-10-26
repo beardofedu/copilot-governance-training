@@ -117,7 +117,7 @@ jobs:
       - name: Set up gh-aw
         uses: github/gh-aw-actions/setup-cli@8b9c5e98dfe3472ac4e3f13e0a2441cd078a2ca7 # v0.92.6
         with:
-          version: v0.92.6
+          version: v0.93.2
 
       - name: Check compiled workflow is current
         run: |
