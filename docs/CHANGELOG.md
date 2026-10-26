@@ -11,8 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-22
 
-- **Added** — Opt-in "Copilot metrics industry comparison" policy and Industry comparison section in the Copilot impact dashboard ([changelog](https://github.blog/changelog/2026-10-22-industry-comparisons-in-the-copilot-impact-dashboard/)) — Updated: [Audit & Visibility]({{ '/sections/audit-visibility/' | relative_url }})
-
+- **Added** — Opt-in "Copilot metrics industry comparison" policy and Industry comparison dashboard section, including eligibility, data handling and residency behavior ([changelog](https://github.blog/changelog/2026-10-22-industry-comparisons-in-the-copilot-impact-dashboard/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 - **Added** — Usage-metrics undercounting of IDE agent activity (Copilot SDK-based agent mode), fixed-version table per IDE, and client-side causes of metrics gaps ([changelog](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 - **Added** — Default policy for new features: the scheduled October 22 start date has arrived but the docs still describe it as not active, so it remains a known gap ([default-availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)) — Updated: [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
 - **Added** — `forceRemoteSettingsRefresh` fail-closed and delivery-timing behavior, and minimum client version enforcement when the `sandbox` key is present in managed settings ([changelog](https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates/)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
