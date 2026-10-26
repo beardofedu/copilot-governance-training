@@ -26,7 +26,7 @@ GitHub announced that **local sandboxing** is generally available in Copilot CLI
 > **Official documentation**
 > - [Default availability for Copilot features and models](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)
 
-The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/) says enforcement of the default policy for new features has begun and is rolling out gradually through **October 26**, so timing varies per enterprise. However, as of **October 22, 2026**, the [default availability page](https://docs.github.com/en/copilot/concepts/enterprise/default-availability) still describes the policy as configurable but "not currently active" and scheduled to apply starting October 22. The remaining gap is this upstream documentation mismatch, not a lack of an activation announcement.
+The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/) announced that enforcement began on October 22 and is rolling out gradually through **October 26**; timing varies per enterprise. The rollout applies the selected default once to eligible GA features that remain **Unconfigured**; explicit choices are preserved, and previews stay opt-in. The [default availability page](https://docs.github.com/en/copilot/concepts/enterprise/default-availability) still used the stale pre-rollout wording "not currently active" when reviewed on **October 22, 2026**. That is an upstream documentation gap, not current activation guidance: enforcement has been announced and is rolling out.
 
 ## Still to verify
 
