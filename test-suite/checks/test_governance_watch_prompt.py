@@ -70,6 +70,11 @@ class GovernanceWatchPromptTests(unittest.TestCase):
 
     def test_missing_tool_diagnostic_requires_terminal_incomplete_output(self):
         for instruction in (
+            "emit a terminal safe output",
+            "then call `report_incomplete` with the retrieval errors",
+            "`missing_tool` is diagnostic, not a terminal safe output",
+            "never end after that call alone",
+            "including unavailable retrieval tools",
             "`missing_tool` is diagnostic only, not a terminal safe output",
             "call `report_incomplete` even if you already emitted `missing_tool`",
             "which sources remain unreviewed",
@@ -114,14 +119,28 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(tool=tool):
                 self.assertIn(tool, config["permissions"]["allowedTools"])
 
-    def test_retrieval_failure_paths_require_incomplete_output(self):
-        retrieval_rules = PROMPT.split("\nRules:\n", 1)[1].split("\n### a.", 1)[0]
+    def test_retrieval_failure_paths_require_terminal_incomplete_output(self):
+        source_review = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
+        retrieval_rules = source_review.split("\nRules:\n", 1)[1].split(
+            "\n### a.", 1
+        )[0]
+        self.assertIn(
+            "all three retrieval paths are unavailable or fail", retrieval_rules
+        )
+        self.assertIn(
+            "Then call `report_incomplete` with the retrieval blocker", retrieval_rules
+        )
+        self.assertIn(
+            "`missing_tool` alone is not a terminal safe output", retrieval_rules
+        )
         no_change_path = PROMPT.split("## Step 4", 1)[1].split(
             "\nOtherwise edit", 1
         )[0]
-        self.assertIn("also call `report_incomplete` before ending", retrieval_rules)
-        self.assertIn("`missing_tool` alone is not a terminal safe output", retrieval_rules)
-        self.assertIn("call `report_incomplete` instead of `noop`", no_change_path)
+        self.assertIn("call `missing_tool` followed by `report_incomplete`", no_change_path)
+        self.assertIn(
+            "call `missing_tool` followed by `report_incomplete` instead of `noop`",
+            no_change_path,
+        )
 
 
 if __name__ == "__main__":
