@@ -33,6 +33,27 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, COMPLETION_SIGNAL)
 
+    def test_missing_tool_diagnostic_requires_terminal_incomplete_output(self):
+        for instruction in (
+            "emit a terminal safe output",
+            "then call `report_incomplete` with the retrieval errors",
+            "`missing_tool` is diagnostic, not a terminal safe output",
+            "never end after that call alone",
+            "including unavailable retrieval tools",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, COMPLETION_SIGNAL)
+
+    def test_retrieval_failure_paths_require_terminal_incomplete_output(self):
+        source_review = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
+        edit_decision = PROMPT.split("## Step 4", 1)[1].split(
+            "Otherwise edit files", 1
+        )[0]
+        self.assertIn("Then call `report_incomplete`", source_review)
+        self.assertIn(
+            "call `missing_tool` followed by `report_incomplete`", edit_decision
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
