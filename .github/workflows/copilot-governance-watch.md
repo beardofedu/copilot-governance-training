@@ -59,6 +59,7 @@ tools:
   web-fetch: {}
   bash:
     - "curl"
+    - "sleep"
     - "date *"
     - "ls *"
     - "cat *"
@@ -90,7 +91,7 @@ Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live
 
 ## Step 0 — Keep the live event calendar current
 
-On every review, use `web_fetch` to check the official event sources in `docs/_data/copilot-events.json`, plus `https://github.com/resources/events` and `https://www.microsoft.com/en-us/events`. Follow official links to discover other GitHub- or Microsoft-hosted events whose agendas include GitHub Copilot, VS Code, developer AI, or enterprise Copilot administration. Track GitHub Universe, Microsoft Ignite, Microsoft Build, GitHub Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.
+On every review, check the official event sources in `docs/_data/copilot-events.json`, plus `https://github.com/resources/events` and `https://www.microsoft.com/en-us/events`, using the retrieval order in Step 2. Follow official links to discover other GitHub- or Microsoft-hosted events whose agendas include GitHub Copilot, VS Code, developer AI, or enterprise Copilot administration. Track GitHub Universe, Microsoft Ignite, Microsoft Build, GitHub Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.
 
 - Add or correct confirmed occurrences in `docs/_data/copilot-events.json`, including next year's dates as soon as the organizer announces them. Each entry has `name`, `source` (official evidence URL), `start_date`, and `end_date` (`YYYY-MM-DD`, including the year). Multiple occurrences of a series may coexist.
 - Never repeat dates by month/day each year or infer dates from historical patterns. Use `null` for both dates when the next occurrence is unannounced; keep that series on the discovery list. Retire past dated occurrences when a confirmed successor is added.
@@ -122,10 +123,11 @@ On every review, use `web_fetch` to check the official event sources in `docs/_d
 
 Review both of these, restricted to the window from Step 1.
 
-You have two ways to retrieve source content. Use them in this order, starting with the first action of this step:
+You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
-1. The `web_fetch` **tool call**. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. **Always make at least one real `web_fetch` call before concluding that fetching is unavailable** — do not decide from the tool list, from a shell probe, or from a prior run's notes.
-2. The remote GitHub MCP tools, which can search public source content without network access from the shell. Use this fallback only after `web_fetch` fails:
+1. The `web_fetch` **tool call**, when exposed by the runtime. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. Make a real call if available; if tool discovery confirms it is absent, record that absence and proceed to `curl` rather than stopping.
+2. Run `curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://…'` through `bash` for the official source URL. The command is allowed by this workflow; the network firewall still restricts destinations. Use this fallback when `web_fetch` is absent or fails. Read the returned content directly, without shell redirection. If it fails, record the actual error and proceed to the GitHub MCP fallback; do not assume a prior run's permission denial still applies.
+3. The remote GitHub MCP tools, which can search public source content without network access from the shell. Use this fallback only after both `web_fetch` and `curl` are unavailable or fail:
     - For GitHub Docs, use `search_code` with `repo:github/docs`.
     - For a Blog or changelog entry:
         1. Use `search_repositories` scoped to the `github` organization to identify public repositories that might host the entry.
@@ -141,12 +143,12 @@ You have two ways to retrieve source content. Use them in this order, starting w
 
 Rules:
 
-- Do **not** try to fetch URLs from `bash`. The agent sandbox denies outbound network access from shell commands, so `curl https://…` always fails with "Permission denied and could not request permission from user". Retrying it only burns turns — use `web_fetch` instead.
-- Likewise, write files with the file-editing tool rather than shell redirection or heredocs, which the sandbox also denies.
+- Use `curl` only for source retrieval, not to call authenticated APIs or mutate remote resources. Never send credentials, repository file contents, or cache-memory notes in requests.
+- Write files with the file-editing tool rather than shell redirection or heredocs, which the sandbox denies.
 - If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
-- GitHub `search_code` has a strict secondary rate limit, and a 429 response says when to retry. Keep fallback searches few and targeted, and never fire several in parallel. On a 429, do not report `missing_tool` immediately. Continue with other work that does not need search, such as reading the site, the calendar, or sources already fetched. Then retry the rate-limited query once after the stated interval. Treat the fallback as failed only if that retry also fails, and quote both errors.
-- Only report `missing_tool` via the safe-output if both `web_fetch` and the GitHub MCP fallback fail, and say which error each one returned. Then call `report_incomplete` with the retrieval blocker, observed errors, and any partial review coverage; `missing_tool` is diagnostic, not a terminal safe output. If retrieval failures prevent completing the review, also call `report_incomplete` before ending; `missing_tool` alone is not a terminal safe output.
-- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
+- GitHub `search_code` has a strict secondary rate limit, and a 429 response says when to retry. Keep fallback searches few and targeted, and never fire several in parallel. On a 429, do not report `missing_tool` immediately. Continue with other work that does not need search, such as reading the site, the calendar, or sources already fetched. Use `sleep <remaining-seconds>` through `bash` if needed to wait out the stated interval; never retry early if waiting is denied. Retry the rate-limited query once after the stated interval. Treat the fallback as failed only if that retry also fails, and quote both errors. If the wait cannot be completed within this run, report the review as incomplete rather than claiming the retry failed.
+- Only report `missing_tool` via the safe-output if all three retrieval paths are unavailable or fail, and say which error or confirmed tool absence each one returned. Then call `report_incomplete` with the retrieval blocker, observed errors, and any partial review coverage; `missing_tool` is diagnostic, not a terminal safe output. If retrieval failures prevent completing the review, also call `report_incomplete` before ending; `missing_tool` alone is not a terminal safe output.
+- Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try the available retrieval paths yourself.
 
 ### a. GitHub Blog + Changelog
 
@@ -226,11 +228,22 @@ Do not touch files outside `docs/`. Calendar-only PRs do not need a site changel
 
 ## Completion signal
 
-Before ending, select and emit a terminal safe output: create a pull request for actionable changes, or emit `noop` when the review found none. Use `missing_tool` only when both retrieval paths failed, then call `report_incomplete` with the retrieval errors and any partial review coverage. `missing_tool` is diagnostic, not a terminal safe output; never end after that call alone. Reserve `report_incomplete` for an interruption or blocker that prevented reaching one of those outcomes, including unavailable retrieval tools; do not use it for an empty diff, an ambiguous source, or a source that can be documented as a known gap.
+Before ending, select and emit a terminal safe output: create a pull request for actionable changes, or emit `noop` when the review found none. Use `missing_tool` only when all three retrieval paths failed or were unavailable, then call `report_incomplete` with the retrieval errors, any partial review coverage, and which sources remain unreviewed. A `missing_tool` report is diagnostic, not terminal: after reporting it, emit `report_incomplete` with the failed retrieval paths and which sources remain unreviewed. `missing_tool` is diagnostic, not a terminal safe output; never end after that call alone. Reserve `report_incomplete` for an interruption or blocker that prevented reaching one of those outcomes, including unavailable retrieval tools; do not use it for an empty diff, an ambiguous source, or a source that can be documented as a known gap. Never end with only a diagnostic report or a prose summary, and never emit `noop` for a blocked review.
 
 `missing_tool` is diagnostic only, not a terminal safe output. If retrieval failures prevent completing the review, call `report_incomplete` even if you already emitted `missing_tool`. Include the failed retrieval paths, their observed errors, and which sources remain unreviewed; do not claim a rate limit without an actual rate-limit response. Leave review coverage dates unchanged for unreviewed sources, and do not emit `noop` to hide a blocked review. A final text response or cache-memory note does not replace a terminal safe-output tool call.
 
 ## Step 5 — Open the pull request
+
+Before calling `create_pull_request`, prepare a local branch and commit. From the repository root, run each line below in a separate `bash` tool call:
+
+```bash
+git checkout -b governance/watch-${{ github.run_id }}
+git add -- docs/
+git commit -m "Update Copilot governance documentation"
+git branch --show-current
+```
+
+Use the fixed commit message above: the SDK permission matcher rejects shell metacharacters such as `&`, `<`, and `>` even inside quoted Git arguments. Put descriptive change details in the PR title and body instead. Pass the branch name returned by `git branch --show-current` as the `branch` parameter to `create_pull_request`; never use `main` or the base branch. Do not push or change remotes; the safe-output tool handles publication.
 
 Create a pull request with:
 
