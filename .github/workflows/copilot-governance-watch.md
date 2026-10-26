@@ -230,6 +230,17 @@ Before ending, select and emit the safe output that matches the completed review
 
 ## Step 5 — Open the pull request
 
+Before calling `create_pull_request`, prepare a local branch and commit. From the repository root, run each line below in a separate `bash` tool call:
+
+```bash
+git checkout -b governance/watch-${{ github.run_id }}
+git add -- docs/
+git commit -m "Update Copilot governance documentation"
+git branch --show-current
+```
+
+Use the fixed commit message above: the SDK permission matcher rejects shell metacharacters such as `&`, `<`, and `>` even inside quoted Git arguments. Put descriptive change details in the PR title and body instead. Pass the branch name returned by `git branch --show-current` as the `branch` parameter to `create_pull_request`; never use `main` or the base branch. Do not push or change remotes; the safe-output tool handles publication.
+
 Create a pull request with:
 
 - **Title**: a short summary of the substantive change, e.g. `MCP registry enforcement reaches GA` — the `[governance]` prefix is added automatically.
