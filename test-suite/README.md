@@ -93,7 +93,7 @@ all sorts of reasons, including a mistyped path. On a client that supports conte
 capture the output and grep it:
 
 **Copilot CLI does not support content exclusion.** Do not use it to test excluded files:
-it may return their contents. Use a supported client, such as Copilot Chat in an IDE or on
+it may return their contents. Use a supported client/mode, such as IDE Chat in Ask mode or Chat on
 github.com, and scan the captured response with `./test-suite/checks/check_canaries.sh`.
 
 A canary in the output means exclusion failed and should be treated as an incident,
