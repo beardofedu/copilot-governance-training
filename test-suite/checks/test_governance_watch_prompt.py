@@ -40,18 +40,36 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             "`missing_tool` is diagnostic, not a terminal safe output",
             "never end after that call alone",
             "including unavailable retrieval tools",
+            "`missing_tool` is diagnostic only, not a terminal safe output",
+            "call `report_incomplete` even if you already emitted `missing_tool`",
+            "which sources remain unreviewed",
+            "do not claim a rate limit without an actual rate-limit response",
+            "Leave review coverage dates unchanged for unreviewed sources",
+            "do not emit `noop` to hide a blocked review",
+            "does not replace a terminal safe-output tool call",
         ):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, COMPLETION_SIGNAL)
 
     def test_retrieval_failure_paths_require_terminal_incomplete_output(self):
         source_review = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
+        retrieval_rules = source_review.split("\nRules:\n", 1)[1].split(
+            "\n### a.", 1
+        )[0]
         edit_decision = PROMPT.split("## Step 4", 1)[1].split(
             "Otherwise edit files", 1
         )[0]
-        self.assertIn("Then call `report_incomplete`", source_review)
+        self.assertIn("Then call `report_incomplete`", retrieval_rules)
+        self.assertIn("also call `report_incomplete` before ending", retrieval_rules)
+        self.assertIn(
+            "`missing_tool` alone is not a terminal safe output", retrieval_rules
+        )
         self.assertIn(
             "call `missing_tool` followed by `report_incomplete`", edit_decision
+        )
+        self.assertIn(
+            "call `missing_tool` followed by `report_incomplete` instead of `noop`",
+            edit_decision,
         )
 
 

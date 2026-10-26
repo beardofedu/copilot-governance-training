@@ -145,7 +145,7 @@ Rules:
 - Likewise, write files with the file-editing tool rather than shell redirection or heredocs, which the sandbox also denies.
 - If the required GitHub MCP search tool is absent, treat the GitHub MCP fallback as failed and include that absence in the `missing_tool` report.
 - GitHub `search_code` has a strict secondary rate limit, and a 429 response says when to retry. Keep fallback searches few and targeted, and never fire several in parallel. On a 429, do not report `missing_tool` immediately. Continue with other work that does not need search, such as reading the site, the calendar, or sources already fetched. Then retry the rate-limited query once after the stated interval. Treat the fallback as failed only if that retry also fails, and quote both errors.
-- Only report `missing_tool` via the safe-output if both `web_fetch` and the GitHub MCP fallback fail, and say which error each one returned. Then call `report_incomplete` with the retrieval blocker and any partial review coverage; `missing_tool` is diagnostic, not a terminal safe output.
+- Only report `missing_tool` via the safe-output if both `web_fetch` and the GitHub MCP fallback fail, and say which error each one returned. Then call `report_incomplete` with the retrieval blocker, observed errors, and any partial review coverage; `missing_tool` is diagnostic, not a terminal safe output. If retrieval failures prevent completing the review, also call `report_incomplete` before ending; `missing_tool` alone is not a terminal safe output.
 - Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try both paths yourself.
 
 ### a. GitHub Blog + Changelog
@@ -185,7 +185,7 @@ Only act on changes you can cite to a specific GitHub Blog post or docs page. **
 
 ## Step 4 — Make the edits
 
-If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. A change to `docs/_data/governance-watch-state.json` alone is not actionable; only update it alongside another change. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, call `missing_tool` followed by `report_incomplete` instead of a bare `noop`, and say which error each path returned.
+If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. A change to `docs/_data/governance-watch-state.json` alone is not actionable; only update it alongside another change. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, call `missing_tool` followed by `report_incomplete` instead of `noop`, and say which error each path returned.
 
 Otherwise edit files under `docs/`:
 
@@ -227,6 +227,8 @@ Do not touch files outside `docs/`. Calendar-only PRs do not need a site changel
 ## Completion signal
 
 Before ending, select and emit a terminal safe output: create a pull request for actionable changes, or emit `noop` when the review found none. Use `missing_tool` only when both retrieval paths failed, then call `report_incomplete` with the retrieval errors and any partial review coverage. `missing_tool` is diagnostic, not a terminal safe output; never end after that call alone. Reserve `report_incomplete` for an interruption or blocker that prevented reaching one of those outcomes, including unavailable retrieval tools; do not use it for an empty diff, an ambiguous source, or a source that can be documented as a known gap.
+
+`missing_tool` is diagnostic only, not a terminal safe output. If retrieval failures prevent completing the review, call `report_incomplete` even if you already emitted `missing_tool`. Include the failed retrieval paths, their observed errors, and which sources remain unreviewed; do not claim a rate limit without an actual rate-limit response. Leave review coverage dates unchanged for unreviewed sources, and do not emit `noop` to hide a blocked review. A final text response or cache-memory note does not replace a terminal safe-output tool call.
 
 ## Step 5 — Open the pull request
 
