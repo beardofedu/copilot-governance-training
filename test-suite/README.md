@@ -89,12 +89,12 @@ Reports land at `test-suite/results/latest.json` and `junit.xml` for CI ingestio
 Every excluded fixture contains a unique token, e.g. `CANARY-ENV-7f3a91`.
 
 Never accept a model's refusal message as proof the control worked — models decline for
-all sorts of reasons, including a mistyped path. Instead, capture the output and grep it:
+all sorts of reasons, including a mistyped path. On a client that supports content exclusion,
+capture the output and grep it:
 
-```bash
-copilot -p "read test-suite/fixtures/secrets/.env" | tee out.txt
-./test-suite/checks/check_canaries.sh out.txt
-```
+**Copilot CLI does not support content exclusion.** Do not use it to test excluded files:
+it may return their contents. Use a supported client, such as Copilot Chat in an IDE or on
+github.com, and scan the captured response with `./test-suite/checks/check_canaries.sh`.
 
 A canary in the output means exclusion failed and should be treated as an incident,
 whatever the surrounding text says.
@@ -105,7 +105,7 @@ whatever the surrounding text says.
 
 **Covers:** content exclusion rules (org + repo), org and enterprise Copilot policies,
 duplication detection behavior, surface enablement, seat hygiene, and runtime enforcement
-across IDE, Chat, and CLI.
+across supported surfaces, including IDE Chat and github.com Chat.
 
 **Does not cover:** content exclusion is a *context* control, not a data-loss-prevention
 boundary. It stops Copilot from reading matching files; it does not stop a developer from
@@ -117,11 +117,12 @@ pre-commit hooks.
 
 ## Running in CI
 
-The weekly governance workflow (and manual runs from `main`) runs a live Copilot CLI
-canary check against the fake secret fixtures and confirms an allowed fixture remains
-readable. It uses the built-in Actions `GITHUB_TOKEN` with `copilot-requests: write`,
-so no additional secret is needed; the organization must allow Copilot CLI usage
-billed to the organization. The check is skipped on pull requests.
+The weekly governance workflow (and manual runs from `main`) uses Copilot CLI to confirm
+an allowed fixture remains readable. It does not probe excluded fixtures because Copilot
+CLI does not support content exclusion. Run the behavioral exclusion tests in a supported
+client. The workflow uses the built-in Actions `GITHUB_TOKEN` with `copilot-requests: write`,
+so no additional secret is needed; the organization must allow Copilot CLI usage billed
+to the organization. The check is skipped on pull requests.
 
 ```yaml
 name: Copilot governance

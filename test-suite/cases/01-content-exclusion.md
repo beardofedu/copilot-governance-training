@@ -5,7 +5,10 @@ Config checks prove rules *exist*. These prove they're *enforced*.
 Run each case in every surface you support, and record the result in
 [`../templates/results-template.md`](../templates/results-template.md).
 
-**Surfaces:** IDE completions · IDE Chat · Copilot CLI · github.com Chat · Coding agent
+**Surfaces:** IDE completions · IDE Chat · github.com Chat · Coding agent
+
+**Copilot CLI does not support content exclusion.** Do not use it for these tests; it may
+return excluded file contents. Run them only in a client that supports content exclusion.
 
 **Canary tokens.** Each excluded fixture contains a unique string (e.g. `CANARY-ENV-7f3a91`).
 If a canary ever appears in Copilot output, exclusion has failed — regardless of what
