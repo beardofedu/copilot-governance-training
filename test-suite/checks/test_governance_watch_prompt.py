@@ -1,5 +1,6 @@
 """Regression tests for Governance Watch completion instructions."""
 
+import json
 import unittest
 from pathlib import Path
 
@@ -27,11 +28,54 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         for instruction in (
             "create a pull request for actionable changes",
             "emit `noop` when the review found none",
-            "`missing_tool` only when both retrieval paths failed",
+            "`missing_tool` only when all three retrieval paths failed or were unavailable",
             "`report_incomplete` for an interruption or blocker",
         ):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, COMPLETION_SIGNAL)
+
+    def test_missing_tool_diagnostic_requires_terminal_output(self):
+        for instruction in (
+            "A `missing_tool` report is diagnostic, not terminal",
+            "after reporting it, emit `report_incomplete`",
+            "which sources remain unreviewed",
+            "never emit `noop` for a blocked review",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, COMPLETION_SIGNAL)
+
+    def test_retrieval_fallback_uses_allowed_curl(self):
+        frontmatter, body = PROMPT.split("---", 2)[1:]
+        self.assertIn('    - "curl"\n', frontmatter)
+        retrieval = body.split("## Step 2 — Review the sources\n", 1)[1]
+        web_fetch = retrieval.index("1. The `web_fetch`")
+        curl = retrieval.index("2. Run `curl --fail")
+        github = retrieval.index("3. The remote GitHub MCP tools")
+        self.assertLess(web_fetch, curl)
+        self.assertLess(curl, github)
+        self.assertIn("--connect-timeout 15 --max-time 60", retrieval)
+        self.assertNotIn("Do **not** try to fetch URLs from `bash`", body)
+        self.assertIn("using the retrieval order in Step 2", body)
+        self.assertIn("Never send credentials, repository file contents", body)
+
+    def test_rate_limit_retry_can_wait_without_retrying_early(self):
+        frontmatter = PROMPT.split("---", 2)[1]
+        self.assertIn('    - "sleep"\n', frontmatter)
+        self.assertIn("Use `sleep <remaining-seconds>` through `bash`", PROMPT)
+        self.assertIn("never retry early if waiting is denied", PROMPT)
+        self.assertIn("Retry the rate-limited query once after the stated interval", PROMPT)
+
+    def test_compiled_runtime_allows_retrieval_and_rate_limit_wait(self):
+        lock = (ROOT / ".github/workflows/copilot-governance-watch.lock.yml").read_text()
+        config_line = next(
+            line for line in lock.splitlines()
+            if line.strip().startswith("GH_AW_COPILOT_SDK_TOOL_CONFIG:")
+        )
+        config = json.loads(config_line.split(": ", 1)[1].strip("'"))
+        self.assertTrue(config["capabilities"]["webFetch"])
+        for tool in ("web_fetch", "shell(curl:*)", "shell(sleep)"):
+            with self.subTest(tool=tool):
+                self.assertIn(tool, config["permissions"]["allowedTools"])
 
 
 if __name__ == "__main__":
