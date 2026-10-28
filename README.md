@@ -130,7 +130,8 @@ After editing the workflow markdown, including prompt-only changes, recompile it
 with the gh-aw version pinned in `.github/workflows/quality-checks.yml`:
 
 ```bash
-gh extension install github/gh-aw
+# If gh-aw is already installed, first run: gh extension remove gh-aw
+gh extension install github/gh-aw --pin v0.93.2
 gh aw compile
 ```
 
