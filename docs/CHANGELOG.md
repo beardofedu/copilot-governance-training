@@ -11,7 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-28
 
-- **Added** — Usage metrics API `totals_by_client` array reporting server-side model usage by tool (OpenCode, Claude Code, Codex, Zed, Copilot CLI, IDEs, and others), with scope, selection modes, and caveats ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+- **Added** — Usage metrics API `totals_by_client` reports server-counted model requests and tokens per client tool (including OpenCode, Claude Code, Codex, Zed) ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 
 ## 2026-10-22
 
