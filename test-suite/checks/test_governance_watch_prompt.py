@@ -88,7 +88,7 @@ class GovernanceWatchPromptTests(unittest.TestCase):
 
     def test_retrieval_fallback_uses_allowed_curl(self):
         frontmatter, body = PROMPT.split("---", 2)[1:]
-        self.assertIn('    - "curl *"\n', frontmatter)
+        self.assertIn('    - "curl"\n', frontmatter)
         retrieval = body.split("## Step 2 — Review the sources\n", 1)[1]
         web_fetch = retrieval.index("1. The `web_fetch`")
         curl = retrieval.index("2. Run `curl --fail")
@@ -111,6 +111,33 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertIn("Use `sleep <remaining-seconds>` through `bash`", PROMPT)
         self.assertIn("never retry early if waiting is denied", PROMPT)
         self.assertIn("Retry the rate-limited query once after the stated interval", PROMPT)
+
+    def test_shell_commands_avoid_sdk_permission_denials(self):
+        execution = PROMPT.split("## Tool execution\n", 1)[1].split(
+            "\n## Step 0", 1
+        )[0]
+        for instruction in (
+            "one standalone command per `bash` tool call",
+            "Do not use shell loops, pipelines, command chaining",
+            "redirection, command substitution, or inline interpreters",
+            "Read local files with `cat` or `grep`",
+            "do not use `sed` or Python",
+            "A denied compound command does not mean source retrieval failed",
+            "retry only as a standalone allowed command",
+            "If that standalone command is also denied, stop issuing shell commands",
+            "use the next retrieval path in Step 2",
+            "`report_incomplete`",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, execution)
+
+    def test_shell_denial_fix_preserves_command_allowlist(self):
+        frontmatter = PROMPT.split("---", 2)[1]
+        bash = frontmatter.split("  bash:\n", 1)[1].split("  github:\n", 1)[0]
+        self.assertEqual(
+            [json.loads(line.strip()[2:]) for line in bash.splitlines()],
+            ["curl", "sleep", "date *", "ls *", "cat *", "grep *", "rg *", "find *"],
+        )
 
     def test_compiled_runtime_allows_retrieval_and_rate_limit_wait(self):
         lock = (ROOT / ".github/workflows/copilot-governance-watch.lock.yml").read_text()

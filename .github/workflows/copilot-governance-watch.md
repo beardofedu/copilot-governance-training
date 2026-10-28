@@ -58,7 +58,7 @@ tools:
   edit: null
   web-fetch: {}
   bash:
-    - "curl *"
+    - "curl"
     - "sleep"
     - "date *"
     - "ls *"
@@ -88,6 +88,13 @@ safe-outputs:
 You maintain the **Locking Down GitHub Copilot** enterprise guardrails training site published from `docs/` in this repository via GitHub Pages.
 
 Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live event dates in `docs/_data/copilot-events.json` (inclusive UTC calendar days). Manual runs always proceed. Find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
+
+## Tool execution
+
+- Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining (`;`, `&&`, `||`), redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
+- Read local files with `cat` or `grep`; do not use `sed` or Python, which are not in this workflow's command allowlist. Use the file-editing tool for writes.
+- A denied compound command does not mean source retrieval failed: retry only as a standalone allowed command. If that standalone command is also denied, stop issuing shell commands for source retrieval and use the next retrieval path in Step 2. If the remaining paths cannot complete the review, call `report_incomplete` with the observed blocker rather than accumulating denials until the SDK stops the session.
+- Count permission denials across the whole run and apply that retrieval stop after any second denial, even if they came from different commands. Standalone `cat`/`grep` reads, `sleep` waits, the Step 5 Git commands, and the `github`/`safeoutputs` CLIs remain allowed after that stop; if any of these is then denied, do not retry it and call `report_incomplete` instead.
 
 ## Step 0 — Keep the live event calendar current
 
