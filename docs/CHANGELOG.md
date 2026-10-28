@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-28
+
+- **Added** — Usage metrics API `totals_by_client` reports server-counted model requests and tokens per client tool (including OpenCode, Claude Code, Codex, Zed) ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-10-22
 
 - **Corrected** — Default policy for new features is no longer merely scheduled: enforcement began October 22 and rolls out gradually through October 26; one-time application, explicit choices preserved, previews stay opt-in ([changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})

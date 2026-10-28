@@ -3,7 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-28
 ---
 
 # Visibility & Audit (governance, not prevention)
@@ -17,6 +17,7 @@ last_reviewed: 2026-10-22
 - **Does not capture local IDE/CLI prompt content** — that needs a custom telemetry pipeline (see the [`telemetry` key]({{ '/sections/managed-settings/#telemetry-capture-controls' | relative_url }})).
 - 180-day retention in UI; stream to SIEM (Splunk, Sentinel) for longer retention/alerting.
 - Separate Copilot usage metrics dashboard/API for adoption/usage reporting (access itself gated by the "Copilot Metrics API" policy).
+- **Per-client model traffic in usage metrics (Oct 23, 2026):** a new `totals_by_client` array in the enterprise, organization, enterprise-user, and organization-user 1-day and 28-day reports counts requests on the server, so tools that send no editor telemetry (for example OpenCode) are now captured. Each entry has `client` (such as `opencode`, `claude_code`, `codex`, `zed`, `copilot_cli`, `github_app`, `cloud_agent`, `code_review`, `vscode`, `jetbrains`; unrecognized clients are grouped as `other`), `request_count`, `session_count`, `token_usage`, and `totals_by_model` with a `model_selection_mode` (`user_selected`, `auto`, `product_selected`, plus `other`/`unknown`). This measures model requests and tokens from any tool using Copilot, unlike agent app activity, which counts jobs started by agent apps on GitHub ([source](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)).
 - **Named customizations in usage metrics (Oct 22, 2026):** `totals_by_skill`, `totals_by_custom_agent`, `totals_by_mcp`, `totals_by_slash_cmd`, and `totals_by_plugin` now show the configured name of customer-defined items (trimmed to 128 characters) instead of `other`/`custom`, with up to 25 entries per record (was 5); remaining activity is combined into a trailing `other` entry. Names are reported from Copilot CLI interactive sessions and prompt mode, the Copilot app, ACP integrations such as JetBrains, and the Copilot SDK. Prompt mode, the app, and ACP integrations require Copilot CLI 1.0.97+; the SDK requires v1.0.21+ (including IDE agent experiences running on that SDK). IDE built-in chat telemetry doesn't report names. Names that look like file paths stay grouped as `other`/`custom`; earlier days aren't backfilled; review names before sharing reports externally. Data comes from client telemetry and can undercount. Requires the Copilot usage metrics policy and the "View Copilot Metrics" permission ([source](https://github.blog/changelog/2026-10-22-custom-skills-agents-and-mcp-servers-in-usage-metrics-api/)).
 - **IDE agent-activity undercounting:** IDE versions that moved agent mode to the Copilot SDK didn't identify their IDE, so most agent activity (and agent lines of code) was left out of usage metrics, and some was counted as Copilot CLI activity. Billing isn't affected, and GitHub can't backfill missing data. Fix status per [GitHub's notice](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/):
 
