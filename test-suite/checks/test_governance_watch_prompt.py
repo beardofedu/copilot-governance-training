@@ -88,7 +88,7 @@ class GovernanceWatchPromptTests(unittest.TestCase):
 
     def test_retrieval_fallback_uses_allowed_curl(self):
         frontmatter, body = PROMPT.split("---", 2)[1:]
-        self.assertIn('    - "curl"\n', frontmatter)
+        self.assertIn('    - "curl *"\n', frontmatter)
         retrieval = body.split("## Step 2 — Review the sources\n", 1)[1]
         web_fetch = retrieval.index("1. The `web_fetch`")
         curl = retrieval.index("2. Run `curl --fail")

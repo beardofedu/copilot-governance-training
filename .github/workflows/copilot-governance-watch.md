@@ -58,7 +58,7 @@ tools:
   edit: null
   web-fetch: {}
   bash:
-    - "curl"
+    - "curl *"
     - "sleep"
     - "date *"
     - "ls *"
