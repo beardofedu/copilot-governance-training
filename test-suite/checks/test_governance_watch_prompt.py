@@ -96,6 +96,11 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertLess(web_fetch, curl)
         self.assertLess(curl, github)
         self.assertIn("--connect-timeout 15 --max-time 60", retrieval)
+        self.assertIn(
+            "Run each request as a standalone `bash` tool call; "
+            "do not pipe its output or chain it with other shell commands.",
+            retrieval,
+        )
         self.assertNotIn("Do **not** try to fetch URLs from `bash`", body)
         self.assertIn("using the retrieval order in Step 2", body)
         self.assertIn("Never send credentials, repository file contents", body)
