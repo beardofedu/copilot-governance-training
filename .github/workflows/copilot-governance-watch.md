@@ -89,6 +89,12 @@ You maintain the **Locking Down GitHub Copilot** enterprise guardrails training 
 
 Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live event dates in `docs/_data/copilot-events.json` (inclusive UTC calendar days). Manual runs always proceed. Find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
 
+## Tool execution
+
+- Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining (`;`, `&&`, `||`), redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
+- Read local files with `cat` or `grep`; do not use `sed` or Python, which are not in this workflow's command allowlist. Use the file-editing tool for writes.
+- A denied compound command does not mean source retrieval failed: retry only as a standalone allowed command. If that standalone command is also denied, stop issuing shell commands and use the next retrieval path in Step 2. If the remaining paths cannot complete the review, call `report_incomplete` with the observed blocker rather than accumulating denials until the SDK stops the session.
+
 ## Step 0 — Keep the live event calendar current
 
 On every review, check the official event sources in `docs/_data/copilot-events.json`, plus `https://github.com/resources/events` and `https://www.microsoft.com/en-us/events`, using the retrieval order in Step 2. Follow official links to discover other GitHub- or Microsoft-hosted events whose agendas include GitHub Copilot, VS Code, developer AI, or enterprise Copilot administration. Track GitHub Universe, Microsoft Ignite, Microsoft Build, GitHub Galaxy, VS Code Live, and relevant Microsoft AI Tour stops.
