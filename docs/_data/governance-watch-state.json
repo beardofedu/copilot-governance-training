@@ -2,7 +2,7 @@
   "sources": {
     "blog": {
       "reviewed_through": "2026-10-22",
-      "note": "GitHub Blog and changelog. Full review coverage remains through 2026-10-22. The 2026-10-29 run checked the changelog index and read the 2026-10-27 server-to-server authentication post in full; other candidates in the window remain unevaluated."
+      "note": "GitHub Blog and changelog. Backlog from 2026-09-20 through 2026-10-22 reviewed via web_fetch on the changelog index and September archive."
     },
     "docs": {
       "reviewed_through": "2026-10-21",
