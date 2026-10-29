@@ -3,7 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
-last_reviewed: 2026-10-28
+last_reviewed: 2026-10-29
 ---
 
 # Visibility & Audit (governance, not prevention)
@@ -40,3 +40,7 @@ last_reviewed: 2026-10-28
 - **Syncing:** locally-run CLI/app sessions sync to the user's GitHub account by default. For Enterprise/Business users, the **"Store local sessions in the Cloud"** policy must be set to at least "View from cloud" for sync to occur — disabled/unconfigured keeps sessions local-only. Users can further control sync per-client via the `remote`/`remoteExport` CLI config keys.
 - **Sharing/visibility differs by surface:** synced CLI/app sessions are **unshared by default** and accessible only to the owning user (admins can gate sync availability but cannot see session content by enabling it); cloud agent sessions are **shared by default**, visible in the repo's "Agents" tab "All sessions" view to anyone with repo access.
 - **Retention controls:** locally stored sessions support share/delete/archive (archive not supported for CLI); cloud-agent sessions on GitHub.com support share/archive but **not delete**.
+
+### Server-to-server auth for GitHub Apps (public preview)
+
+- Services built with the Copilot SDK can call Copilot as a GitHub App installed on an organization (read-only `Copilot Requests` permission, short-lived installation token). Usage is attributed and billed to the owning organization, and its model policies, budgets, and spending controls apply. Org owners can see app-attributed usage in AI usage CSV reports via the `app_client_id` field and cut off access by suspending or uninstalling the app ([source](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)).
