@@ -52,9 +52,9 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 
 [Assisted permissions are generally available](https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available) in Copilot CLI, the Copilot app, and VS Code: a language model evaluates each command, file-path, or URL request; clearly safe requests proceed and the rest need approval. Admin levers ([reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#permissions)):
 
-- `permissions.disableBypassPermissionsMode: "disable"` blocks allow-all/YOLO but does **not** block assisted mode (`/permissions assisted`).
+- `permissions.disableBypassPermissionsMode: "disable"` blocks allow-all/YOLO but does **not** block assisted mode (`/permissions assisted` or `/allow-all auto`).
 - `permissions.disableAssistedPermissionsMode: true` blocks assisted mode but does **not** disable bypass mode. Set both to force manual approval.
-- `permissions.defaultMode` picks the starting mode for new sessions; an explicit permitted user choice wins, resumed sessions keep their saved mode, and an unavailable or blocked default falls back to manual approval. In the CLI it overrides the user's `defaultPermissionMode`.
+- `permissions.defaultMode` (`"manual"`, `"assisted"`, or `"allow-all"`) picks the starting mode for new sessions; it is not a lock, an explicit permitted user choice wins, resumed sessions keep their saved mode, and an unavailable or blocked default falls back to manual approval. In the CLI it overrides the user's `defaultPermissionMode`.
 - Managed `deny` and `ask` rules still apply in assisted mode.
 
 ### Granular operation permissions
