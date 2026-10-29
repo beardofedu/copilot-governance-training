@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-29
+
+- **Added** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecation on 2026-11-16, with suggested alternatives and default-enablement behavior ([changelog](https://github.blog/changelog/2026-10-15-upcoming-deprecation-of-selected-github-copilot-models-in-mid-november/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+- **Added** — Server-to-server authentication for GitHub Apps with the Copilot SDK (public preview), including billing, policy, and revocation controls ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-10-28
 
 - **Added** — Usage metrics API `totals_by_client` array reporting server-side model usage by tool (OpenCode, Claude Code, Codex, Zed, Copilot CLI, IDEs, and others), with scope, selection modes, and caveats ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})

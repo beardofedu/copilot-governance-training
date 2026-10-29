@@ -3,7 +3,7 @@ layout: default
 title: "Model & Data Governance"
 nav_order: 11
 permalink: /sections/model-data-governance/
-last_reviewed: 2026-10-20
+last_reviewed: 2026-10-29
 ---
 
 # Model & Data Governance
@@ -13,5 +13,7 @@ last_reviewed: 2026-10-20
 
 - Enterprise/org **Models** tab controls which models are selectable (cost implications for non-default models); enterprise policy overrides org choice.
 - **Model policy REST API (GA)** — `GET`/`PATCH` endpoints manage Copilot model policies at four levels: enterprise (`/enterprises/{enterprise}/copilot/model-policies`), enterprise teams (`/enterprises/{enterprise}/teams/{team_slug}/copilot/model-policies`), enterprise apps (`/enterprises/{enterprise}/copilot/apps/model-policies`), and organization (`/orgs/{org}/copilot/model-policies`). Enterprise policies can delegate model control to organizations (organization mode) or to teams and apps (enterprise teams mode) ([changelog](https://github.blog/changelog/2026-10-19-copilot-model-policy-api-for-enterprise-orgs-and-teams/)).
+- **Scheduled model deprecations (2026-11-16)** — Claude Opus 4.8 (suggested alternative Claude Opus 5.5; remains available to individual subscribers on annual plans), Claude Opus 5 (Claude Opus 5.5), and GPT-5.6 Terra (GPT-6.1 Sol or GPT-6 Luna) are removed from all Copilot experiences. Under default model enablement the alternatives are enabled automatically for Copilot Business and Enterprise unless an admin turned off the global default or explicitly disabled the model; if the global default is off, enable the alternatives through model policies. No action is needed to remove deprecated models ([changelog](https://github.blog/changelog/2026-10-15-upcoming-deprecation-of-selected-github-copilot-models-in-mid-november/)).
+- **Server-to-server authentication for the Copilot SDK (public preview)** — GitHub Apps installed on an organization with the read-only `Copilot Requests` organization permission can call Copilot with short-lived installation tokens, independent of a signed-in user. Usage is billed to the owning organization, and its model policies, budgets, and spending controls apply. Org owners can identify app usage in AI usage CSV reports via `app_client_id` and revoke access by suspending or uninstalling the app ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication/), [managing app access](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-organization/manage-app-copilot-access)).
 - GitHub maintains zero-data-retention agreements with OpenAI/Anthropic/Google for GA models — no admin toggle needed, it's contractual, **except** Claude "Fable" style safety-classifier models which require explicit admin opt-in due to different retention terms.
 - Multi-license conflict rule: same-enterprise multi-org → least restrictive; cross-enterprise → most restrictive.
