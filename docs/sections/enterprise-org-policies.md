@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-10-21
+last_reviewed: 2026-10-29
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -58,5 +58,13 @@ Two enterprise/org policies control whether unconfigured GA (general availabilit
 - **Default policy for new features** — GitHub began enforcing this policy on October 22, 2026, with rollout continuing gradually through October 26. It applies the selected default once to new GA features, features moving preview→GA, and existing GA features left **Unconfigured**; explicit choices are preserved, and preview features remain opt-in. The policy is enabled by default. It covers everything on the enterprise "Features & clients" page, plus the **Copilot code review** policy (Agents page) and the **MCP servers in Copilot** policy (MCP page). It does **not** apply to the data-residency/FedRAMP restrictive model policies or **Store local sessions in the Cloud**.
 - **Default availability for released models** — already active; auto-enables new/unconfigured GA models (those labeled **Delegate to Default Policy**). Out of scope and disabled by default regardless of this setting: pre-GA models, open-weight models (DeepSeek, Kimi K2.7 Code, Kimi K3), models not covered by GitHub's data-retention agreement (Claude Fable 5, Claude Fable 5.1), and — for enterprises restricted to data-residency or FedRAMP models — any model that doesn't respect those restrictions.
 - Disable either policy at the enterprise or org level to stop auto-enablement; individual features/models can still be explicitly disabled to opt them out while the default policy stays on.
+
+### GitHub App access to organization Copilot (public preview)
+
+> **Official sources**
+> - [Server-to-server authentication changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication/)
+> - [Managing GitHub App access to your organization's Copilot](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-app-copilot-access)
+
+A GitHub App with the read-only **Copilot Requests** organization permission, installed on an organization, can make Copilot requests with a short-lived installation token (Copilot SDK) without a signed-in user. Usage is attributed and billed to the organization that owns the installation, and the organization's model policies, budgets, and spending controls apply. Organization owners can review which apps have access, identify app usage in AI usage CSV reports via the `app_client_id` field, and stop access by suspending or uninstalling the app. Only approve apps you trust to spend your organization's Copilot usage.
 
 **Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* ([`managed-settings.json`]({{ '/sections/managed-settings/' | relative_url }})) does the actual restricting.

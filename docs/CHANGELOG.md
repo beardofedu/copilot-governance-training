@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-29
+
+- **Added** — GitHub App server-to-server Copilot access (public preview): Copilot Requests permission, org-billed usage, `app_client_id` in usage reports, and owner controls ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication/), [docs](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-app-copilot-access)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+- **Added** — GPT-6.1 Terra to the generator model list ([changelog](https://github.blog/changelog/2026-10-26-gpt-6-1-terra-in-github-copilot/), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)) — Updated: [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+
 ## 2026-10-28
 
 - **Added** — Usage metrics API `totals_by_client` array reporting server-side model usage by tool (OpenCode, Claude Code, Codex, Zed, Copilot CLI, IDEs, and others), with scope, selection modes, and caveats ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
