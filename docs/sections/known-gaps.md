@@ -30,6 +30,20 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 
 ## Still to verify
 
+### MCP connectors and governance policies
+
+> **Official documentation**
+> - [Connect your tools to Copilot](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)
+
+The changelog for GitHub-verified connectors (public preview) does not state whether enterprise MCP allowlists, registry policies, or MCP policies gate them. Verify in a test enterprise before relying on connectors being blocked or allowed.
+
+### Server-to-server authentication for Copilot SDK apps
+
+> **Official documentation**
+> - [Server-to-server authentication](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)
+
+Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. The post does not specify policy, audit-log, or billing attribution for these requests; treat as unverified.
+
 ### Settings validation error taxonomy
 
 > **Official documentation**

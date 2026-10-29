@@ -72,3 +72,7 @@ For users with multiple Copilot seats, private-registry policy resolves in this 
 | Status | GA | Public preview |
 | Matching | URL / stdio command / name — secure | Name/ID only — bypassable |
 | Cloud agent support | Yes | No |
+
+### GitHub-verified connectors (public preview)
+
+GitHub-verified MCP servers ("connectors") are rolling out in public preview: 26 services at launch (including Slack, Figma, Notion, Sentry, Linear, Atlassian Rovo, Cloudflare, Vercel, Work IQ), connected once with sign-in and usable across the Copilot app, Copilot CLI, VS Code, Copilot in the cloud, and GitHub Mobile ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)). The announcement does not say how enterprise MCP allowlist or registry policies apply to connectors; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).
