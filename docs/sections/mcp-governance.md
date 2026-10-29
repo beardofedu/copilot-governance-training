@@ -3,7 +3,7 @@ layout: default
 title: "MCP Server Governance (Deep Dive)"
 nav_order: 4
 permalink: /sections/mcp-governance/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-29
 ---
 
 # MCP Server Governance (Deep Dive)
@@ -75,4 +75,4 @@ For users with multiple Copilot seats, private-registry policy resolves in this 
 
 ### GitHub-verified connectors (public preview)
 
-GitHub-verified MCP servers ("connectors") are rolling out in public preview: 26 services at launch (including Slack, Figma, Notion, Sentry, Linear, Atlassian Rovo, Cloudflare, Vercel, Work IQ), connected once with sign-in and usable across the Copilot app, Copilot CLI, VS Code, Copilot in the cloud, and GitHub Mobile ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)). The announcement does not say how enterprise MCP allowlist or registry policies apply to connectors; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).
+GitHub-verified MCP servers ("connectors") are rolling out in public preview: 26 services at launch (including Slack, Figma, Notion, Sentry, Linear, Atlassian Rovo, Cloudflare, Vercel, Work IQ), connected once with sign-in and usable across the Copilot app, Copilot CLI, VS Code, Copilot in the cloud, and GitHub Mobile. For Business and Enterprise users, the **Editor preview features** policy must be enabled. If an enterprise MCP allowlist is configured, an administrator must add the GitHub-verified servers to it ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)). The announcement does not describe how registry policies or other MCP policy interactions affect connectors; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).

@@ -3,7 +3,7 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-29
 ---
 
 # Known Gaps to Verify
@@ -35,14 +35,14 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 > **Official documentation**
 > - [Connect your tools to Copilot](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)
 
-The changelog for GitHub-verified connectors (public preview) does not state whether enterprise MCP allowlists, registry policies, or MCP policies gate them. Verify in a test enterprise before relying on connectors being blocked or allowed.
+For Business and Enterprise users, the **Editor preview features** policy must be enabled. If an enterprise MCP allowlist is configured, an administrator must add the GitHub-verified servers to it. The announcement does not explain how registry policies or other MCP policy interactions affect connectors; verify these undocumented interactions in a test enterprise before relying on them.
 
 ### Server-to-server authentication for Copilot SDK apps
 
 > **Official documentation**
 > - [Server-to-server authentication](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)
 
-Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. The post does not specify policy, audit-log, or billing attribution for these requests; treat as unverified.
+Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. Requests are attributed and billed to the organization that owns the app installation; that organization's model policies, budgets, and spending controls apply. AI usage CSV reports identify the app through `app_client_id`. The post does not specify whether these requests appear in audit logs.
 
 ### Settings validation error taxonomy
 
