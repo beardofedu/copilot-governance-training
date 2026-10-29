@@ -25,7 +25,7 @@ last_reviewed: 2026-10-29
 
 - GitHub Actions workflows **do not auto-run** on agent-authored pushes by default — a human must click "Approve and run workflows," especially important if the diff touches `.github/workflows/`.
 - Repo admins can toggle built-in validation tools (security scanning, code-review "second opinion") for the cloud agent.
-- Agent changes always land as a PR requiring human review/merge.
+- Agent changes always land as a PR; human review/merge is the default, but an automation with merge permission can merge it without a human.
 
 ### MCP + cloud agent
 Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via [managed settings]({{ '/sections/managed-settings/' | relative_url }}), but is **excluded** from [MCP private-registry enforcement]({{ '/sections/mcp-governance/#mcp-registry-public-preview--not-the-recommended-method' | relative_url }}) and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
