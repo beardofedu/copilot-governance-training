@@ -4,7 +4,7 @@ title: "Managed settings generator"
 description: "Build enterprise managed-settings.json with a step-by-step setup wizard that explains each setting, plus copy-ready JSON."
 nav_order: 90
 permalink: /sections/managed-settings-generator/
-last_reviewed: 2026-10-28
+last_reviewed: 2026-10-29
 wide_content: true
 ---
 

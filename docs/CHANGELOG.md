@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-29
+
+- **Added** — Managed settings `permissions.disableAssistedPermissionsMode`, `permissions.defaultMode` and `fusionTier`; clarified that disabling bypass mode does not block assisted permissions, which are now GA ([docs](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings), [blog](https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+- **Added** — `fusion` model value in the generator model list, as shown in the managed settings reference example ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings)) — Updated: [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+
 ## 2026-10-28
 
 - **Added** — Assisted permissions GA and the `permissions.disableAssistedPermissionsMode` and `permissions.defaultMode` managed settings, including how they differ from bypass-mode blocking ([changelog](https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available/), [reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#permissions)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
