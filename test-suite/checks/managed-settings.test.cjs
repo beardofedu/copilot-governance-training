@@ -10,7 +10,7 @@ test('all documented top-level settings and nested controls are represented', ()
   assert.equal(new Set(fields.map(field => field.path)).size, fields.length);
   assert.deepEqual([...new Set(fields.map(field => field.path.split('.')[0]))].sort(), [
     'allowedMcpServers', 'autoTier', 'deniedMcpServers', 'enabledPlugins',
-    'extraKnownMarketplaces', 'features', 'forceRemoteSettingsRefresh',
+    'extraKnownMarketplaces', 'features', 'forceRemoteSettingsRefresh', 'fusionTier',
     'model', 'permissions', 'remoteControl', 'sandbox', 'strictKnownMarketplaces', 'telemetry'
   ].sort());
   for (const path of [

@@ -111,10 +111,27 @@ Run the offline scheduling tests with:
 python3 -m unittest discover -s test-suite/checks -p 'test_governance_watch_*.py'
 ```
 
-After editing the workflow markdown, recompile it:
+The watcher uses a restricted shell allowlist. Its prompt provides standalone
+commands with explicit paths; utilities such as `cd`, `sed`, and `python3` are
+not enabled. On the first workflow permission denial, it stops the review and
+reports incomplete coverage instead of retrying commands until the SDK stops it.
+HTTP/network failures and rate limits still use the documented retrieval fallbacks.
+Keep command examples aligned with the generated SDK permissions rather than
+broadening permissions or raising the denial limit to hide failures.
+
+Compiler-version enforcement remains enabled, but `on.report-blocked-version: false`
+prevents the activation job from requesting issue-write access just to post
+blocked-version notices. Existing workflow-failure issue reporting is unchanged.
+With this setting, the pinned compiler also emits its standard membership gate:
+scheduled runs pass directly, while manual runs validate the actor's repository
+write, maintain, or admin access before proceeding through the calendar gate.
+
+After editing the workflow markdown, including prompt-only changes, recompile it
+with the gh-aw version pinned in `.github/workflows/quality-checks.yml`:
 
 ```bash
-gh extension install github/gh-aw
+# If gh-aw is already installed, first run: gh extension remove gh-aw
+gh extension install github/gh-aw --pin v0.93.2
 gh aw compile
 ```
 
