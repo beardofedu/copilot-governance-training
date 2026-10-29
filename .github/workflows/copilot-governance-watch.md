@@ -3,6 +3,7 @@ name: Copilot Governance Watch
 description: Reviews Copilot governance daily, hourly during live events, and maintains the event calendar through pull requests.
 emoji: 🛡️
 on:
+  report-blocked-version: false
   schedule:
     - cron: "34 8 * * *"
     - cron: "34 0-7,9-23 * * *"
@@ -91,10 +92,38 @@ Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live
 
 ## Tool execution
 
-- Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining (`;`, `&&`, `||`), redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
-- Read local files with `cat` or `grep`; do not use `sed` or Python, which are not in this workflow's command allowlist. Use the file-editing tool for writes.
-- A denied compound command does not mean source retrieval failed: retry only as a standalone allowed command. If that standalone command is also denied, stop issuing shell commands for source retrieval and use the next retrieval path in Step 2. If the remaining paths cannot complete the review, call `report_incomplete` with the observed blocker rather than accumulating denials until the SDK stops the session.
-- Count permission denials across the whole run and apply that retrieval stop after any second denial, even if they came from different commands. Standalone `cat`/`grep` reads, `sleep` waits, the Step 5 Git commands, and the `github`/`safeoutputs` CLIs remain allowed after that stop; if any of these is then denied, do not retry it and call `report_incomplete` instead.
+These rules apply before Step 0 and throughout the review, including calendar discovery, source retrieval, local inspection, and PR preparation.
+
+- Stay in the repository root. Use explicit repository-relative paths for site files and absolute paths for cache-memory or runtime-provided output files. Do not use `cd`.
+- Prefer native read, search, and edit tools when they are actually exposed. Otherwise use the allowed shell recipes below for reads and searches; write files only with the file-editing tool.
+- Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining, redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
+- Read local files with `cat` or `grep` when appropriate; use only the supported recipes below. Do not use `sed` or Python, which are not in this workflow's command allowlist.
+- `cd`, `sed`, `awk`, `python3`, `node`, and `tr` are not granted by this workflow. Do not use them to change directories, strip HTML, parse output, or edit files. Do not wrap commands in another shell or interpreter.
+- Read raw retrieval output directly. If the runtime returns an output-file path, use that exact path with an exposed read/search tool or an allowed command; do not guess filenames or change directories to find them. A truncated excerpt is not a complete source review: continue reading the relevant content before advancing coverage.
+
+### Supported shell recipes
+
+Each line is a separate `bash` call, not a script to run together. Adapt only the literal path, search text, line count, or official source URL needed for the review. The date/inspection recipes do not replace the retrieval order in Step 2.
+
+```bash
+date -u "+%Y-%m-%d"
+ls docs/sections/
+ls /tmp/gh-aw/cache-memory/
+cat docs/_data/governance-watch-state.json
+grep -n -i -C 3 'permissions' docs/sections/managed-settings.md
+rg -n -i 'permissions' docs/sections/
+head -n 60 docs/CHANGELOG.md
+tail -n 40 docs/CHANGELOG.md
+curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://github.blog/changelog/feed/'
+```
+
+### On the first permission denial
+
+If any tool reports `Tool invocation is not allowed by workflow tool permissions` or another explicit workflow permission denial, stop the review immediately. Do not retry the denied operation, probe alternate command forms, or make further retrieval, editing, or shell calls. Repeated denials stop the SDK before it can record a terminal outcome.
+
+Call the exposed `report_incomplete` safe-output tool with the rejected operation, the observed permission error, any partial review coverage, and which sources remain unreviewed. If only the configured safe-output CLI is exposed, the sole permitted shell call after a denial is `safeoutputs report_incomplete` with a complete inline JSON payload matching its schema. If that transport is unavailable or denied, stop and state that the terminal output could not be recorded; do not probe other transports or claim it succeeded.
+
+Leave review coverage dates unchanged for unreviewed sources. Never emit `noop` for this interruption. A single denied shell command does not mean all retrieval paths failed: do not emit `missing_tool` unless the all-paths-failed condition in Step 2 was actually established. An ordinary HTTP/network failure or an actual HTTP 429 is not a workflow permission denial; follow Step 2's fallback and bounded retry rules for those responses.
 
 ## Step 0 — Keep the live event calendar current
 
@@ -133,7 +162,7 @@ Review both of these, restricted to the window from Step 1.
 You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call**, when exposed by the runtime. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. Make a real call if available; if tool discovery confirms it is absent, record that absence and proceed to `curl` rather than stopping.
-2. Run `curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://…'` through `bash` for the official source URL. Run each request as a standalone `bash` tool call; do not pipe its output or chain it with other shell commands. The command is allowed by this workflow; the network firewall still restricts destinations. Use this fallback when `web_fetch` is absent or fails. Read the returned content directly, without shell redirection. If it fails, record the actual error and proceed to the GitHub MCP fallback; do not assume a prior run's permission denial still applies.
+2. Run `curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://…'` through `bash` for the official source URL. Run each request as a standalone `bash` tool call; do not pipe its output or chain it with other shell commands. The command is allowed by this workflow; the network firewall still restricts destinations. Use this fallback when `web_fetch` is absent or fails. Read the returned content directly, without shell redirection or a parser. For an ordinary HTTP/network failure, record the actual error and proceed to the GitHub MCP fallback. For a workflow permission denial, follow the first-denial instruction above; do not assume a prior run's permission denial still applies.
 3. The remote GitHub MCP tools, which can search public source content without network access from the shell. Use this fallback only after both `web_fetch` and `curl` are unavailable or fail:
     - For GitHub Docs, use `search_code` with `repo:github/docs`.
     - For a Blog or changelog entry:
