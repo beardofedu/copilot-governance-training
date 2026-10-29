@@ -30,6 +30,13 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 
 ## Still to verify
 
+### GitHub-verified connectors and MCP governance
+
+> **Official source**
+> - [Connect your tools to Copilot without all the setup](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)
+
+The October 28 changelog announces connectors in public preview but does not state whether the **MCP servers in Copilot** policy, enterprise allowlists (`allowedMcpServers`/`deniedMcpServers`), or registry restrictions apply to them. Verify in a test enterprise before relying on existing MCP controls to govern connectors.
+
 ### Settings validation error taxonomy
 
 > **Official documentation**

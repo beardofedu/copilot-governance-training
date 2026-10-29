@@ -9,6 +9,12 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-29
+
+- **Added** — Copilot included with GitHub Enterprise / Copilot Standalone: same features as Copilot Enterprise, no per-seat AI credits, usage metered against the enterprise budget ([changelog](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
+- **Added** — GitHub-verified MCP connectors (public preview); interaction with MCP policies is unconfirmed and tracked as a gap ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)) — Updated: [MCP Governance]({{ '/sections/mcp-governance/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+- **Added** — Server-to-server authentication for GitHub Apps with the Copilot SDK (public preview), org attribution, `app_client_id` in usage CSVs ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-10-28
 
 - **Added** — Usage metrics API `totals_by_client` array reporting server-side model usage by tool (OpenCode, Claude Code, Codex, Zed, Copilot CLI, IDEs, and others), with scope, selection modes, and caveats ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
