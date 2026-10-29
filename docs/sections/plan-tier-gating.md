@@ -8,7 +8,7 @@ last_reviewed: 2026-08-18
 
 # Plan-Tier Gating
 
-- All of the above governance controls require **Copilot Business or Enterprise** seats — Free/Pro/Pro+/Max plans carry no org/enterprise policy control.
+- Organization/enterprise governance controls are available with **Copilot Business or Enterprise** seats, **Copilot included with GitHub Enterprise**, or **Copilot Standalone**; the latter two have the same features as Copilot Enterprise ([source](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)). Free/Pro/Pro+/Max plans carry no org/enterprise policy control.
 - Copilot governance features are **GHEC (Enterprise Cloud) only** — not available on GitHub Enterprise Server.
 
 ### Copilot included with GitHub Enterprise (Oct 28, 2026)
