@@ -36,3 +36,7 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 > - [Getting started with enterprise-managed settings: validate and check settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)
 
 The guide confirms that validation checks `copilot/managed-settings.json`, `copilot/team-mappings.json`, and team files referenced by the mappings. It says each issue identifies the affected file and JSON path and is shown as an error or warning, but does not provide a complete list of error/warning codes. Continue to review the reported issues; update this guidance if GitHub publishes a fuller reference.
+
+### Enterprise plugin require/block controls
+
+The [October 28 changelog](https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available) says enterprises can require and block plugins through managed settings, but it doesn't name a "block" key. This site documents only `enabledPlugins`, `extraKnownMarketplaces` and `strictKnownMarketplaces` from the [managed settings reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings). Not reviewed against the live reference on this run; confirm whether a dedicated block key exists before documenting one.
