@@ -3,7 +3,7 @@ layout: default
 title: "Plugin Marketplace Governance"
 nav_order: 5
 permalink: /sections/plugin-marketplaces/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-29
 ---
 
 # Plugin Marketplace Governance
@@ -14,6 +14,7 @@ last_reviewed: 2026-10-16
 >
 > **Related section:** [Managed Settings: supported keys]({{ '/sections/managed-settings/#supported-keys' | relative_url }})
 
+- **GA (2026-10-28):** repository plugin defaults and enterprise-managed plugin controls are generally available in VS Code, Copilot CLI, and the GitHub Copilot app. Enterprises can require plugins (auto-installed, users cannot disable), block plugins, and restrict installs to approved marketplaces via managed settings, which take precedence over repository and personal choices. Managed controls need GitHub Enterprise Cloud with Copilot Business or Copilot Enterprise licenses issued by the enterprise or one of its organizations; repository defaults are also available to individual users. Contributors can turn off repository defaults where policy permits. ([changelog](https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available), [plugins docs](https://docs.github.com/copilot/concepts/customizations/plugins))
 - A **marketplace** = a `marketplace.json` manifest (in `.github/plugin/` of a repo, or `.claude-plugin/`) listing installable CLI plugins.
 - **`strictKnownMarketplaces`** source types:
   - `"github"` — `OWNER/REPO`, optional `ref`/`path`

@@ -11,6 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-29
 
+- **Corrected** — Repository plugin defaults and enterprise-managed plugin controls (require, block, approved marketplaces) are now generally available in VS Code, Copilot CLI, and the Copilot app ([changelog](https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
 - **Added** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecation on 2026-11-16, with suggested alternatives and default-enablement behavior ([changelog](https://github.blog/changelog/2026-10-15-upcoming-deprecation-of-selected-github-copilot-models-in-mid-november/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 - **Added** — GitHub-verified MCP connectors (public preview) ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)) — Updated: [MCP Governance]({{ '/sections/mcp-governance/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
 - **Added** — Copilot included with GitHub Enterprise and Copilot Standalone, including budget-based metering and which features need budget ([changelog](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
