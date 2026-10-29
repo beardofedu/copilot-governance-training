@@ -40,6 +40,8 @@
   field('defaults', 'autoTier', 'Auto routing tier', 'enum', 'A plain tier locks user/repository overrides. An overridable tier provides a default.', '', ['efficiency', 'balance', 'intelligence', 'unmanaged'], false, true);
   field('defaults', 'permissions.model', 'Legacy default model', 'enum', 'Compatibility fallback only, read when top-level model is absent. Prefer Default model above.', '', modelIds, true);
   field('permissions', 'permissions.disableBypassPermissionsMode', 'Bypass permissions mode', 'enum', 'disable blocks YOLO / allow-all; unmanaged leaves this control unmanaged. This is a string, not a Boolean.', '', ['disable', 'unmanaged'], false, true);
+  bool('permissions', 'permissions.disableAssistedPermissionsMode', 'Disable assisted permissions', 'True prevents users enabling assisted permissions (LLM-evaluated approvals). Does not disable bypass mode; set that separately.');
+  field('permissions', 'permissions.defaultMode', 'Default permission mode', 'enum', 'Default for new sessions. A default, not a lock; if the mode is unavailable or blocked by policy, the session starts with manual approval.', '', ['manual', 'assisted', 'allow-all'], false);
   bool('permissions', 'features.computerUse', 'Computer use', 'False prevents users enabling computer use in CLI and the Copilot app. True leaves the choice to users.');
   ['deny', 'ask', 'allow'].forEach(function (kind) {
     field('permissions', 'permissions.' + kind, kind.charAt(0).toUpperCase() + kind.slice(1) + ' operation rules', 'rules',
@@ -120,6 +122,8 @@
     'permissions.model': ['Supports older clients that read only this legacy key.', 'Ignored whenever the top-level default model is set. Most enterprises never need it.'],
     'permissions.disableBypassPermissionsMode': ['Stops developers enabling allow-all (YOLO) mode, so agents cannot run commands or edit files without approval.', 'Experienced users lose a fast workflow in disposable environments. Consider allowing team overrides for platform teams.'],
     'features.computerUse': ['False keeps agents from controlling desktop applications, a high-risk capability for unintended actions or data exposure.', 'Leaving the choice to users enables UI automation and testing workflows that cannot be scripted.'],
+    'permissions.disableAssistedPermissionsMode': ['Removes the option for an LLM to auto-approve requests it classes as safe, for organizations that want every non-allowlisted action reviewed by a human.', 'Developers lose fewer-prompt workflows, and approval fatigue may increase.'],
+    'permissions.defaultMode': ['Starts new sessions in the mode you choose, such as assisted or manual, so the safe path is the default.', 'It is only a default; users can pick another permitted mode, and unavailable modes fall back to manual approval.'],
     'permissions.deny': ['Hard-block operations no agent should ever perform, such as reading SSH keys or editing system files.', 'Users cannot override deny rules. Overly broad patterns break legitimate work.'],
     'permissions.ask': ['Require human approval for sensitive but legitimate operations, such as git push or deployments.', 'Every prompt interrupts the agent. Too many prompts cause approval fatigue and rubber-stamping.'],
     'permissions.allow': ['Pre-approve routine, safe operations such as tests and linting to reduce prompts.', 'Allowed operations run without review. Once any rule exists, unmatched operations require approval, so an incomplete list can add prompts.'],

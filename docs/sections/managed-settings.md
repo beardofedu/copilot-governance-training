@@ -32,6 +32,8 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `allowedMcpServers` | Allowlist MCP servers (URL/command match); unmatched = blocked | ✅ | ✅ | ✅ | ❌ | ✅ |
 | `deniedMcpServers` | Hard-block matching MCP servers, always wins over allow | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `permissions.disableBypassPermissionsMode` | Disable "YOLO"/bypass-all-approvals mode | ✅ | ✅ | ✅ | ❌ | ✅ |
+| `permissions.disableAssistedPermissionsMode` | Set `true` to prevent users enabling [assisted permissions](https://docs.github.com/en/copilot/concepts/customizations/allowing-safe-commands) (LLM-evaluated approvals, GA); does not disable bypass mode, and `disableBypassPermissionsMode` does not block assisted mode ([source](https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available/)) | ✅ | ✅ | ✅ | ✅ (cloud sandbox only) | ❌ |
+| `permissions.defaultMode` | Default permission mode for new sessions: `manual`, `assisted`, or `allow-all`. A default, not a lock; if the mode is unavailable or blocked by policy, the session starts with manual approval ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings)) | ✅ | ✅ | ✅ | ❌ | ❌ |
 | `permissions.deny` | Block specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.ask` | Require fresh approval for specific operations | ✅ | ❌ | ✅ | ❌ | ❌ |
 | `permissions.allow` | Permit specific operations without a prompt | ✅ | ❌ | ✅ | ❌ | ❌ |
