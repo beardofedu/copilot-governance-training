@@ -1,4 +1,4 @@
-"""Regression tests for Governance Watch completion instructions."""
+"""Regression tests for Governance Watch execution and completion instructions."""
 
 import json
 import shlex
@@ -8,6 +8,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PROMPT = (ROOT / ".github/workflows/copilot-governance-watch.md").read_text()
+LOCK = (ROOT / ".github/workflows/copilot-governance-watch.lock.yml").read_text()
+EXECUTION_CONTRACT = PROMPT.split("## Tool execution\n", 1)[1].split(
+    "\n## Step 0", 1
+)[0]
 COMPLETION_SIGNAL = PROMPT.split("## Completion signal\n", 1)[1].split(
     "\n## Step 5", 1
 )[0]
@@ -16,7 +20,128 @@ PR_INSTRUCTIONS = PROMPT.split("## Step 5 — Open the pull request\n", 1)[1].sp
 )[0]
 
 
+def compiled_json_env(name):
+    line = next(
+        line for line in LOCK.splitlines()
+        if line.strip().startswith(f"{name}:")
+    )
+    return json.loads(line.split(": ", 1)[1].strip("'"))
+
+
 class GovernanceWatchPromptTests(unittest.TestCase):
+    def test_execution_contract_precedes_calendar_and_source_work(self):
+        self.assertLess(PROMPT.index("## Tool execution"), PROMPT.index("## Step 0"))
+        for instruction in (
+            "Stay in the repository root",
+            "explicit repository-relative paths",
+            "absolute paths for cache-memory or runtime-provided output files",
+            "Prefer native read, search, and edit tools when they are actually exposed",
+            "Run one standalone command per `bash` tool call",
+            "write files only with the file-editing tool",
+            "A truncated excerpt is not a complete source review",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, EXECUTION_CONTRACT)
+        self.assertIn(
+            "`cd`, `sed`, `awk`, `python3`, `node`, and `tr` are not granted",
+            EXECUTION_CONTRACT,
+        )
+        self.assertIn("Do not wrap commands in another shell or interpreter", EXECUTION_CONTRACT)
+
+    def test_shell_recipes_use_compiled_permissions(self):
+        commands = EXECUTION_CONTRACT.split("```bash\n", 1)[1].split("```", 1)[0]
+        config = compiled_json_env("GH_AW_COPILOT_SDK_TOOL_CONFIG")
+        allowed = set(config["permissions"]["allowedTools"])
+        args = compiled_json_env("GH_AW_COPILOT_SDK_SERVER_ARGS")
+        sidecar_allowed = {
+            args[index + 1]
+            for index, value in enumerate(args[:-1])
+            if value == "--allow-tool"
+        }
+        executables = set()
+        for command in commands.strip().splitlines():
+            with self.subTest(command=command):
+                self.assertNotRegex(command, r"[|;&<>`$]")
+                executable = shlex.split(command)[0]
+                executables.add(executable)
+                grants = {f"shell({executable})", f"shell({executable}:*)"}
+                self.assertTrue(grants & allowed, f"No SDK grant for {command}")
+                self.assertTrue(grants & sidecar_allowed, f"No sidecar grant for {command}")
+        self.assertEqual(executables, {"date", "ls", "cat", "grep", "rg", "head", "tail", "curl"})
+        self.assertIn("--connect-timeout 15 --max-time 60", commands)
+
+    def test_shell_permissions_remain_restricted(self):
+        config = compiled_json_env("GH_AW_COPILOT_SDK_TOOL_CONFIG")
+        args = compiled_json_env("GH_AW_COPILOT_SDK_SERVER_ARGS")
+        allowed = set(config["permissions"]["allowedTools"])
+        sidecar_allowed = {
+            args[index + 1]
+            for index, value in enumerate(args[:-1])
+            if value == "--allow-tool"
+        }
+        expected_shell = {
+            "shell(cat)", "shell(curl:*)", "shell(date)", "shell(echo)",
+            "shell(find)", "shell(git add:*)", "shell(git branch:*)",
+            "shell(git checkout:*)", "shell(git commit:*)", "shell(git merge:*)",
+            "shell(git rm:*)", "shell(git status)", "shell(git switch:*)",
+            "shell(github:*)", "shell(grep)", "shell(head)", "shell(ls)",
+            "shell(printf)", "shell(pwd)", "shell(rg)", "shell(safeoutputs:*)",
+            "shell(sleep)", "shell(sort)", "shell(tail)", "shell(uniq)",
+            "shell(wc)", "shell(yq)",
+        }
+        for grants in (allowed, sidecar_allowed):
+            with self.subTest(grants=sorted(grants)):
+                self.assertEqual(
+                    {grant for grant in grants if grant.startswith("shell")},
+                    expected_shell,
+                )
+                self.assertNotIn("*", grants)
+        self.assertNotIn("--allow-all-tools", args)
+        self.assertFalse(config["permissions"].get("allowAllTools", False))
+
+    def test_version_enforcement_does_not_add_activation_issue_writes(self):
+        frontmatter = PROMPT.split("---", 2)[1]
+        self.assertIn("  report-blocked-version: false\n", frontmatter)
+        activation = LOCK.split("\n  activation:\n", 1)[1].split("\n  agent:\n", 1)[0]
+        permissions = activation.split("    permissions:\n", 1)[1].split(
+            "    env:\n", 1
+        )[0]
+        self.assertNotIn("issues: write", permissions)
+        self.assertIn("Check compile-agentic version", activation)
+        self.assertIn('GH_AW_BLOCKED_VERSION_REPORT_AS_ISSUE: "false"', activation)
+        self.assertNotIn("report-failure-as-issue: false", frontmatter)
+        self.assertIn("needs.event_schedule.outputs.should_run == 'true'", activation)
+        self.assertIn("needs.pre_activation.outputs.activated == 'true'", activation)
+        self.assertIn('GH_AW_REQUIRED_ROLES: "admin,maintainer,write"', LOCK)
+
+    def test_first_permission_denial_stops_with_incomplete_coverage(self):
+        denial = EXECUTION_CONTRACT.split("### On the first permission denial\n", 1)[1]
+        for instruction in (
+            "Tool invocation is not allowed by workflow tool permissions",
+            "stop the review immediately",
+            "Do not retry the denied operation, probe alternate command forms",
+            "Call the exposed `report_incomplete` safe-output tool",
+            "the rejected operation, the observed permission error",
+            "any partial review coverage, and which sources remain unreviewed",
+            "the sole permitted shell call after a denial is `safeoutputs report_incomplete`",
+            "terminal output could not be recorded",
+            "Leave review coverage dates unchanged for unreviewed sources",
+            "Never emit `noop` for this interruption",
+            "do not emit `missing_tool` unless the all-paths-failed condition",
+            "An ordinary HTTP/network failure or an actual HTTP 429 is not a workflow permission denial",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, denial)
+        retrieval = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
+        self.assertIn(
+            "Run each request as a standalone `bash` tool call",
+            retrieval,
+        )
+        self.assertIn(
+            "For a workflow permission denial, follow the first-denial instruction above",
+            retrieval,
+        )
+
     def test_review_windows_use_per_source_coverage_state(self):
         for instruction in (
             "docs/_data/governance-watch-state.json",
@@ -96,6 +221,11 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertLess(web_fetch, curl)
         self.assertLess(curl, github)
         self.assertIn("--connect-timeout 15 --max-time 60", retrieval)
+        self.assertIn(
+            "Run each request as a standalone `bash` tool call; "
+            "do not pipe its output or chain it with other shell commands.",
+            retrieval,
+        )
         self.assertNotIn("Do **not** try to fetch URLs from `bash`", body)
         self.assertIn("using the retrieval order in Step 2", body)
         self.assertIn("Never send credentials, repository file contents", body)
@@ -108,19 +238,16 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertIn("Retry the rate-limited query once after the stated interval", PROMPT)
 
     def test_shell_commands_avoid_sdk_permission_denials(self):
-        execution = PROMPT.split("## Tool execution\n", 1)[1].split(
-            "\n## Step 0", 1
-        )[0]
+        execution = EXECUTION_CONTRACT
         for instruction in (
             "one standalone command per `bash` tool call",
             "Do not use shell loops, pipelines, command chaining",
             "redirection, command substitution, or inline interpreters",
             "Read local files with `cat` or `grep`",
-            "do not use `sed` or Python",
-            "A denied compound command does not mean source retrieval failed",
-            "retry only as a standalone allowed command",
-            "If that standalone command is also denied, stop issuing shell commands",
-            "use the next retrieval path in Step 2",
+            "Do not use `sed` or Python",
+            "If any tool reports",
+            "stop the review immediately",
+            "Do not retry the denied operation",
             "`report_incomplete`",
         ):
             with self.subTest(instruction=instruction):
@@ -135,12 +262,7 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         )
 
     def test_compiled_runtime_allows_retrieval_and_rate_limit_wait(self):
-        lock = (ROOT / ".github/workflows/copilot-governance-watch.lock.yml").read_text()
-        config_line = next(
-            line for line in lock.splitlines()
-            if line.strip().startswith("GH_AW_COPILOT_SDK_TOOL_CONFIG:")
-        )
-        config = json.loads(config_line.split(": ", 1)[1].strip("'"))
+        config = compiled_json_env("GH_AW_COPILOT_SDK_TOOL_CONFIG")
         self.assertTrue(config["capabilities"]["webFetch"])
         for tool in ("web_fetch", "shell(curl:*)", "shell(sleep)"):
             with self.subTest(tool=tool):
