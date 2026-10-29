@@ -12,9 +12,9 @@
     { id: 'remote', title: '7. Remote access and policy freshness', help: 'Remote control: CLI and VS Code, governing sessions hosted on this device only. Freshness: CLI, VS Code, and Copilot app. Requiring refresh can restrict or block use without a network connection at startup.' }
   ];
   var fields = [];
-  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-28).
+  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-29).
   var modelCatalog = [
-    { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)']] },
+    { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)'], ['fusion', 'Fusion (model routing; see fusionTier)']] },
     { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
       ['gpt-5.6-luna', 'GPT-5.6 Luna'], ['gpt-5.6-sol', 'GPT-5.6 Sol'], ['gpt-5.6-terra', 'GPT-5.6 Terra'],
       ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'], ['gpt-6.1-sol', 'GPT-6.1 Sol']] },
@@ -38,10 +38,11 @@
   var modelHelp = 'Choose auto or a model from GitHub\'s supported models list. The model must also be enabled by your AI model policies and supported by each client and plan.';
   field('defaults', 'model', 'Default model', 'enum', modelHelp, '', modelIds, false, true);
   field('defaults', 'autoTier', 'Auto routing tier', 'enum', 'A plain tier locks user/repository overrides. An overridable tier provides a default.', '', ['efficiency', 'balance', 'intelligence', 'unmanaged'], false, true);
+  field('defaults', 'fusionTier', 'Fusion effort tier', 'enum', 'Default effort level when model is fusion, most to least restrictive. A plain tier locks it; an overridable tier provides a default. Requires CLI 1.0.104-3, VS Code 1.144.0, or Copilot app 1.1.33-4 or later.', '', ['standard', 'high', 'max', 'unmanaged'], false, true);
   field('defaults', 'permissions.model', 'Legacy default model', 'enum', 'Compatibility fallback only, read when top-level model is absent. Prefer Default model above.', '', modelIds, true);
   field('permissions', 'permissions.disableBypassPermissionsMode', 'Bypass permissions mode', 'enum', 'disable blocks YOLO / allow-all; unmanaged leaves this control unmanaged. This is a string, not a Boolean.', '', ['disable', 'unmanaged'], false, true);
-  bool('permissions', 'permissions.disableAssistedPermissionsMode', 'Disable assisted permissions', 'True prevents users enabling assisted permissions (LLM-evaluated approvals). It does not disable bypass mode.');
-  field('permissions', 'permissions.defaultMode', 'Default permission mode', 'enum', 'Default for new sessions. A default, not a lock; if the mode is unavailable or blocked by policy, the session starts with manual approval.', '', ['manual', 'assisted', 'allow-all'], false);
+  field('permissions', 'permissions.disableAssistedPermissionsMode', 'Disable assisted permissions', 'boolean', 'true stops users enabling assisted permissions. It does not disable bypass mode.', '', null, false);
+  field('permissions', 'permissions.defaultMode', 'Default permission mode', 'enum', 'Default for new sessions. Not a lock: an explicit permitted choice wins and resumed sessions keep their saved mode. Unavailable or blocked modes fall back to manual.', '', ['manual', 'assisted', 'allow-all'], false);
   bool('permissions', 'features.computerUse', 'Computer use', 'False prevents users enabling computer use in CLI and the Copilot app. True leaves the choice to users.');
   ['deny', 'ask', 'allow'].forEach(function (kind) {
     field('permissions', 'permissions.' + kind, kind.charAt(0).toUpperCase() + kind.slice(1) + ' operation rules', 'rules',
@@ -120,10 +121,11 @@
     'model': ['Standardize the starting model for cost predictability, consistent quality, or because a model passed your security review.', 'Auto already picks a suitable model per task. A locked model can strand users if it is retired or unavailable on their client or plan.'],
     'autoTier': ['Bias Auto toward cheaper models (efficiency) or more capable ones (intelligence) to match budget and task complexity.', 'It has no effect unless Auto is in use. A locked tier stops developers choosing more capable routing for hard problems.'],
     'permissions.model': ['Supports older clients that read only this legacy key.', 'Ignored whenever the top-level default model is set. Most enterprises never need it.'],
+    'fusionTier': ['Cap or default the effort level Fusion uses, to control cost and latency.', 'It has no effect unless the model is fusion. A locked tier stops developers choosing more effort for hard problems.'],
+    'permissions.disableAssistedPermissionsMode': ['Forces explicit approval where you do not want an LLM deciding which requests are safe.', 'Assisted mode reduces approval fatigue and is safer than allow-all; blocking it may push users toward bypass mode unless that is also disabled.'],
+    'permissions.defaultMode': ['Start new sessions in a consistent mode, for example assisted or manual, without removing user choice.', 'It is only a default; it does not prevent users picking another permitted mode. Use the disable keys to enforce limits.'],
     'permissions.disableBypassPermissionsMode': ['Stops developers enabling allow-all (YOLO) bypass mode; it does not disable assisted permissions, which can auto-approve requests judged safe. Use permissions.disableAssistedPermissionsMode to disable that separately.', 'Experienced users lose a fast workflow in disposable environments. Consider allowing team overrides for platform teams.'],
     'features.computerUse': ['False keeps agents from controlling desktop applications, a high-risk capability for unintended actions or data exposure.', 'Leaving the choice to users enables UI automation and testing workflows that cannot be scripted.'],
-    'permissions.disableAssistedPermissionsMode': ['Stops an LLM from auto-approving requests it judges safe, keeping every approval human.', 'Users lose fewer-prompt workflows; bypass mode is controlled separately.'],
-    'permissions.defaultMode': ['Starts new sessions in the mode you choose, such as assisted or manual, so the safe path is the default.', 'It is only a default; users can pick another permitted mode, and unavailable modes fall back to manual approval.'],
     'permissions.deny': ['Hard-block operations no agent should ever perform, such as reading SSH keys or editing system files.', 'Users cannot override deny rules. Overly broad patterns break legitimate work.'],
     'permissions.ask': ['Require human approval for sensitive but legitimate operations, such as git push or deployments.', 'Every prompt interrupts the agent. Too many prompts cause approval fatigue and rubber-stamping.'],
     'permissions.allow': ['Pre-approve routine, safe operations such as tests and linting to reduce prompts.', 'Allowed operations run without review. Once any rule exists, unmatched operations require approval, so an incomplete list can add prompts.'],
@@ -337,6 +339,9 @@
     }
     if (plain.autoTier && (plain.model || plain.permissions && plain.permissions.model || 'auto') !== 'auto') {
       warnings.push('Auto tier applies only when users switch to auto; it does not select auto for them.');
+    }
+    if (plain.fusionTier && (plain.model || plain.permissions && plain.permissions.model) !== 'fusion') {
+      warnings.push('Fusion tier applies only when the model is fusion; it does not select Fusion for users.');
     }
     if (plain.sandbox) {
       warnings.push('Sandbox settings activate minimum client-version requirements. Pilot before enterprise deployment; unsupported clients are blocked.');
