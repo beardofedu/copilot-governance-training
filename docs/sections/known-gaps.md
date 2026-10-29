@@ -3,7 +3,7 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-29
 ---
 
 # Known Gaps to Verify
@@ -36,3 +36,10 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 > - [Getting started with enterprise-managed settings: validate and check settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)
 
 The guide confirms that validation checks `copilot/managed-settings.json`, `copilot/team-mappings.json`, and team files referenced by the mappings. It says each issue identifies the affected file and JSON path and is shown as an error or warning, but does not provide a complete list of error/warning codes. Continue to review the reported issues; update this guidance if GitHub publishes a fuller reference.
+
+### Governance controls for Copilot included with GitHub Enterprise
+
+> **Official sources**
+> - [Changelog: GitHub Enterprise now includes access to GitHub Copilot](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)
+
+The announcement says access through GitHub Enterprise and Copilot Standalone has the same features and models as Copilot Enterprise, but it does not state how policies and managed settings are assigned for these users. Confirm in the [Copilot access documentation](https://docs.github.com/copilot/get-started/whats-changing-with-github-enterprise-and-copilot) before relying on the plan-tier assumptions in [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }}).

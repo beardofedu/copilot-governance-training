@@ -3,7 +3,7 @@ layout: default
 title: "Copilot Coding (Cloud) Agent Restrictions"
 nav_order: 6
 permalink: /sections/cloud-agent/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-29
 ---
 
 # Copilot Coding (Cloud) Agent Restrictions
@@ -29,6 +29,16 @@ last_reviewed: 2026-10-16
 
 ### MCP + cloud agent
 Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via [managed settings]({{ '/sections/managed-settings/' | relative_url }}), but is **excluded** from [MCP private-registry enforcement]({{ '/sections/mcp-governance/#mcp-registry-public-preview--not-the-recommended-method' | relative_url }}) and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
+
+### Copilot Automations: triggers, tools, and cost controls
+> **Official documentation**
+> - [Changelog: New tools, triggers, and cost controls for Copilot Automations](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)
+> - [Create automations (cloud agent)](https://docs.github.com/copilot/how-tos/use-copilot-agents/cloud-agent/create-automations#setting-ai-credits-limits)
+
+- Automations combine prompts, **triggers** (when to run), and **tools** (what the automation may do); each automation uses only the tools you select.
+- New triggers: the REST API (external systems), 24 more GitHub events, and chaining via "Automation run succeeded/failed" triggers. A trigger's **"Can be triggered by"** setting defaults to `Only users`; `Users and Copilot` lets Copilot-authored events (such as a PR opened by Copilot) fire it.
+- New tools include merging pull requests and retrying workflow runs, plus tools from custom MCP servers — review these when approving automations.
+- **Cost controls:** optional AI-credit limits per run, day, week, or month. Automations without limits run as before.
 
 ### Custom instructions honored by cloud agent
 > **Official documentation**
