@@ -17,7 +17,7 @@
     { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)']] },
     { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
       ['gpt-5.6-luna', 'GPT-5.6 Luna'], ['gpt-5.6-sol', 'GPT-5.6 Sol'], ['gpt-5.6-terra', 'GPT-5.6 Terra'],
-      ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'], ['gpt-6.1-sol', 'GPT-6.1 Sol'], ['gpt-6.1-terra', 'GPT-6.1 Terra']] },
+      ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'], ['gpt-6.1-sol', 'GPT-6.1 Sol']] },
     { provider: 'Anthropic', models: [['claude-haiku-4.5', 'Claude Haiku 4.5'], ['claude-haiku-5.5', 'Claude Haiku 5.5'],
       ['claude-opus-5', 'Claude Opus 5'], ['claude-opus-5.5', 'Claude Opus 5.5'], ['claude-sonnet-4.6', 'Claude Sonnet 4.6'],
       ['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-sonnet-5.5', 'Claude Sonnet 5.5']] },
