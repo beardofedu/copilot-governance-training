@@ -30,6 +30,14 @@ The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-defau
 
 ## Still to verify
 
+### Policy controls for Copilot included with GitHub Enterprise
+
+> **Official sources**
+> - [GitHub Enterprise now includes access to GitHub Copilot](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)
+> - [Copilot access (what's changing)](https://docs.github.com/copilot/get-started/whats-changing-with-github-enterprise-and-copilot)
+
+The October 28 post says access through GitHub Enterprise and Copilot Standalone has the same features and models as Copilot Enterprise, but it does not state how policies, managed settings, or plan-tier gating are surfaced for it. Verify in the docs before assuming parity.
+
 ### Settings validation error taxonomy
 
 > **Official documentation**
