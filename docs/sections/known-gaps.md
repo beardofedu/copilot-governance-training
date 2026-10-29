@@ -3,7 +3,7 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-29
 ---
 
 # Known Gaps to Verify
@@ -29,6 +29,20 @@ GitHub announced that **local sandboxing** is generally available in Copilot CLI
 The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/) announced that enforcement began on October 22 and is rolling out gradually through **October 26**; timing varies per enterprise. The rollout applies the selected default once to eligible GA features that remain **Unconfigured**; explicit choices are preserved, and previews stay opt-in. The [default availability page](https://docs.github.com/en/copilot/concepts/enterprise/default-availability) still used the stale pre-rollout wording "not currently active" when reviewed on **October 22, 2026**. That is an upstream documentation gap, not current activation guidance: enforcement has been announced and is rolling out.
 
 ## Still to verify
+
+### MCP connectors and governance policies
+
+> **Official documentation**
+> - [Connect your tools to Copilot](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)
+
+For Business and Enterprise users, the **Editor preview features** policy must be enabled. If an enterprise MCP allowlist is configured, an administrator must add the GitHub-verified servers to it. The announcement does not explain how registry policies or other MCP policy interactions affect connectors; verify these undocumented interactions in a test enterprise before relying on them.
+
+### Server-to-server authentication for Copilot SDK apps
+
+> **Official documentation**
+> - [Server-to-server authentication](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)
+
+Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. Requests are attributed and billed to the organization that owns the app installation; that organization's model policies, budgets, and spending controls apply. AI usage CSV reports identify the app through `app_client_id`. The post does not specify whether these requests appear in audit logs.
 
 ### Settings validation error taxonomy
 

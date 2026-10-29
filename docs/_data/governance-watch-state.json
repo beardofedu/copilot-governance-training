@@ -2,7 +2,7 @@
   "sources": {
     "blog": {
       "reviewed_through": "2026-10-22",
-      "note": "GitHub Blog and changelog. Complete-review cutoff remains 2026-10-22. Window 2026-10-15 through 2026-10-29 partially reviewed via the changelog index and selected posts; Copilot Fusion, Copilot automations, and model deprecations still need review."
+      "note": "GitHub Blog and changelog. Complete-review cutoff remains 2026-10-22. The 2026-10-15 through 2026-10-29 window was partially reviewed in the 2026-10-29 run, including model deprecations and server-to-server auth. Still pending detailed review: Copilot in Teams and Slack (2026-10-15, 2026-10-23), assisted permissions GA and GPT-6.1 Terra (2026-10-26), and the 2026-10-28 Universe announcements (Fusion, Copilot automations, etc.)."
     },
     "docs": {
       "reviewed_through": "2026-10-21",
