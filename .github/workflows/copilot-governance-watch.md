@@ -153,7 +153,10 @@ On every review, check the official event sources in `docs/_data/copilot-events.
    - A long window is expected after an outage. Work through it oldest first, and skip items the site or an open `[governance]` PR already covers.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
    - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
-4. Check open `[governance]` pull requests before proposing edits. Do not duplicate a pending content or calendar change. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
+4. List every open `[governance]` pull request (title, body, and changed files via the GitHub tools) before proposing edits. Build a list of the upstream changes each one already covers.
+   - Only propose a change that no open `[governance]` PR already covers. Match by upstream announcement or source link, not by title; several PRs with different titles can document the same change.
+   - Never touch an upstream change, section edit, or calendar entry that a pending PR already addresses, even if that PR looks incomplete. Mention it in the PR body under Review notes instead.
+   - If every actionable change is already covered by an open PR, emit **noop** naming the covering PR number(s). Do not open a new PR. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
 
 ## Step 2 — Review the sources
 
@@ -280,6 +283,8 @@ git branch --show-current
 ```
 
 Use the fixed commit message above: the SDK permission matcher rejects shell metacharacters such as `&`, `<`, and `>` even inside quoted Git arguments. Put descriptive change details in the PR title and body instead. Pass the branch name returned by `git branch --show-current` as the `branch` parameter to `create_pull_request`; never use `main` or the base branch. Do not push or change remotes; the safe-output tool handles publication.
+
+Immediately before calling `create_pull_request`, re-list open `[governance]` pull requests once more. If one now covers any change in your diff, drop that change; if nothing remains, emit **noop** instead.
 
 Create a pull request with:
 
