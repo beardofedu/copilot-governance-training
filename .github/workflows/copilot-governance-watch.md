@@ -90,13 +90,14 @@ You maintain the **Locking Down GitHub Copilot** enterprise guardrails training 
 
 Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live event dates in `docs/_data/copilot-events.json` (inclusive UTC calendar days). Manual runs always proceed. Find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
 
-## Execution contract
+## Tool execution
 
 These rules apply before Step 0 and throughout the review, including calendar discovery, source retrieval, local inspection, and PR preparation.
 
 - Stay in the repository root. Use explicit repository-relative paths for site files and absolute paths for cache-memory or runtime-provided output files. Do not use `cd`.
 - Prefer native read, search, and edit tools when they are actually exposed. Otherwise use the allowed shell recipes below for reads and searches; write files only with the file-editing tool.
-- Run one command per `bash` call, sequentially. Do not combine commands with pipes, `;`, or `&&`, or use loops, command substitution, heredocs, or redirection. The SDK checks every command in a chain; permission for `curl` does not authorize an HTML parser after it.
+- Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining, redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
+- Read local files with `cat` or `grep` when appropriate; use only the supported recipes below. Do not use `sed` or Python, which are not in this workflow's command allowlist.
 - `cd`, `sed`, `awk`, `python3`, `node`, and `tr` are not granted by this workflow. Do not use them to change directories, strip HTML, parse output, or edit files. Do not wrap commands in another shell or interpreter.
 - Read raw retrieval output directly. If the runtime returns an output-file path, use that exact path with an exposed read/search tool or an allowed command; do not guess filenames or change directories to find them. A truncated excerpt is not a complete source review: continue reading the relevant content before advancing coverage.
 
@@ -161,7 +162,7 @@ Review both of these, restricted to the window from Step 1.
 You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call**, when exposed by the runtime. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. Make a real call if available; if tool discovery confirms it is absent, record that absence and proceed to `curl` rather than stopping.
-2. Run `curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://…'` through `bash` for the official source URL as one standalone command, without a pipeline or parser. The command is allowed by this workflow; the network firewall still restricts destinations. Use this fallback when `web_fetch` is absent or fails. Read the returned content directly, without shell redirection. For an ordinary HTTP/network failure, record the actual error and proceed to the GitHub MCP fallback. For a workflow permission denial, follow the execution contract and stop the review; do not assume a prior run's permission denial still applies.
+2. Run `curl --fail --silent --show-error --location --connect-timeout 15 --max-time 60 'https://…'` through `bash` for the official source URL. Run each request as a standalone `bash` tool call; do not pipe its output or chain it with other shell commands. The command is allowed by this workflow; the network firewall still restricts destinations. Use this fallback when `web_fetch` is absent or fails. Read the returned content directly, without shell redirection or a parser. For an ordinary HTTP/network failure, record the actual error and proceed to the GitHub MCP fallback. For a workflow permission denial, follow the first-denial instruction above; do not assume a prior run's permission denial still applies.
 3. The remote GitHub MCP tools, which can search public source content without network access from the shell. Use this fallback only after both `web_fetch` and `curl` are unavailable or fail:
     - For GitHub Docs, use `search_code` with `repo:github/docs`.
     - For a Blog or changelog entry:

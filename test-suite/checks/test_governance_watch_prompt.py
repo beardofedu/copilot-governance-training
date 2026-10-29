@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PROMPT = (ROOT / ".github/workflows/copilot-governance-watch.md").read_text()
 LOCK = (ROOT / ".github/workflows/copilot-governance-watch.lock.yml").read_text()
-EXECUTION_CONTRACT = PROMPT.split("## Execution contract\n", 1)[1].split(
+EXECUTION_CONTRACT = PROMPT.split("## Tool execution\n", 1)[1].split(
     "\n## Step 0", 1
 )[0]
 COMPLETION_SIGNAL = PROMPT.split("## Completion signal\n", 1)[1].split(
@@ -30,13 +30,13 @@ def compiled_json_env(name):
 
 class GovernanceWatchPromptTests(unittest.TestCase):
     def test_execution_contract_precedes_calendar_and_source_work(self):
-        self.assertLess(PROMPT.index("## Execution contract"), PROMPT.index("## Step 0"))
+        self.assertLess(PROMPT.index("## Tool execution"), PROMPT.index("## Step 0"))
         for instruction in (
             "Stay in the repository root",
             "explicit repository-relative paths",
             "absolute paths for cache-memory or runtime-provided output files",
             "Prefer native read, search, and edit tools when they are actually exposed",
-            "Run one command per `bash` call, sequentially",
+            "Run one standalone command per `bash` tool call",
             "write files only with the file-editing tool",
             "A truncated excerpt is not a complete source review",
         ):
@@ -133,9 +133,12 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, denial)
         retrieval = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
-        self.assertIn("one standalone command, without a pipeline or parser", retrieval)
         self.assertIn(
-            "For a workflow permission denial, follow the execution contract and stop the review",
+            "Run each request as a standalone `bash` tool call",
+            retrieval,
+        )
+        self.assertIn(
+            "For a workflow permission denial, follow the first-denial instruction above",
             retrieval,
         )
 
@@ -218,6 +221,11 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertLess(web_fetch, curl)
         self.assertLess(curl, github)
         self.assertIn("--connect-timeout 15 --max-time 60", retrieval)
+        self.assertIn(
+            "Run each request as a standalone `bash` tool call; "
+            "do not pipe its output or chain it with other shell commands.",
+            retrieval,
+        )
         self.assertNotIn("Do **not** try to fetch URLs from `bash`", body)
         self.assertIn("using the retrieval order in Step 2", body)
         self.assertIn("Never send credentials, repository file contents", body)
@@ -228,6 +236,30 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertIn("Use `sleep <remaining-seconds>` through `bash`", PROMPT)
         self.assertIn("never retry early if waiting is denied", PROMPT)
         self.assertIn("Retry the rate-limited query once after the stated interval", PROMPT)
+
+    def test_shell_commands_avoid_sdk_permission_denials(self):
+        execution = EXECUTION_CONTRACT
+        for instruction in (
+            "one standalone command per `bash` tool call",
+            "Do not use shell loops, pipelines, command chaining",
+            "redirection, command substitution, or inline interpreters",
+            "Read local files with `cat` or `grep`",
+            "Do not use `sed` or Python",
+            "If any tool reports",
+            "stop the review immediately",
+            "Do not retry the denied operation",
+            "`report_incomplete`",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, execution)
+
+    def test_shell_denial_fix_preserves_command_allowlist(self):
+        frontmatter = PROMPT.split("---", 2)[1]
+        bash = frontmatter.split("  bash:\n", 1)[1].split("  github:\n", 1)[0]
+        self.assertEqual(
+            [json.loads(line.strip()[2:]) for line in bash.splitlines()],
+            ["curl", "sleep", "date *", "ls *", "cat *", "grep *", "rg *", "find *"],
+        )
 
     def test_compiled_runtime_allows_retrieval_and_rate_limit_wait(self):
         config = compiled_json_env("GH_AW_COPILOT_SDK_TOOL_CONFIG")
