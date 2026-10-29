@@ -3,7 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
-last_reviewed: 2026-10-28
+last_reviewed: 2026-10-29
 ---
 
 # Visibility & Audit (governance, not prevention)
@@ -40,3 +40,13 @@ last_reviewed: 2026-10-28
 - **Syncing:** locally-run CLI/app sessions sync to the user's GitHub account by default. For Enterprise/Business users, the **"Store local sessions in the Cloud"** policy must be set to at least "View from cloud" for sync to occur — disabled/unconfigured keeps sessions local-only. Users can further control sync per-client via the `remote`/`remoteExport` CLI config keys.
 - **Sharing/visibility differs by surface:** synced CLI/app sessions are **unshared by default** and accessible only to the owning user (admins can gate sync availability but cannot see session content by enabling it); cloud agent sessions are **shared by default**, visible in the repo's "Agents" tab "All sessions" view to anyone with repo access.
 - **Retention controls:** locally stored sessions support share/delete/archive (archive not supported for CLI); cloud-agent sessions on GitHub.com support share/archive but **not delete**.
+
+### Server-to-server authentication for the Copilot SDK (public preview)
+
+> **Official documentation**
+> - [GitHub Copilot supports server-to-server authentication](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)
+> - [Managing GitHub App access to your organization's Copilot](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-organization/manage-app-copilot-access)
+
+- GitHub Apps installed on an organization with the read-only **Copilot Requests** organization permission can pass a short-lived installation token to the Copilot SDK, so services and agents run without a signed-in user's credentials.
+- Usage is attributed and billed to the owning organization; its model policies, budgets, and spending controls apply.
+- Organization owners can review app access, identify app-attributed usage in AI usage CSV reports via the `app_client_id` field, and revoke access by suspending or uninstalling the app.

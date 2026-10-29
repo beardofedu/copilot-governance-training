@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-29
+
+- **Added** — Copilot included with GitHub Enterprise for account-team customers, Copilot Standalone, and budget behavior ([changelog](https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
+- **Added** — Copilot SDK server-to-server authentication for GitHub Apps (public preview), org attribution and `app_client_id` reporting ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-10-28
 
 - **Added** — Usage metrics API `totals_by_client` array reporting server-side model usage by tool (OpenCode, Claude Code, Codex, Zed, Copilot CLI, IDEs, and others), with scope, selection modes, and caveats ([changelog](https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode/)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
