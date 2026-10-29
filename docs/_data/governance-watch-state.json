@@ -1,8 +1,8 @@
 {
   "sources": {
     "blog": {
-      "reviewed_through": "2026-10-29",
-      "note": "GitHub Blog and changelog. Window 2026-10-15 through 2026-10-29 reviewed via curl on the changelog index; Copilot-governance items assessed."
+      "reviewed_through": "2026-10-22",
+      "note": "GitHub Blog and changelog. Complete-review cutoff remains 2026-10-22. Window 2026-10-15 through 2026-10-29 partially reviewed via the changelog index and selected posts; Copilot Fusion, Copilot automations, and model deprecations still need review."
     },
     "docs": {
       "reviewed_through": "2026-10-21",
