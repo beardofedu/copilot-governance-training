@@ -12,7 +12,7 @@
     { id: 'remote', title: '7. Remote access and policy freshness', help: 'Remote control: CLI and VS Code, governing sessions hosted on this device only. Freshness: CLI, VS Code, and Copilot app. Requiring refresh can restrict or block use without a network connection at startup.' }
   ];
   var fields = [];
-  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-22).
+  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-28).
   var modelCatalog = [
     { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)']] },
     { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
@@ -41,7 +41,7 @@
   field('defaults', 'permissions.model', 'Legacy default model', 'enum', 'Compatibility fallback only, read when top-level model is absent. Prefer Default model above.', '', modelIds, true);
   field('defaults', 'fusionTier', 'Fusion effort tier', 'enum', 'Default effort level when the selected model is fusion; it does not select Fusion itself. A plain tier locks user overrides. An overridable tier provides a default.', '', ['standard', 'high', 'max', 'unmanaged'], false, true);
   field('permissions', 'permissions.disableBypassPermissionsMode', 'Bypass permissions mode', 'enum', 'disable blocks YOLO / allow-all; unmanaged leaves this control unmanaged. This is a string, not a Boolean.', '', ['disable', 'unmanaged'], false, true);
-  bool('permissions', 'permissions.disableAssistedPermissionsMode', 'Disable assisted permissions', 'true prevents users enabling assisted permissions. It does not disable bypass mode.');
+  bool('permissions', 'permissions.disableAssistedPermissionsMode', 'Disable assisted permissions', 'True prevents users enabling assisted permissions (LLM-evaluated approvals). It does not disable bypass mode.');
   field('permissions', 'permissions.defaultMode', 'Default permission mode', 'enum', 'Starting approval mode. This is a default, not a lock: permitted user choices win, and resumed sessions keep their saved mode.', '', ['manual', 'assisted', 'allow-all'], false);
   bool('permissions', 'features.computerUse', 'Computer use', 'False prevents users enabling computer use in CLI and the Copilot app. True leaves the choice to users.');
   ['deny', 'ask', 'allow'].forEach(function (kind) {
@@ -122,10 +122,10 @@
     'autoTier': ['Bias Auto toward cheaper models (efficiency) or more capable ones (intelligence) to match budget and task complexity.', 'It has no effect unless Auto is in use. A locked tier stops developers choosing more capable routing for hard problems.'],
     'permissions.model': ['Supports older clients that read only this legacy key.', 'Ignored whenever the top-level default model is set. Most enterprises never need it.'],
     'fusionTier': ['Cap or default the effort Copilot Fusion spends per request to control cost and latency.', 'It has no effect unless the model is fusion. A locked tier stops developers choosing higher effort for hard problems.'],
-    'permissions.disableAssistedPermissionsMode': ['Keeps every permission request in front of a human by stopping LLM-evaluated auto-approval.', 'Assisted mode reduces approval fatigue; blocking it may push developers toward broader allow rules.'],
     'permissions.defaultMode': ['Starts sessions in a conservative mode (manual or assisted) without removing user choice.', 'It is not enforcement. Pair it with disableBypassPermissionsMode if allow-all must be blocked.'],
-    'permissions.disableBypassPermissionsMode': ['Stops developers enabling allow-all (YOLO) mode, so agents cannot run commands or edit files without approval.', 'Experienced users lose a fast workflow in disposable environments. Consider allowing team overrides for platform teams.'],
+    'permissions.disableBypassPermissionsMode': ['Stops developers enabling allow-all (YOLO) bypass mode; it does not disable assisted permissions, which can auto-approve requests judged safe. Use permissions.disableAssistedPermissionsMode to disable that separately.', 'Experienced users lose a fast workflow in disposable environments. Consider allowing team overrides for platform teams.'],
     'features.computerUse': ['False keeps agents from controlling desktop applications, a high-risk capability for unintended actions or data exposure.', 'Leaving the choice to users enables UI automation and testing workflows that cannot be scripted.'],
+    'permissions.disableAssistedPermissionsMode': ['Stops an LLM from auto-approving requests it judges safe, keeping every approval human.', 'Users lose fewer-prompt workflows; bypass mode is controlled separately.'],
     'permissions.deny': ['Hard-block operations no agent should ever perform, such as reading SSH keys or editing system files.', 'Users cannot override deny rules. Overly broad patterns break legitimate work.'],
     'permissions.ask': ['Require human approval for sensitive but legitimate operations, such as git push or deployments.', 'Every prompt interrupts the agent. Too many prompts cause approval fatigue and rubber-stamping.'],
     'permissions.allow': ['Pre-approve routine, safe operations such as tests and linting to reduce prompts.', 'Allowed operations run without review. Once any rule exists, unmatched operations require approval, so an incomplete list can add prompts.'],

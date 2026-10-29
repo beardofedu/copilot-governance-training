@@ -3,7 +3,7 @@ layout: default
 title: "`managed-settings.json` — The Core Enterprise Lockdown File"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-10-22
+last_reviewed: 2026-10-28
 ---
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
@@ -47,6 +47,12 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `remoteControl` | Restrict remote control of CLI sessions on this device by SSO org authorization | ✅ | ✅ | ❌ | ❌ | ❌ |
 
 `permissions.model` is a legacy fallback only; use the top-level `model` key in new configurations.
+
+**Assisted permissions** (GA in Copilot CLI, the Copilot app, and VS Code): an LLM evaluates each permission request and lets clearly safe ones proceed without a prompt; everything else still needs approval ([changelog](https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available/)). Two managed controls apply ([reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#permissions)):
+
+- `permissions.disableBypassPermissionsMode` blocks **Allow All** but does not block `/permissions assisted` or `/allow-all auto`.
+- `permissions.disableAssistedPermissionsMode: true` prevents users enabling assisted permissions; it does not disable bypass mode. Set both to remove both modes.
+- `permissions.defaultMode` (`"manual"`, `"assisted"`, or `"allow-all"`) sets the default for new sessions only; it is not a locked mode, an explicit permitted user choice wins, and an unavailable or blocked mode falls back to manual approval.
 
 ### Granular operation permissions
 

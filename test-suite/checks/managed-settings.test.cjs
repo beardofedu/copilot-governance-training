@@ -10,11 +10,12 @@ test('all documented top-level settings and nested controls are represented', ()
   assert.equal(new Set(fields.map(field => field.path)).size, fields.length);
   assert.deepEqual([...new Set(fields.map(field => field.path.split('.')[0]))].sort(), [
     'allowedMcpServers', 'autoTier', 'deniedMcpServers', 'enabledPlugins',
-    'extraKnownMarketplaces', 'features', 'forceRemoteSettingsRefresh',
+    'extraKnownMarketplaces', 'features', 'forceRemoteSettingsRefresh', 'fusionTier',
     'model', 'permissions', 'remoteControl', 'sandbox', 'strictKnownMarketplaces', 'telemetry'
   ].sort());
   for (const path of [
-    'permissions.model', 'sandbox.learningMode', 'sandbox.auth.git', 'sandbox.auth.gh',
+    'permissions.model', 'permissions.defaultMode', 'permissions.disableAssistedPermissionsMode',
+    'sandbox.learningMode', 'sandbox.auth.git', 'sandbox.auth.gh',
     'sandbox.userPolicy.network.proxy.url', 'sandbox.userPolicy.seatbelt.keychainAccess',
     'telemetry.headersProvider', ...['identity', 'prompts', 'responses', 'toolArguments',
       'toolOutput', 'policyDetail'].map(key => `telemetry.capture.${key}`)
@@ -57,6 +58,24 @@ test('included autoTier is preserved with a fixed default model and reports its 
 test('nothing configured yields {}, including stale values in unchecked fields', () => {
   assert.deepEqual(build({}).settings, {});
   assert.deepEqual(build({ model: { include: false, raw: 'auto' } }).settings, {});
+});
+
+test('Fusion effort and permission defaults preserve their documented types and choices', () => {
+  for (const tier of ['standard', 'high', 'max', 'unmanaged']) {
+    assert.deepEqual(build({ fusionTier: entry(tier) }).settings, { fusionTier: tier });
+    assert.deepEqual(build({ fusionTier: entry(tier, true) }).settings,
+      { fusionTier: { overridable: tier } });
+  }
+  for (const mode of ['manual', 'assisted', 'allow-all']) {
+    assert.deepEqual(build({
+      'permissions.defaultMode': entry(mode),
+      'permissions.disableAssistedPermissionsMode': entry('false')
+    }).settings, { permissions: { defaultMode: mode, disableAssistedPermissionsMode: false } });
+  }
+  assert.deepEqual(build({ 'permissions.disableAssistedPermissionsMode': entry('true') }).settings,
+    { permissions: { disableAssistedPermissionsMode: true } });
+  assert.throws(() => parse(def('fusionTier'), 'invalid'));
+  assert.throws(() => parse(def('permissions.defaultMode'), 'invalid'));
 });
 
 test('empty included arrays and objects are preserved, not omitted', () => {
