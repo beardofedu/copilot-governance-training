@@ -1,8 +1,8 @@
 {
   "sources": {
     "blog": {
-      "reviewed_through": "2026-10-29",
-      "note": "GitHub Blog and changelog. Reviewed through 2026-10-29 via curl on the changelog index."
+      "reviewed_through": "2026-10-22",
+      "note": "GitHub Blog and changelog. Backlog from 2026-09-20 through 2026-10-22 reviewed via web_fetch on the changelog index and September archive. Partial review on 2026-10-29 via curl; unassessed Universe-week posts require a follow-up review."
     },
     "docs": {
       "reviewed_through": "2026-10-21",
