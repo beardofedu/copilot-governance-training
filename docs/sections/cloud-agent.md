@@ -20,6 +20,7 @@ last_reviewed: 2026-10-29
 ### Workflow & merge safety
 > **Official documentation**
 > - [Configuring cloud agent settings](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/configuring-agent-settings)
+> - [Changelog: New tools, triggers, and cost controls for Copilot Automations](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)
 >
 > **Related sections:** [Network-Level Controls]({{ '/sections/network-controls/' | relative_url }})
 

@@ -43,4 +43,4 @@ last_reviewed: 2026-10-29
 
 ### Server-to-server auth for GitHub Apps (public preview)
 
-- Services built with the Copilot SDK can call Copilot as a GitHub App installed on an organization (read-only `Copilot Requests` permission, short-lived installation token). Usage is attributed and billed to the owning organization, and its model policies, budgets, and spending controls apply. Org owners can see app-attributed usage in AI usage CSV reports via the `app_client_id` field and cut off access by suspending or uninstalling the app ([source](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)).
+- App-attributed usage is confirmed in AI usage CSV reports via the `app_client_id` field ([source](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)). Whether these requests appear in audit logs is unspecified; see [Known Gaps to Verify]({{ '/sections/known-gaps/' | relative_url }}) for the open question. For authentication and policy details, see [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }}).
