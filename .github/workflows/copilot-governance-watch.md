@@ -99,6 +99,7 @@ These rules apply before Step 0 and throughout the review, including calendar di
 - Run one standalone command per `bash` tool call. Do not use shell loops, pipelines, command chaining, redirection, command substitution, or inline interpreters. Fetch each URL in its own call and read the returned content directly.
 - Read local files with `cat` or `grep` when appropriate; use only the supported recipes below. Do not use `sed` or Python, which are not in this workflow's command allowlist.
 - `cd`, `sed`, `awk`, `python3`, `node`, and `tr` are not granted by this workflow. Do not use them to change directories, strip HTML, parse output, or edit files. Do not wrap commands in another shell or interpreter.
+- Do not invoke shell commands outside the supported recipes below, including common read-only commands such as `git log` or `gh pr list`. Use native GitHub tools for PR and repository queries. The only permitted shell `git` commands are those explicitly listed in Step 5.
 - Read raw retrieval output directly. If the runtime returns an output-file path, use that exact path with an exposed read/search tool or an allowed command; do not guess filenames or change directories to find them. A truncated excerpt is not a complete source review: continue reading the relevant content before advancing coverage.
 
 ### Supported shell recipes
