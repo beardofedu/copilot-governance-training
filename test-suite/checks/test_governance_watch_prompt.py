@@ -48,6 +48,17 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         )
         self.assertIn("Do not wrap commands in another shell or interpreter", EXECUTION_CONTRACT)
 
+    def test_shell_repository_queries_use_native_github_tools(self):
+        for instruction in (
+            "Do not invoke shell commands outside the supported recipes below",
+            "`git log`",
+            "`gh pr list`",
+            "Use native GitHub tools for PR and repository queries",
+            "The only permitted shell `git` commands are those explicitly listed in Step 5",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, EXECUTION_CONTRACT)
+
     def test_shell_recipes_use_compiled_permissions(self):
         commands = EXECUTION_CONTRACT.split("```bash\n", 1)[1].split("```", 1)[0]
         config = compiled_json_env("GH_AW_COPILOT_SDK_TOOL_CONFIG")
