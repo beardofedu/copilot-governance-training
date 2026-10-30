@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-10-30
+
+- **Added** — Copilot Fusion GA: model-policy dependency (Fusion only uses enabled models; admins can disable models for Fusion), managed-settings default, billing and client availability ([source](https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-10-29
 
 - **Added** — Repository plugin defaults and enterprise plugin controls (require/block plugins, approved marketplaces) generally available ([changelog](https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
