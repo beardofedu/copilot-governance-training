@@ -153,6 +153,21 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, PROMPT)
 
+    def test_open_pr_coverage_is_specific_and_noop_is_deferred(self):
+        step1 = PROMPT.split("## Step 1", 1)[1].split("## Step 2", 1)[0]
+        for instruction in (
+            "do not decide that the run is a **noop** here",
+            "only to identify candidate overlaps, not to establish coverage",
+            "same specific fact, setting, or event occurrence",
+            "A shared source URL alone is not enough",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, step1)
+        self.assertNotIn("emit **noop**", step1)
+        step4 = PROMPT.split("## Step 4", 1)[1].split("## Completion signal", 1)[0]
+        self.assertIn("After completing the Step 2 source review and Step 3 classification", step4)
+        self.assertIn("preserve `report_incomplete`", step4)
+
     def test_completed_review_has_an_explicit_safe_output(self):
         for instruction in (
             "create a pull request for actionable changes",
@@ -185,6 +200,24 @@ class GovernanceWatchPromptTests(unittest.TestCase):
         self.assertIn("as the `branch` parameter", PR_INSTRUCTIONS)
         self.assertIn("never use `main` or the base branch", PR_INSTRUCTIONS)
         self.assertIn("Do not push or change remotes", PR_INSTRUCTIONS)
+
+    def test_late_covered_edits_are_committed_before_pull_request(self):
+        self.assertIn("drop that exact change", PR_INSTRUCTIONS)
+        self.assertIn("commit the cleanup before calling `create_pull_request`", PR_INSTRUCTIONS)
+        self.assertIn("not sufficient because the safe-output tool publishes the committed branch", PR_INSTRUCTIONS)
+        self.assertLess(
+            PR_INSTRUCTIONS.index("Immediately before calling `create_pull_request`"),
+            PR_INSTRUCTIONS.index("commit the cleanup"),
+        )
+        self.assertLess(
+            PR_INSTRUCTIONS.index("commit the cleanup"),
+            PR_INSTRUCTIONS.index("Create a pull request with:"),
+        )
+        cleanup_commands = PR_INSTRUCTIONS.split("```bash\n")[2].split("```", 1)[0]
+        self.assertEqual(cleanup_commands.strip().splitlines(), [
+            "git add -- docs/",
+            'git commit -m "Update Copilot governance documentation"',
+        ])
 
     def test_commit_message_avoids_sdk_rejected_metacharacters(self):
         commands = PR_INSTRUCTIONS.split("```bash\n", 1)[1].split("```", 1)[0]
