@@ -153,10 +153,10 @@ On every review, check the official event sources in `docs/_data/copilot-events.
    - A long window is expected after an outage. Work through it oldest first, and skip items the site or an open `[governance]` PR already covers.
 3. Read the cache-memory notes (if any) for sources you already evaluated and rejected, so you do not re-propose the same change.
    - If a prior note says the run was **blocked** because `web_fetch` or network access was unavailable, ignore that conclusion. Tool availability changes between runs — always attempt Step 2 yourself before deciding anything is blocked.
-4. List every open `[governance]` pull request (title, body, and changed files via the GitHub tools) before proposing edits. Build a list of the upstream changes each one already covers.
-   - Only propose a change that no open `[governance]` PR already covers. Match by upstream announcement or source link, not by title; several PRs with different titles can document the same change.
-   - Never touch an upstream change, section edit, or calendar entry that a pending PR already addresses, even if that PR looks incomplete. Mention it in the PR body under Review notes instead.
-   - If every actionable change is already covered by an open PR, emit **noop** naming the covering PR number(s). Do not open a new PR. Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
+4. List every open `[governance]` pull request (title, body, and changed files via the GitHub tools) before proposing edits. Record potential overlaps, but do not decide that the run is a **noop** here: complete Step 2's source review and Step 3's change classification first.
+   - Use an upstream announcement or source link only to identify candidate overlaps, not to establish coverage. Verify that the PR's changed files and description address the same specific fact, setting, or event occurrence as the candidate change. A shared source URL alone is not enough; for example, separate city/date occurrences in the calendar remain distinct changes.
+   - Do not propose or retain an edit that an open `[governance]` PR already addresses at that same level of detail, even if the PR looks incomplete. Mention it in the PR body under Review notes instead.
+   - Re-fetch sources on hourly runs; a date-only cache note does not mean today's sources are unchanged.
 
 ## Step 2 — Review the sources
 
@@ -224,9 +224,11 @@ For every candidate change, classify it:
 
 Only act on changes you can cite to a specific GitHub Blog post or docs page. **Do not speculate.** If the docs are ambiguous, record it under Known Gaps instead of asserting a behavior.
 
+Compare each classified change with the potential overlaps from Step 1. Treat a change as covered only when the open PR's changed files and description address that same specific fact, setting, or occurrence; a matching source URL by itself does not establish coverage.
+
 ## Step 4 — Make the edits
 
-If neither the calendar nor the site needs an actionable change, emit **noop** with a one-line explanation. Do not open an empty pull request. A change to `docs/_data/governance-watch-state.json` alone is not actionable; only update it alongside another change. Only emit **noop** after you actually retrieved and reviewed the Step 2 sources — if retrieval failed for every path, call `missing_tool` followed by `report_incomplete` instead of `noop`, and say which error each path returned.
+After completing the Step 2 source review and Step 3 classification, if neither the calendar nor the site needs an actionable change because it is already accurate or every actionable change is covered by an open `[governance]` PR, emit **noop** with a one-line explanation (name the covering PR numbers when applicable). Do not open an empty pull request. A change to `docs/_data/governance-watch-state.json` alone is not actionable; only update it alongside another change. If retrieval failed for every path, call `missing_tool` followed by `report_incomplete` instead of `noop`, and say which error each path returned. If a blocker prevents completing the review, preserve `report_incomplete`; do not decide that all changes are covered before the review is complete.
 
 Otherwise edit files under `docs/`:
 
@@ -284,7 +286,14 @@ git branch --show-current
 
 Use the fixed commit message above: the SDK permission matcher rejects shell metacharacters such as `&`, `<`, and `>` even inside quoted Git arguments. Put descriptive change details in the PR title and body instead. Pass the branch name returned by `git branch --show-current` as the `branch` parameter to `create_pull_request`; never use `main` or the base branch. Do not push or change remotes; the safe-output tool handles publication.
 
-Immediately before calling `create_pull_request`, re-list open `[governance]` pull requests once more. If one now covers any change in your diff, drop that change; if nothing remains, emit **noop** instead.
+Immediately before calling `create_pull_request`, re-list open `[governance]` pull requests once more. If one now covers any change in your diff, drop that exact change; if nothing remains, emit **noop** instead.
+
+If changes remain after dropping newly covered edits, commit the cleanup before calling `create_pull_request`; removing edits only from the working tree is not sufficient because the safe-output tool publishes the committed branch. Stage and commit the updated `docs/` tree with these permitted commands, each in a separate `bash` tool call:
+
+```bash
+git add -- docs/
+git commit -m "Update Copilot governance documentation"
+```
 
 Create a pull request with:
 
