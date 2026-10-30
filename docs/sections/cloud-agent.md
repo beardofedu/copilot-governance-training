@@ -3,7 +3,7 @@ layout: default
 title: "Copilot Coding (Cloud) Agent Restrictions"
 nav_order: 6
 permalink: /sections/cloud-agent/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-10-29
 ---
 
 # Copilot Coding (Cloud) Agent Restrictions
@@ -20,15 +20,26 @@ last_reviewed: 2026-10-16
 ### Workflow & merge safety
 > **Official documentation**
 > - [Configuring cloud agent settings](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/configuring-agent-settings)
+> - [Changelog: New tools, triggers, and cost controls for Copilot Automations](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)
 >
 > **Related sections:** [Network-Level Controls]({{ '/sections/network-controls/' | relative_url }})
 
 - GitHub Actions workflows **do not auto-run** on agent-authored pushes by default — a human must click "Approve and run workflows," especially important if the diff touches `.github/workflows/`.
 - Repo admins can toggle built-in validation tools (security scanning, code-review "second opinion") for the cloud agent.
-- Agent changes always land as a PR requiring human review/merge.
+- Agent changes always land as a PR; human review/merge is the default, but an automation with merge permission can merge it without a human.
 
 ### MCP + cloud agent
 Cloud agent supports `allowedMcpServers`/`deniedMcpServers`/`enabledPlugins`/`extraKnownMarketplaces` via [managed settings]({{ '/sections/managed-settings/' | relative_url }}), but is **excluded** from [MCP private-registry enforcement]({{ '/sections/mcp-governance/#mcp-registry-public-preview--not-the-recommended-method' | relative_url }}) and from `permissions.disableBypassPermissionsMode`, `sandbox`, `telemetry`, `remoteControl`.
+
+### Copilot Automations: triggers, tools, and cost controls
+> **Official documentation**
+> - [Changelog: New tools, triggers, and cost controls for Copilot Automations](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)
+> - [Create automations (cloud agent)](https://docs.github.com/copilot/how-tos/use-copilot-agents/cloud-agent/create-automations#setting-ai-credits-limits)
+
+- Automations combine prompts, **triggers** (when to run), and **tools** (what the automation may do); each automation uses only the tools you select.
+- New triggers: the REST API (external systems), 24 more GitHub events, and chaining via "Automation run succeeded/failed" triggers. A trigger's **"Can be triggered by"** setting defaults to `Only users`; `Users and Copilot` lets Copilot-authored events (such as a PR opened by Copilot) fire it.
+- New tools include merging pull requests and retrying workflow runs, plus tools from custom MCP servers — review these when approving automations.
+- **Cost controls:** optional AI-credit limits per run, day, week, or month. Automations without limits run as before.
 
 ### Custom instructions honored by cloud agent
 > **Official documentation**
