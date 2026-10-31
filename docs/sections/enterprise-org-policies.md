@@ -39,7 +39,8 @@ Each policy is set to **Enabled everywhere / Disabled everywhere / Let organizat
 - Agent apps (single policy)
 - MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
 - Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents)
-- Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark — **not** IDEs or the Copilot app)
+- Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark; also applies to VS Code Local Agent Host sessions when the application's Memory setting is enabled, and to eligible Copilot app accounts. Other IDE and app contexts are not listed as supported by the [supported-surfaces table](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies); see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}))
+- Copilot dreaming (public preview, opt-in; policy enablement) — administrators enable it through Copilot policies and enterprise administrators can delegate the choice to organization administrators. Repository dreams cover the repositories allowed by Copilot Memory's repository access settings, users must also enable personal dreaming, and dream runs consume AI credits. Dreaming can add, update, and remove memories; changes to checked-in skills and instructions are proposed in pull requests ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work), [admin docs](https://docs.github.com/copilot/how-tos/use-copilot-agents/copilot-memory/manage-as-administrator#enabling-copilot-dreaming))
 - Models (enable specific/custom models, may add cost)
 
 ### Enterprise-assigned users
