@@ -44,6 +44,14 @@ For Business and Enterprise users, the **Editor preview features** policy must b
 
 Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. Requests are attributed and billed to the organization that owns the app installation; that organization's model policies, budgets, and spending controls apply. AI usage CSV reports identify the app through `app_client_id`. The post does not specify whether these requests appear in audit logs.
 
+### Copilot Memory surfaces and dreaming policy
+
+> **Official sources**
+> - [GitHub intelligence changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work)
+> - [Supported surfaces for policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)
+
+The changelog says Copilot Memory is generally available on paid plans and memories can be created in the Copilot app, CLI, VS Code, cloud agent, code review, Slack, Teams, and GitHub Mobile, while the supported-surfaces table (as last reviewed) says the Memory policy does not govern IDEs or the Copilot app. It does not state which policy governs each surface, or where the dreaming policy appears relative to the Memory policy. Verify in a test enterprise before relying on either.
+
 ### Settings validation error taxonomy
 
 > **Official documentation**
