@@ -284,6 +284,14 @@ img { max-width: 100%; }
   background: var(--header-bg);
   border-bottom: 1px solid var(--border);
 }
+.open-pr-banner {
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--accent-subtle);
+  color: var(--fg);
+  text-align: center;
+  font-size: 14px;
+}
 .header-inner {
   display: flex;
   flex-wrap: wrap;

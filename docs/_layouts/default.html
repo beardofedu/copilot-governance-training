@@ -24,6 +24,11 @@
 {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
 {% assign repo_nwo = site.github.repository_nwo | default: 'beardofedu/copilot-governance-training' %}
 
+<div id="open-pr-banner" class="open-pr-banner" data-pulls-url="https://api.github.com/repos/{{ repo_nwo }}/pulls?state=open&amp;per_page=1" hidden role="status">
+  This repository has open pull requests waiting to ship changes.
+  <a href="https://github.com/{{ repo_nwo }}/pulls" target="_blank" rel="noopener">View open pull requests</a>
+</div>
+
 <header class="site-header">
   <div class="header-inner">
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
