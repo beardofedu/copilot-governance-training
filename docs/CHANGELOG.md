@@ -11,7 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-10-31
 
-- **Added** — Copilot dreaming (public preview, opt-in) administrator controls and credit consumption, and an ambiguity between Copilot Memory surfaces in the announcement and the supported-surfaces table ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+- **Added** — Copilot dreaming (public preview, opt-in) administrator controls and credit consumption; clarified Copilot Memory policy coverage for VS Code Local Agent Host sessions and eligible Copilot app accounts, with other announced surfaces still to verify ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
 
 ## 2026-10-30
 
