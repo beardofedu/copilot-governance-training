@@ -14,8 +14,24 @@ async function main() {
     const context = await browser.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
     const page = await context.newPage();
     const errors = [];
+    let openPullRequests = [{ number: 1 }];
+    await page.route('https://api.github.com/repos/**/pulls?state=open&per_page=1', route =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(openPullRequests)
+      }));
     page.on('pageerror', error => errors.push(error.message));
     assert.ok((await page.goto(`${base}/sections/managed-settings-generator/`)).ok());
+    const banner = page.locator('#open-pr-banner');
+    await banner.waitFor({ state: 'visible' });
+    assert.equal(await banner.locator('a').getAttribute('href'),
+      'https://github.com/beardofedu/copilot-governance-training/pulls');
+    const noPullsResponse = page.waitForResponse(response => response.url().includes('/pulls?state=open'));
+    openPullRequests = [];
+    await page.reload();
+    await noPullsResponse;
+    assert.ok(await banner.isHidden());
     await page.locator('#settings-workspace').waitFor({ state: 'visible' });
     const output = async () => JSON.parse(await page.locator('#settings-output').inputValue());
     assert.deepEqual(await output(), {});

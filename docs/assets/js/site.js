@@ -5,6 +5,19 @@
   var THEMES = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
   var root = document.documentElement;
 
+  var openPrBanner = document.getElementById('open-pr-banner');
+  if (openPrBanner) {
+    fetch(openPrBanner.getAttribute('data-pulls-url'), {
+      headers: { Accept: 'application/vnd.github+json' }
+    }).then(function (response) {
+      return response.ok ? response.json() : null;
+    }).then(function (pulls) {
+      if (Array.isArray(pulls) && pulls.length > 0) {
+        openPrBanner.hidden = false;
+      }
+    }).catch(function () {});
+  }
+
   /* ----- Theme picker, persisted in localStorage ------------------------ */
 
   function readTheme() {
