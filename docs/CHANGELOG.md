@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-03
+
+- **Verified** — Documented MCP connector policy interactions, clarified Copilot Memory policy coverage and dreaming scope, and refreshed the default-feature-policy status; remaining audit-log, mobile-policy, and validation-catalog questions are explicit ([MCP management](https://docs.github.com/en/copilot/concepts/enterprise/mcp-management), [Copilot Memory](https://docs.github.com/en/copilot/concepts/prompting-and-context/copilot-memory), [default availability](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)) — Updated: [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+
 ## 2026-11-02
 
 - **Added** — GitHub security extension for the Copilot app (public preview): plugin install path, local-only fixes, credit use, app policy and managed-settings plugin control ([changelog](https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
