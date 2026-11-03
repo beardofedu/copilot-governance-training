@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-02
+
+- **Added** — GitHub security extension for the Copilot app (public preview): plugin install path, local-only fixes, credit use, app policy and managed-settings plugin control ([changelog](https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
+
 ## 2026-10-31
 
 - **Added** — Copilot dreaming (public preview, opt-in) administrator controls and credit consumption; clarified Copilot Memory policy coverage for VS Code Local Agent Host sessions and eligible Copilot app accounts, with other announced surfaces still to verify ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
