@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-10-21
+last_reviewed: 2026-11-03
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -14,6 +14,12 @@ last_reviewed: 2026-10-21
 > - [GitHub Copilot policies for enterprises and organizations](https://docs.github.com/en/copilot/concepts/policies)
 
 Each policy is set to **Enabled everywhere / Disabled everywhere / Let organizations decide** (enterprise level). Orgs cannot override an enterprise "everywhere" setting.
+
+### Choosing the policy scope
+
+Use **Enabled everywhere** or **Disabled everywhere** when the enterprise needs a consistent baseline—for example, to require an approved capability or block one that has not passed review. Choose **Let organizations decide** when business units have different needs and there is a clear owner for those decisions; it is delegation, not a way to make the policy optional for each individual user. Enterprise-assigned users have a separate default (see below).
+
+Treat availability as one layer of governance, not the whole control: enabling a feature does not by itself approve every model, agent, repository, or integration it can reach. Pair the policy with the relevant access, managed-settings, ruleset, data-handling, and budget controls. For preview features, third-party agents, and new models, prefer explicit review and scope over automatic broad enablement.
 
 ### Confirmed named policies
 
@@ -43,12 +49,33 @@ Each policy is set to **Enabled everywhere / Disabled everywhere / Let organizat
 - Copilot dreaming (public preview, opt-in; policy enablement) — administrators enable it through Copilot policies and enterprise administrators can delegate the choice to organization administrators. Repository dreams cover the repositories allowed by Copilot Memory's repository access settings, users must also enable personal dreaming, and dream runs consume AI credits. Dreaming can add, update, and remove memories; changes to checked-in skills and instructions are proposed in pull requests ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work), [admin docs](https://docs.github.com/copilot/how-tos/use-copilot-agents/copilot-memory/manage-as-administrator#enabling-copilot-dreaming))
 - Models (enable specific/custom models, may add cost)
 
+### Why choose each control?
+
+| Control | Why you might enable or delegate it | What to weigh before enabling |
+|---|---|---|
+| Copilot Chat in the IDE, chat agent mode, and Chat in GitHub Mobile | Make the assistant available in the clients and workflows your developers use. | These are distinct surfaces; decide whether mobile access and agentic actions fit your device, data, and review requirements. |
+| Copilot can search the web | Give users current public information to complement repository context. | Web results can be incomplete or untrusted; establish expectations for checking sources and avoid sending sensitive queries. |
+| Copilot code review and unlicensed-member access | Add automated review capacity, including for members without their own Copilot license when that sub-policy is allowed. | Decide who may trigger reviews and who pays. The authorized-users restriction can limit requests made with external licenses; review the Member/Organization billing choices above before broadening access. |
+| Suggestions matching public code | Choose whether users may receive suggestions that match public code, based on the organization’s code reuse and attribution posture. | Enabling can provide useful matches with references; disabling reduces that exposure but can also reduce available suggestions. |
+| Semantic indexing for non-GitHub repositories | Let Copilot use indexed context from supported non-GitHub repositories for more relevant answers. | Enable only for repositories and data sources whose access and handling have been reviewed. |
+| Copilot Metrics API access | Allow approved reporting or analytics integrations to measure adoption and usage. | Keep access disabled if no approved consumer needs it, and govern the data in any downstream reporting system. |
+| Copilot CLI and GitHub Copilot app | Make each client available where its workflow is supported. | They are independent policies: assess local execution, integrations, and data access for each instead of assuming one toggle controls both. |
+| Copilot cloud agent | Give selected organizations access to delegated, repository-based agent work. | Select only organizations ready to govern repository access, agent permissions, review of changes, and usage costs. |
+| Editor preview features | Let teams evaluate capabilities before general availability. | Previews can change and may have different support or governance maturity; enable for an evaluation need, not just for convenience. |
+| Third-party coding agents and agent apps | Allow teams to use a reviewed external or app-based agent when it solves a real workflow need. | Review the provider, data handling, permissions, and applicable organization controls; keep access scoped to organizations with an owner. |
+| MCP servers in Copilot | Unlock MCP use on supported Copilot surfaces when teams need tool or service integrations. | This is a capability switch, not approval of every server. Use the [managed-settings allowlist]({{ '/sections/managed-settings/' | relative_url }}) to control servers; registry restrictions have different coverage and limits (see [MCP governance]({{ '/sections/mcp-governance/' | relative_url }})). |
+| Restrict MCP access to registry servers | Prefer a centrally maintained catalog when supported clients and registered servers meet your needs. | Check the supported surfaces and limitations first; registry enforcement is not a substitute for the managed-settings allowlist where stronger coverage is needed. |
+| Copilot Memory and dreaming | Preserve useful context across eligible sessions; dreaming can maintain memories and propose repository instruction or skill changes. | Set repository access deliberately, explain that memories can change over time, review proposed changes, and account for AI-credit use. Dreaming also requires user opt-in. |
+| Specific and custom models | Approve models that meet your teams’ capability and data-handling requirements. | Models may differ in cost, data-retention terms, and regional/FedRAMP eligibility; do not assume one model’s approval covers another. |
+| Default policy for new features | Reduce the effort of individually configuring each GA feature, or keep the default disabled for a more deliberate rollout. | New or unconfigured GA features can become available automatically; preview features remain opt-in. Preserve explicit choices for features that must differ from the default. |
+| Default availability for released models | Make new GA models available without having to opt in to each one. | Some models are excluded by default or by data-residency/FedRAMP restrictions; review the eligibility rules and keep explicit exceptions where needed. |
+
 ### Enterprise-assigned users
 
 > **Official documentation**
 > - [How policies work for enterprise-assigned users](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)
 
-Users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them.
+Users who receive Copilot directly from the enterprise (not via an org) aren't covered by "Let organizations decide" — a separate **Policies for enterprise-assigned users** setting decides whether those policies default to enabled or disabled for them. Set that default deliberately so directly assigned users are not an unintended exception to the enterprise’s baseline.
 
 ### Default availability of new features and models
 
