@@ -3,12 +3,12 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
-last_reviewed: 2026-10-29
+last_reviewed: 2026-11-03
 ---
 
 # Known Gaps to Verify
 
-Reviewed against official GitHub documentation on **October 22, 2026**.
+Reviewed against official GitHub documentation on **November 3, 2026**.
 
 ## Verified answers
 
@@ -26,35 +26,42 @@ GitHub announced that **local sandboxing** is generally available in Copilot CLI
 > **Official documentation**
 > - [Default availability for Copilot features and models](https://docs.github.com/en/copilot/concepts/enterprise/default-availability)
 
-The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/) announced that enforcement began on October 22 and is rolling out gradually through **October 26**; timing varies per enterprise. The rollout applies the selected default once to eligible GA features that remain **Unconfigured**; explicit choices are preserved, and previews stay opt-in. The [default availability page](https://docs.github.com/en/copilot/concepts/enterprise/default-availability) still used the stale pre-rollout wording "not currently active" when reviewed on **October 22, 2026**. That is an upstream documentation gap, not current activation guidance: enforcement has been announced and is rolling out.
+The [October 22 changelog](https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available/) announced that enforcement would roll out gradually through **October 26**, with timing varying per enterprise. The rollout applies the selected default once to eligible GA features that remain **Unconfigured**; explicit choices are preserved, and previews stay opt-in. The current [default availability page](https://docs.github.com/en/copilot/concepts/enterprise/default-availability) now describes the policy's behavior without the former "not currently active" wording. For a specific enterprise, check its AI Controls to confirm the policy and eligible feature settings.
 
-## Still to verify
-
-### MCP connectors and governance policies
+### GitHub-verified MCP connectors and governance
 
 > **Official documentation**
-> - [Connect your tools to Copilot](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)
+> - [MCP server usage in your company](https://docs.github.com/en/copilot/concepts/enterprise/mcp-management)
+> - [Copilot connectors](https://docs.github.com/en/copilot/concepts/customizations/copilot-connectors)
 
-For Business and Enterprise users, the **Editor preview features** policy must be enabled. If an enterprise MCP allowlist is configured, an administrator must add the GitHub-verified servers to it. The announcement does not explain how registry policies or other MCP policy interactions affect connectors; verify these undocumented interactions in a test enterprise before relying on them.
+The policy interactions are now documented. Connectors require **Editor preview features** and **MCP servers in Copilot** to be enabled. On clients that enforce the relevant controls, **Registry only** blocks connectors, and an `allowedMcpServers` allowlist must include their URLs; a matching `deniedMcpServers` entry still blocks them. These details resolve the prior question about registry and allowlist interactions; check the supported surfaces because enforcement varies by client.
+
+### Copilot Memory policy coverage and dreaming
+
+> **Official sources**
+> - [About GitHub Copilot Memory](https://docs.github.com/en/copilot/concepts/prompting-and-context/copilot-memory)
+> - [Supported surfaces for policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)
+> - [Managing Copilot Memory for an enterprise, organization, or repository](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/copilot-memory/manage-as-administrator)
+
+The Memory guide says repository facts are supported in code review, while user-level preferences are not; Slack and Teams sessions started through Copilot cloud agent follow cloud-agent behavior. The policy reference explicitly limits VS Code support to Local Agent Host sessions with the app's Memory setting enabled, and app support to accounts where Memory is available. The guide lists GitHub Mobile as a Memory surface; its policy coverage remains unclear (see open questions). Dreaming is a separate control in the **Memory** policy section, and its repository scope follows the Memory repository-access selection.
+
+## Open questions
 
 ### Server-to-server authentication for Copilot SDK apps
 
 > **Official documentation**
 > - [Server-to-server authentication](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)
+> - [Reviewing audit logs for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/review-audit-logs)
 
 Public preview: GitHub Apps installed on organizations can make Copilot SDK requests without a signed-in user. Requests are attributed and billed to the organization that owns the app installation; that organization's model policies, budgets, and spending controls apply. AI usage CSV reports identify the app through `app_client_id`. The post does not specify whether these requests appear in audit logs.
 
-### Copilot Memory surfaces and dreaming policy
+### Copilot Memory policy on GitHub Mobile
 
-> **Official sources**
-> - [GitHub intelligence changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work)
-> - [Supported surfaces for policies](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies)
+The [Memory guide](https://docs.github.com/en/copilot/concepts/prompting-and-context/copilot-memory) lists GitHub Mobile as a supported surface, but the [policy surfaces reference](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies) does not list mobile separately. Confirm whether the account/app policy coverage described there also governs Memory use in GitHub Mobile.
 
-The changelog says Copilot Memory is generally available on paid plans and memories can be created in the Copilot app, CLI, VS Code, cloud agent, code review, Slack, Teams, and GitHub Mobile. The supported-surfaces table includes VS Code Local Agent Host sessions when the application's Memory setting is enabled, and eligible Copilot app accounts; this is not blanket support for IDEs or the app. The table does not specify policy coverage for the other announced surfaces (code review, Slack, Teams, and GitHub Mobile), or where the dreaming policy appears relative to the Memory policy. Verify in a test enterprise before relying on either.
-
-### Settings validation error taxonomy
+### Complete managed-settings validation error catalog
 
 > **Official documentation**
 > - [Getting started with enterprise-managed settings: validate and check settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)
 
-The guide confirms that validation checks `copilot/managed-settings.json`, `copilot/team-mappings.json`, and team files referenced by the mappings. It says each issue identifies the affected file and JSON path and is shown as an error or warning, but does not provide a complete list of error/warning codes. Continue to review the reported issues; update this guidance if GitHub publishes a fuller reference.
+The guide confirms that validation checks `copilot/managed-settings.json`, `copilot/team-mappings.json`, and team files referenced by the mappings. It says each issue identifies the affected file and JSON path and is shown as an error or warning, but does not provide a complete list of error/warning codes. Review reported issues; update this guidance if GitHub publishes a fuller reference.
