@@ -65,6 +65,54 @@
       "source": "https://aitour.microsoft.com/",
       "start_date": null,
       "end_date": null
+    },
+    {
+      "name": "Agentic Day: NYC",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-09",
+      "end_date": "2026-11-09"
+    },
+    {
+      "name": "GitHub Agentic Day: Chicago",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-16"
+    },
+    {
+      "name": "GitHub Universe on the Road: Sydney",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-17",
+      "end_date": "2026-11-17"
+    },
+    {
+      "name": "GitHub Universe on the Road: Toronto",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-18",
+      "end_date": "2026-11-18"
+    },
+    {
+      "name": "Agentic Day: Montréal",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-19"
+    },
+    {
+      "name": "Agentic Day: Boston",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-19"
+    },
+    {
+      "name": "Measuring What Matters: Proving the ROI of AI-Powered Engineering",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-19"
+    },
+    {
+      "name": "GitHub Universe on the Road: Paris",
+      "source": "https://github.com/resources/events",
+      "start_date": "2026-11-30",
+      "end_date": "2026-11-30"
     }
   ]
 }

@@ -9,15 +9,17 @@
     { id: 'mcp', title: '4. MCP servers', help: 'Deny rules win. Built-in first-party servers are exempt. Allowlisting is not supported by cloud agent. Every matcher must contain exactly one of serverName, serverUrl, or serverCommand. Prefer URL or command matching: users choose server names.' },
     { id: 'sandbox', title: '5. Sandbox', help: 'CLI, Copilot app, and VS Code Agent Host only. Restrictions combine cumulatively across sources. Adding any sandbox key gates clients below VS Code 1.141.0, CLI 1.0.93, and Copilot app 1.1.26. Roll out client updates first. True enforces force-on settings; false prohibits capabilities; the opposite values leave user configuration unchanged.' },
     { id: 'telemetry', title: '6. Telemetry', help: 'CLI, VS Code, Copilot app, and JetBrains; not cloud agent. The highest-precedence managed source supplies the entire object, without merging. Capture can expose identity, code, prompts, tool results, and sensitive paths. Enable only what is approved. VS Code local harness supports identity and legacy captureContent; fine-grained content controls require Agent Host.' },
-    { id: 'remote', title: '7. Remote access and policy freshness', help: 'Remote control: CLI and VS Code, governing sessions hosted on this device only. Freshness: CLI, VS Code, and Copilot app. Requiring refresh can restrict or block use without a network connection at startup.' }
+    { id: 'remote', title: '7. Remote access and policy freshness', help: 'Remote control: CLI and VS Code, governing sessions hosted on this device only. Freshness: CLI, VS Code, and Copilot app. Requiring refresh can restrict or block use without a network connection at startup.' },
+    { id: 'support', title: '8. Support contact', help: 'Informational organization help URL for Copilot CLI. It does not configure a support service or affect policy enforcement.' }
   ];
   var fields = [];
-  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models (reviewed 2026-10-29).
+  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models and https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference (reviewed 2026-11-05).
   var modelCatalog = [
     { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)'], ['fusion', 'Fusion (model routing; see fusionTier)']] },
     { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
       ['gpt-5.6-luna', 'GPT-5.6 Luna'], ['gpt-5.6-sol', 'GPT-5.6 Sol'], ['gpt-5.6-terra', 'GPT-5.6 Terra'],
-      ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'], ['gpt-6.1-sol', 'GPT-6.1 Sol']] },
+      ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'],
+      ['gpt-6.1-sol', 'GPT-6.1 Sol'], ['gpt-6.1-terra', 'GPT-6.1 Terra']] },
     { provider: 'Anthropic', models: [['claude-haiku-4.5', 'Claude Haiku 4.5'], ['claude-haiku-5.5', 'Claude Haiku 5.5'],
       ['claude-opus-5', 'Claude Opus 5'], ['claude-opus-5.5', 'Claude Opus 5.5'], ['claude-sonnet-4.6', 'Claude Sonnet 4.6'],
       ['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-sonnet-5.5', 'Claude Sonnet 5.5']] },
@@ -107,6 +109,7 @@
   field('remote', 'remoteControl.mode', 'Remote control mode', 'enum', 'disabled blocks remote control; enabled permits it unrestricted; requireSSO requires authorization for every listed organization.', '', ['disabled', 'requireSSO', 'enabled']);
   field('remote', 'remoteControl.githubDotComOrganizations', 'SSO organizations', 'orgs', 'One GitHub organization login per line. Required for requireSSO.', 'YOUR-ORG');
   bool('remote', 'forceRemoteSettingsRefresh', 'Require fresh server policy at startup', 'True requires a fresh download. Server delivery affects startups after first receipt; file/MDM can enforce from first startup. Policy helper scripts cannot set it.');
+  field('support', 'communication.support.url', 'Organization support URL', 'url', 'An informational HTTP(S) help page that Copilot CLI can link to when it would otherwise direct users to an administrator.', 'https://support.example.com/copilot');
 
   var intros = {
     defaults: 'Configure this if you want every new conversation to start from a consistent, approved model for cost, quality, or compliance. Skip it if your AI model policies already limit choice and users pick sensibly.',
@@ -115,7 +118,8 @@
     mcp: 'Configure this to limit which MCP servers agents can connect to, since each server can read data and run tools. Skip it if you have not adopted MCP or accept user-selected servers.',
     sandbox: 'Configure this to contain agent commands in an operating-system sandbox, limiting damage from mistakes or prompt injection. Skip it until clients meet the minimum versions; sandbox settings block older clients.',
     telemetry: 'Configure this to export OpenTelemetry to your own collector for audit, adoption, and cost visibility. Skip it if you have no approved collector or privacy review for agent data.',
-    remote: 'Configure this to govern remote control of local sessions and how strictly clients must fetch fresh policy. Skip it if the defaults suit your users and network conditions.'
+    remote: 'Configure this to govern remote control of local sessions and how strictly clients must fetch fresh policy. Skip it if the defaults suit your users and network conditions.',
+    support: 'Configure this to give Copilot CLI users a consistent place to ask for help. Skip it if your organization does not have a dedicated support page.'
   };
   var reasons = {
     'model': ['Standardize the starting model for cost predictability, consistent quality, or because a model passed your security review.', 'Auto already picks a suitable model per task. A locked model can strand users if it is retired or unavailable on their client or plan.'],
@@ -170,7 +174,8 @@
     'telemetry.headersProvider': ['Fetch short-lived credentials at runtime instead of distributing static secrets.', 'CLI only, and you must distribute and maintain the helper executable.'],
     'remoteControl.mode': ['Decide whether local sessions can be steered remotely; requireSSO ties access to your organizations.', 'Disabling removes a convenient way to monitor and steer long-running agents.'],
     'remoteControl.githubDotComOrganizations': ['Lists the organizations whose SSO authorization remote control requires.', 'Only needed with requireSSO.'],
-    'forceRemoteSettingsRefresh': ['Clients always start with the latest policy, closing the gap after a policy change.', 'Restricts or blocks use when the device is offline at startup.']
+    'forceRemoteSettingsRefresh': ['Clients always start with the latest policy, closing the gap after a policy change.', 'Restricts or blocks use when the device is offline at startup.'],
+    'communication.support.url': ['Direct users to your organization’s approved help page when they need administrator support.', 'It is informational only, works only in Copilot CLI, and does not provide support or enforce policy.']
   };
   groups.forEach(function (group) { group.intro = intros[group.id]; });
   fields.forEach(function (def) { def.why = reasons[def.path][0]; def.whyNot = reasons[def.path][1]; });

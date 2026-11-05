@@ -6,10 +6,10 @@ const entry = (raw, override = false) => ({ include: true, raw, override });
 const def = path => fields.find(field => field.path === path);
 
 test('all documented top-level settings and nested controls are represented', () => {
-  assert.equal(groups.length, 7);
+  assert.equal(groups.length, 8);
   assert.equal(new Set(fields.map(field => field.path)).size, fields.length);
   assert.deepEqual([...new Set(fields.map(field => field.path.split('.')[0]))].sort(), [
-    'allowedMcpServers', 'autoTier', 'deniedMcpServers', 'enabledPlugins',
+    'allowedMcpServers', 'autoTier', 'communication', 'deniedMcpServers', 'enabledPlugins',
     'extraKnownMarketplaces', 'features', 'forceRemoteSettingsRefresh', 'fusionTier',
     'model', 'permissions', 'remoteControl', 'sandbox', 'strictKnownMarketplaces', 'telemetry'
   ].sort());
@@ -17,6 +17,7 @@ test('all documented top-level settings and nested controls are represented', ()
     'permissions.model', 'permissions.defaultMode', 'permissions.disableAssistedPermissionsMode',
     'sandbox.learningMode', 'sandbox.auth.git', 'sandbox.auth.gh',
     'sandbox.userPolicy.network.proxy.url', 'sandbox.userPolicy.seatbelt.keychainAccess',
+    'communication.support.url',
     'telemetry.headersProvider', ...['identity', 'prompts', 'responses', 'toolArguments',
       'toolOutput', 'policyDetail'].map(key => `telemetry.capture.${key}`)
   ]) assert.ok(def(path), path);
@@ -33,6 +34,7 @@ test('every wizard step and setting explains why to use it or not', () => {
 test('model fields are dropdowns of documented model identifiers', () => {
   const ids = modelCatalog.flatMap(group => group.models.map(model => model[0]));
   assert.equal(ids[0], 'auto');
+  assert.ok(ids.includes('gpt-6.1-terra'));
   assert.equal(new Set(ids).size, ids.length);
   for (const id of ids) assert.match(id, /^[a-z0-9][a-z0-9.-]*$/);
   for (const path of ['model', 'permissions.model']) {
@@ -40,6 +42,14 @@ test('model fields are dropdowns of documented model identifiers', () => {
     assert.equal(parse(def(path), 'claude-sonnet-5.5'), 'claude-sonnet-5.5');
     assert.throws(() => parse(def(path), 'Claude Sonnet 5.5'));
   }
+});
+
+test('organization support URL is optional and accepts only HTTP(S)', () => {
+  const supportUrl = def('communication.support.url');
+  assert.equal(supportUrl.group, 'support');
+  assert.deepEqual(build({ [supportUrl.path]: entry('https://support.example.com/copilot') }).settings,
+    { communication: { support: { url: 'https://support.example.com/copilot' } } });
+  assert.throws(() => parse(supportUrl, 'ftp://support.example.com'));
 });
 
 test('included autoTier is preserved with a fixed default model and reports its applicability', () => {
