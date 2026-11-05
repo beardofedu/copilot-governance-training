@@ -460,7 +460,7 @@
     section.appendChild(should);
     section.appendChild(node('p', group.help, 'settings-help'));
     var sourceLink = node('a', 'Official ' + stepTitle(group).toLowerCase() + ' reference');
-    var anchors = { defaults: 'model', permissions: 'permissions', plugins: 'strictknownmarketplaces', mcp: 'allowedmcpservers', sandbox: 'sandbox', telemetry: 'telemetry', remote: 'remotecontrol' };
+    var anchors = { defaults: 'model', permissions: 'permissions', plugins: 'strictknownmarketplaces', mcp: 'allowedmcpservers', sandbox: 'sandbox', telemetry: 'telemetry', remote: 'remotecontrol', support: 'communicationsupporturl' };
     sourceLink.href = reference + '#' + anchors[group.id];
     section.appendChild(sourceLink);
     var advanced = node('details', '', 'settings-advanced');

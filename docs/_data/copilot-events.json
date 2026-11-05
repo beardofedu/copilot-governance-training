@@ -113,6 +113,36 @@
       "source": "https://github.com/resources/events",
       "start_date": "2026-11-30",
       "end_date": "2026-11-30"
+    },
+    {
+      "name": "GitHub Universe on the Road: Bengaluru",
+      "source": "https://githubuniverse.com/on-the-road",
+      "start_date": "2026-12-01",
+      "end_date": "2026-12-01"
+    },
+    {
+      "name": "GitHub Universe on the Road: São Paulo",
+      "source": "https://githubuniverse.com/on-the-road",
+      "start_date": "2026-12-01",
+      "end_date": "2026-12-01"
+    },
+    {
+      "name": "GitHub Universe on the Road: Madrid",
+      "source": "https://githubuniverse.com/on-the-road",
+      "start_date": "2026-12-03",
+      "end_date": "2026-12-03"
+    },
+    {
+      "name": "GitHub Universe on the Road: London",
+      "source": "https://githubuniverse.com/on-the-road",
+      "start_date": "2026-12-08",
+      "end_date": "2026-12-08"
+    },
+    {
+      "name": "GitHub Universe on the Road: Munich",
+      "source": "https://githubuniverse.com/on-the-road",
+      "start_date": "2026-12-10",
+      "end_date": "2026-12-10"
     }
   ]
 }
