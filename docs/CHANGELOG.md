@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-06
+
+- **Added** — Usage metrics API flags users missing client telemetry or below minimum IDE/extension versions (`client_telemetry_present`, `usage_metrics_requirements`, daily counts) ([source](https://github.blog/changelog/2026-11-05-usage-metrics-api-flags-telemetry-and-version-gaps)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+- **Added** — Usage metrics API `copilot_code_review` object with comments evaluated/addressed and breakdowns for repository reports ([source](https://github.blog/changelog/2026-11-05-usage-metrics-api-adds-code-review-details-and-addressed-rate)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-11-05
 
 - **Added** — `communication.support.url` as an informational, CLI-only organization help link in the managed-settings reference and generator ([source](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#communicationsupporturl)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
