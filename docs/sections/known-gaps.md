@@ -3,12 +3,12 @@ layout: default
 title: "Known Gaps to Verify"
 nav_order: 14
 permalink: /sections/known-gaps/
-last_reviewed: 2026-11-03
+last_reviewed: 2026-11-05
 ---
 
 # Known Gaps to Verify
 
-Reviewed against official GitHub documentation on **November 3, 2026**.
+Reviewed against official GitHub documentation on **November 5, 2026**.
 
 ## Verified answers
 
@@ -65,3 +65,17 @@ The [Memory guide](https://docs.github.com/en/copilot/concepts/prompting-and-con
 > - [Getting started with enterprise-managed settings: validate and check settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started#4-validate-and-check-the-settings)
 
 The guide confirms that validation checks `copilot/managed-settings.json`, `copilot/team-mappings.json`, and team files referenced by the mappings. It says each issue identifies the affected file and JSON path and is shown as an error or warning, but does not provide a complete list of error/warning codes. Review reported issues; update this guidance if GitHub publishes a fuller reference.
+
+### GitHub Copilot in JetBrains Air
+
+> **Official source**
+> - [GitHub Copilot is now available in JetBrains Air](https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air/)
+
+The announcement says Air administrators can disable Copilot with an Air governance policy, but does not say which GitHub organization policies or managed-settings controls are enforced for local or cloud tasks started through Air. Air analytics do not include Copilot usage, Air cannot set Copilot spending limits, and users cannot choose which personal or organization plan an individual task uses. Do not assume Air’s policy covers the same controls as GitHub’s Copilot policies.
+
+### Copilot in Xcode's built-in coding assistant
+
+> **Official source**
+> - [GitHub Copilot is now available in Xcode's coding assistant](https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant/)
+
+The built-in Xcode coding assistant is in public preview starting with Xcode 27.3 beta and supports all Copilot plans; it is separate from the existing Copilot for Xcode extension. The announcement does not explain which enterprise policies or managed-settings controls apply to this integration.
