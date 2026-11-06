@@ -3,7 +3,7 @@ layout: default
 title: "MCP Server Governance (Deep Dive)"
 nav_order: 4
 permalink: /sections/mcp-governance/
-last_reviewed: 2026-10-29
+last_reviewed: 2026-11-05
 ---
 
 # MCP Server Governance (Deep Dive)

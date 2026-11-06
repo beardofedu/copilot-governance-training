@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-03
+last_reviewed: 2026-11-05
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -42,6 +42,7 @@ Treat availability as one layer of governance, not the whole control: enabling a
 - Copilot cloud agent (enterprise selects **which specific orgs** get it — not just on/off)
 - Editor preview features (IDEs only)
 - Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement
+- **JetBrains Air:** Copilot tasks use the existing subscription via Agent Client Protocol for local or cloud work. Air administrators can disable Copilot through an Air governance policy, but Air analytics do not include Copilot usage and Air cannot set Copilot spending limits; users cannot choose which personal or organization plan an individual task uses ([changelog](https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air)). Whether GitHub organization policies and managed settings apply to these Air tasks is not specified; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).
 - Agent apps (single policy)
 - MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
 - Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents)

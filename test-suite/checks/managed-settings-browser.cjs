@@ -42,7 +42,7 @@ async function main() {
     assert.ok(await page.locator('#wizard-back').isDisabled());
     await page.locator('#wizard-next').click();
     assert.equal(await page.evaluate(() => document.activeElement.id), 'wizard-heading-defaults');
-    assert.match(await page.locator('#wizard-position').textContent(), /Step 2 of 9/);
+    assert.equal((await page.locator('#wizard-position').textContent()).trim(), `Step 2 of ${groups.length + 2}: Conversation defaults`);
     assert.ok(await page.locator(id('model')).isVisible());
     assert.ok(!(await page.locator(id('sandbox.enabled')).isVisible()));
     assert.match(await page.locator(id('model')).locator('..').locator('.settings-reasons').textContent(), /Why you would set it.*Why you might not/s);

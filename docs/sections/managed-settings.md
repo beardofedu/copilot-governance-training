@@ -3,7 +3,7 @@ layout: default
 title: "`managed-settings.json` — The Core Enterprise Lockdown File"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-10-29
+last_reviewed: 2026-11-05
 ---
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
@@ -41,6 +41,7 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 | `model` | Set the default model for new conversations ([JetBrains support](https://github.blog/changelog/2026-10-10-new-controls-and-chat-improvements-in-copilot-for-jetbrains/)) | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `autoTier` | Default Auto routing tier when `model` is `"auto"`: `efficiency`, `balance`, `intelligence`, `unmanaged` (most→least restrictive); needs CLI 1.0.87-0+ / VS Code 1.140.0+ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | `fusionTier` | Default effort level when `model` is `fusion`: `standard`, `high`, `max`, `unmanaged` (most→least restrictive); plain string locks, `{ "overridable": ... }` provides a default; needs CLI 1.0.104-3+ / VS Code 1.144.0+ / Copilot app 1.1.33-4+ ([details](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#fusiontier)) | ✅ | ✅ | ✅ | ❌ | ❌ |
+| `communication.support.url` | Informational HTTP(S) organization help URL; Copilot CLI can link to it when directing users to an administrator ([reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings#communicationsupporturl)) | ✅ | ❌ | ❌ | ❌ | ❌ |
 | `sandbox` | Minimum sandbox: command exec, filesystem/network access, credentials, local MCP/LSP servers (cumulative-restrictive); including this key enforces a minimum client version, so users pinned to older clients must update to keep using Copilot ([source](https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates/)) | ✅ | ✅ (Agent Host sessions, VS Code 1.138.0+) | ✅ | ❌ | ❌ |
 | `telemetry` | Route usage data to your own OpenTelemetry collector; fine-grained `capture` classes for identity and content ([details](#telemetry-capture-controls)) | ✅ | ✅ | ✅ | ❌ | ✅ |
 | `forceRemoteSettingsRefresh` | Require a fresh server-managed settings fetch at startup; clients fail closed if current policy can't be confirmed. Server-managed values start forcing refresh on the startup after first receipt; MDM/file delivery can require freshness before first sign-in ([details](https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates/)) | ✅ | ✅ | ✅ | ❌ | ❌ |

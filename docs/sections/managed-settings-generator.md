@@ -4,14 +4,14 @@ title: "Managed settings generator"
 description: "Build enterprise managed-settings.json with a step-by-step setup wizard that explains each setting, plus copy-ready JSON."
 nav_order: 90
 permalink: /sections/managed-settings-generator/
-last_reviewed: 2026-10-29
+last_reviewed: 2026-11-05
 wide_content: true
 ---
 
 <h1>Managed settings generator</h1>
 <p>Build your enterprise policy one decision at a time, like a setup wizard. Each step covers one area, explains why you would or would not manage each setting, and keeps advanced options one click away. Nothing is included until you select <strong>Include</strong>. This is a new file builder, not an editor for an existing policy.</p>
 <p>All generation happens in your browser. Inputs are not sent to a service or saved by this tool. Avoid real credentials; replace secret placeholders locally after downloading.</p>
-<p>Based on the <a href="https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings">official managed settings reference</a> reviewed October 22, 2026, including the <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#dynamic-authentication-headers">CLI dynamic headers reference</a> and the <a href="https://docs.github.com/en/copilot/reference/ai-models/supported-models">supported AI models list</a>. Read the <a href="{{ '/sections/managed-settings/' | relative_url }}">managed settings guide</a> for precedence, client support, and policy semantics.</p>
+<p>Based on the <a href="https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings">official managed settings reference</a> reviewed November 5, 2026, including the <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#dynamic-authentication-headers">CLI dynamic headers reference</a>, <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference">CLI model identifiers</a>, and the <a href="https://docs.github.com/en/copilot/reference/ai-models/supported-models">supported AI models list</a>. Read the <a href="{{ '/sections/managed-settings/' | relative_url }}">managed settings guide</a> for precedence, client support, and policy semantics.</p>
 
 <noscript><p>This generator requires JavaScript. Use the linked reference and managed settings guide to create your file manually.</p></noscript>
 <p id="settings-loading">Loading the builder. If controls do not appear, enable JavaScript or reload the page.</p>
