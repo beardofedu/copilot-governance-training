@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-07
+
+- **Added** — Copilot code review settings REST/GraphQL APIs by role, rule bypass-list support, and external-license block fix for org-owned bots ([source](https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+- **Added** — Impact dashboard and 28-day usage reports add Copilot Chat and VS Code Agents window engagement; "Passive users" renamed "Chat-first users" ([source](https://github.blog/changelog/2026-11-06-copilot-impact-dashboard-adds-chat-and-vs-code-agent-usage)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-11-06
 
 - **Added** — Usage metrics API flags users missing client telemetry or below minimum IDE/extension versions (`client_telemetry_present`, `usage_metrics_requirements`, daily counts) ([source](https://github.blog/changelog/2026-11-05-usage-metrics-api-flags-telemetry-and-version-gaps)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
