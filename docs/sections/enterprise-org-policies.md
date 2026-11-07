@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-05
+last_reviewed: 2026-11-07
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -34,6 +34,7 @@ Treat availability as one layer of governance, not the whole control: enabling a
 - Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com)
 - Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run.
 - Copilot code review — **"Choose how members with a Copilot license are billed"** (org setting under Copilot → Policies): **Member** (default) bills the member's own Copilot entitlement, and the review fails if their quota is exhausted; **Organization** bills the repository-owning org's cost center and requires AI Credits paid usage to be enabled (a budget is optional) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)).
+- Copilot code review — **settings API (Nov 6, 2026):** code review settings can now be read and updated through REST and GraphQL APIs. Enterprise administrators can enable or disable code review for all organizations or leave the choice to organization administrators; organization administrators manage enablement, default review effort, and runner configuration (enterprise-managed settings can't be overridden); repository administrators manage review effort and whether reviews use custom instructions and MCP tools. Enterprise and organization settings endpoints (including the organization runner endpoint) don't support GitHub Apps or fine-grained personal access tokens; repository endpoints support both (`Administration: read`/`write`), and classic tokens need repository admin access. The **Automatically request Copilot code review** repository rule now supports the bypass list, and the "Block reviews requested with an external Copilot license" setting no longer stops organization- or enterprise-owned GitHub Actions, Dependabot, and apps from requesting reviews on bot-authored pull requests when the organization pays ([changelog](https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates), [docs](https://docs.github.com/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review#configuring-copilot-code-review-with-the-api)).
 - Suggestions matching public code (privacy)
 - Semantic indexing for non-GitHub repos
 - Copilot Metrics API access

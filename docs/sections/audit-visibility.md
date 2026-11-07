@@ -3,7 +3,7 @@ layout: default
 title: "Visibility & Audit (governance, not prevention)"
 nav_order: 10
 permalink: /sections/audit-visibility/
-last_reviewed: 2026-11-06
+last_reviewed: 2026-11-07
 ---
 
 # Visibility & Audit (governance, not prevention)
@@ -34,6 +34,7 @@ last_reviewed: 2026-11-06
 
   Other client-side gaps in metrics: IDE telemetry disabled, proxies/firewalls blocking the Copilot telemetry endpoint, outdated IDE/extension versions. Per-user reports expose `last_known_ide_version` and `last_known_plugin_version` in `totals_by_ide` to spot outdated clients ([source](https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics/)).
 
+- **Impact dashboard chat and VS Code Agents window engagement (Nov 6, 2026):** the Agent adoption chart now covers nine Copilot experiences by adding Copilot Chat and the VS Code Agents window, and the "Passive users" cohort is renamed "Chat-first users" (still `No Cohort` in the API; adoption phases and cohort sizes are unchanged, and chat/VS Code agent engagement doesn't count toward phases). Enterprise and organization 28-day reports add `chat` and `vscode_agent` entries to `copilot_feature_engagement.totals_by_feature`; earlier periods have only the original seven features. A user is engaged after using a feature on at least two days in the 28-day period and can count under several features. Requires the Copilot usage metrics policy and the `View Copilot Metrics` permission ([source](https://github.blog/changelog/2026-11-06-copilot-impact-dashboard-adds-chat-and-vs-code-agent-usage)).
 - **Copilot impact dashboard industry comparison (opt-in, off by default):** the dashboard gains an "Industry comparison" section benchmarking agentic adoption and leverage against aggregated, opted-in peers by company size and industry. Controlled by the **"Copilot metrics industry comparison"** policy, set from the dashboard or centrally in enterprise/organization Copilot policies (the same policy applies in both places; turning it off stops contributing data and viewing comparisons). Requires the Copilot usage metrics policy to be enabled. Enterprise owners (or owners of organizations not owned by an enterprise) can opt in and set the peer group; organizations owned by an enterprise participate through it, and enterprises used only to assign Copilot Business licenses can't participate. Comparisons appear only in the dashboard, not in the metrics API, NDJSON exports or downloads. Aggregated benchmarks contain no identifying data and are deleted after 30 days; opting out excludes data from the next daily update. With data residency, comparison is limited to participants in the same region ([source](https://github.blog/changelog/2026-10-22-industry-comparisons-in-the-copilot-impact-dashboard/)).
 
 ### Session data governance (CLI & Copilot app)
