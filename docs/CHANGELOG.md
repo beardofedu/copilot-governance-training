@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-09
+
+- **Added** — Claude Fable 5.2 is GA with an off-by-default admin policy, required Anthropic data retention, and a time-bound ZDR exemption for eligible enterprises through year end ([source](https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }}), [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+
 ## 2026-11-07
 
 - **Added** — Copilot code review settings REST/GraphQL APIs by role, rule bypass-list support, and external-license block fix for org-owned bots ([source](https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
