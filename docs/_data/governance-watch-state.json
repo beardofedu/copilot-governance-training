@@ -1,8 +1,8 @@
 {
   "sources": {
     "blog": {
-      "reviewed_through": "2026-11-09",
-      "note": "Fully reviewed the GitHub changelog feed from 2026-11-05 through 2026-11-09."
+      "reviewed_through": "2026-11-05",
+      "note": "Reviewed the GitHub changelog feed from 2026-11-05 through 2026-11-09; the full GitHub Blog and changelog review window remains incomplete."
     },
     "docs": {
       "reviewed_through": "2026-11-05",
