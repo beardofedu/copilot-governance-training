@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-11
+
+- **Added** — Enterprise GitHub Apps can manage Copilot seats through the new "Enterprise Copilot license management" permission ([source](https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+- **Added** — Gemini 4 Carbon is GA and governed by the model policy and default model enablement ([source](https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+
 ## 2026-11-09
 
 - **Added** — Claude Fable 5.2 is GA with an off-by-default admin policy, required Anthropic data retention, and a time-bound ZDR exemption for eligible enterprises through year end ([source](https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }}), [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})

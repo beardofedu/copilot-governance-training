@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-07
+last_reviewed: 2026-11-11
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -74,6 +74,8 @@ Treat availability as one layer of governance, not the whole control: enabling a
 
 ### Enterprise-assigned users
 
+- **Seat management via GitHub Apps (Nov 10, 2026):** enterprise GitHub Apps can call the [enterprise-level Copilot seat management APIs](https://docs.github.com/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2026-03-10) to control which users and enterprise teams hold Copilot seats, using the new enterprise fine-grained App permission **Enterprise Copilot license management** ([changelog](https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management)). Grant it only to apps that should assign seats.
+
 > **Official documentation**
 > - [How policies work for enterprise-assigned users](https://docs.github.com/en/copilot/concepts/policies#how-do-policies-work)
 
@@ -87,6 +89,7 @@ Users who receive Copilot directly from the enterprise (not via an org) aren't c
 Two enterprise/org policies control whether unconfigured GA (general availability) items are enabled by default:
 - **Default policy for new features** — GitHub began enforcing this policy on October 22, 2026, with rollout continuing gradually through October 26. It applies the selected default once to new GA features, features moving preview→GA, and existing GA features left **Unconfigured**; explicit choices are preserved, and preview features remain opt-in. The policy is enabled by default. It covers everything on the enterprise "Features & clients" page, plus the **Copilot code review** policy (Agents page) and the **MCP servers in Copilot** policy (MCP page). It does **not** apply to the data-residency/FedRAMP restrictive model policies or **Store local sessions in the Cloud**.
 - **Default availability for released models** — already active; auto-enables new/unconfigured GA models (those labeled **Delegate to Default Policy**). Out of scope and disabled by default regardless of this setting: pre-GA models, open-weight models (DeepSeek, Kimi K2.7 Code, Kimi K3), models not covered by GitHub's data-retention agreement (Claude Fable 5, Claude Fable 5.1, Claude Fable 5.2 — each has its own off-by-default policy; see [changelog](https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot)), and — for enterprises restricted to data-residency or FedRAMP models — any model that doesn't respect those restrictions.
+- **Example — Gemini 4 Carbon (GA, Nov 10, 2026):** a standard GA model for Copilot Pro+, Max, Business, and Enterprise. Administrators manage access through its model policy; under default model enablement it is turned on automatically unless the global default is off or the model is explicitly disabled ([changelog](https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)).
 - Disable either policy at the enterprise or org level to stop auto-enablement; individual features/models can still be explicitly disabled to opt them out while the default policy stays on.
 
 **Training talking point:** "MCP servers in Copilot" being ON does not mean any server can run — it just unlocks MCP capability; the *allowlist* ([`managed-settings.json`]({{ '/sections/managed-settings/' | relative_url }})) does the actual restricting.
