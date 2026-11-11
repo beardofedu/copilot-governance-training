@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-07
+last_reviewed: 2026-11-11
 ---
 
 # Enterprise & Org Policies (AI controls)
