@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-11
+last_reviewed: 2026-11-12
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -29,27 +29,27 @@ Treat availability as one layer of governance, not the whole control: enabling a
 > - [Copilot code review: reviews requested with an external license](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license)
 > - [Configuring Copilot code review](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review)
 
-- Copilot Chat in the IDE / Chat agent mode / Chat in GitHub Mobile
-- "Copilot can search the web"
-- Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com)
-- Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run.
+- Copilot Chat in the IDE / Chat agent mode / Chat in GitHub Mobile ([supported surfaces](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
+- "Copilot can search the web" ([policy conflicts](https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts))
+- Copilot code review (+ sub-policy: allow unlicensed members to use code review on GitHub.com) ([code review configuration](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review))
+- Copilot code review — **"Only allow Copilot code review to be triggered by authorized users"** (org or repo setting, not an enterprise policy): blocks reviews requested with an *external* Copilot license (e.g. personal or another org's). Org-level enablement can't be turned off by repo admins; rulesets-configured automatic reviews still run ([external-license review settings](https://docs.github.com/en/copilot/concepts/agents/code-review#reviews-requested-with-an-external-copilot-license), [code review configuration](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review)).
 - Copilot code review — **"Choose how members with a Copilot license are billed"** (org setting under Copilot → Policies): **Member** (default) bills the member's own Copilot entitlement, and the review fails if their quota is exhausted; **Organization** bills the repository-owning org's cost center and requires AI Credits paid usage to be enabled (a budget is optional) ([changelog](https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls/)).
 - Copilot code review — **settings API (Nov 6, 2026):** code review settings can now be read and updated through REST and GraphQL APIs. Enterprise administrators can enable or disable code review for all organizations or leave the choice to organization administrators; organization administrators manage enablement, default review effort, and runner configuration (enterprise-managed settings can't be overridden); repository administrators manage review effort and whether reviews use custom instructions and MCP tools. Enterprise and organization settings endpoints (including the organization runner endpoint) don't support GitHub Apps or fine-grained personal access tokens; repository endpoints support both (`Administration: read`/`write`), and classic tokens need repository admin access. The **Automatically request Copilot code review** repository rule now supports the bypass list, and the "Block reviews requested with an external Copilot license" setting no longer stops organization- or enterprise-owned GitHub Actions, Dependabot, and apps from requesting reviews on bot-authored pull requests when the organization pays ([changelog](https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates), [docs](https://docs.github.com/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review#configuring-copilot-code-review-with-the-api)).
-- Suggestions matching public code (privacy)
-- Semantic indexing for non-GitHub repos
-- Copilot Metrics API access
-- Copilot CLI (independent client policy)
-- GitHub Copilot app (independent client policy — CLI and app can be toggled separately)
-- Copilot cloud agent (enterprise selects **which specific orgs** get it — not just on/off)
-- Editor preview features (IDEs only)
-- Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement
+- Suggestions matching public code (privacy) ([policy conflicts](https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts))
+- Semantic indexing for non-GitHub repos ([repository indexing](https://docs.github.com/en/copilot/concepts/prompting-and-context/repository-indexing))
+- Copilot Metrics API access ([policy conflicts](https://docs.github.com/en/copilot/reference/enterprise-administrators/policy-conflicts))
+- Copilot CLI (independent client policy) ([CLI administration](https://docs.github.com/en/copilot/how-tos/copilot-cli/administer-copilot-cli-for-your-enterprise))
+- GitHub Copilot app (independent client policy — CLI and app can be toggled separately) ([supported surfaces](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
+- Copilot cloud agent (enterprise selects **which specific orgs** get it — not just on/off) ([enterprise policy management](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies))
+- Editor preview features (IDEs only) ([supported surfaces](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies))
+- Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement ([organization policy management](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-policies))
 - **JetBrains Air:** Copilot tasks use the existing subscription via Agent Client Protocol for local or cloud work. Air administrators can disable Copilot through an Air governance policy, but Air analytics do not include Copilot usage and Air cannot set Copilot spending limits; users cannot choose which personal or organization plan an individual task uses ([changelog](https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air)). Whether GitHub organization policies and managed settings apply to these Air tasks is not specified; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).
-- Agent apps (single policy)
-- MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
-- Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents)
+- Agent apps (single policy) ([Agent apps](https://docs.github.com/en/copilot/concepts/agent-capabilities/about-agents/agent-apps))
+- MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf) ([MCP server usage](https://docs.github.com/en/copilot/concepts/mcp-management))
+- Restrict MCP access to registry servers (governs IDEs/CLI/Copilot app only — no effect on cloud agent or third-party agents) ([registry restrictions](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry))
 - Copilot Memory (governs cloud agent, third-party agents, CLI, and Spark; also applies to VS Code Local Agent Host sessions when the application's Memory setting is enabled, and to eligible Copilot app accounts. Other IDE and app contexts are not listed as supported by the [supported-surfaces table](https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies); see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}))
 - Copilot dreaming (public preview, opt-in; policy enablement) — administrators enable it through Copilot policies and enterprise administrators can delegate the choice to organization administrators. Repository dreams cover the repositories allowed by Copilot Memory's repository access settings, users must also enable personal dreaming, and dream runs consume AI credits. Dreaming can add, update, and remove memories; changes to checked-in skills and instructions are proposed in pull requests ([changelog](https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work), [admin docs](https://docs.github.com/copilot/how-tos/use-copilot-agents/copilot-memory/manage-as-administrator#enabling-copilot-dreaming))
-- Models (enable specific/custom models, may add cost)
+- Models (enable specific/custom models, may add cost) ([organization policy management](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-policies))
 
 ### Why choose each control?
 
