@@ -9,6 +9,11 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-14
+
+- **Added** — Claude Fable 5, Claude Haiku 4.5, Gemini 3.8 Flash, Gemini 4 Argon, Grok 4.6, and Kimi K3 deprecation on 2026-12-14, with suggested alternatives and default-enablement behavior ([source](https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+- **Added** — Gemini 4 Hydrogen is GA and governed by the model policy and default model enablement ([source](https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-11-11
 
 - **Added** — Enterprise GitHub Apps can manage Copilot seats through the new "Enterprise Copilot license management" permission ([source](https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
