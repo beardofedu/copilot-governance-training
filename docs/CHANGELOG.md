@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-16
+
+- **Added** — GitHub Enterprise Server accounts are supported in the GitHub Copilot app (GA); cloud sessions are not available for GHES ([source](https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
+
 ## 2026-11-14
 
 - **Added** — Claude Fable 5, Claude Haiku 4.5, Gemini 3.8 Flash, Gemini 4 Argon, Grok 4.6, and Kimi K3 deprecation on 2026-12-14, with suggested alternatives and default-enablement behavior ([source](https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
