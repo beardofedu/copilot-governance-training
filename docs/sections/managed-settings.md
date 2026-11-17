@@ -3,7 +3,7 @@ layout: default
 title: "`managed-settings.json` — The Core Enterprise Lockdown File"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-11-05
+last_reviewed: 2026-11-17
 ---
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
@@ -128,7 +128,7 @@ Adding `sandbox` to managed settings activates a minimum client-version gate: cl
 | `toolOutput` | Tool results and execution error details |
 | `policyDetail` | Unbounded policy detail such as raw sandbox filesystem paths |
 
-`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`. To attribute activity without collecting content, set only `capture.identity: true`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs.
+`captureContent` is a legacy shorthand for all classes except `identity`; an explicit `capture` value wins for that class. `lockCaptureContent` doesn't govern identity. Fine-grained classes work in CLI, the Copilot app, and VS Code Agent Host sessions; VS Code's local agent harness supports only `identity` and legacy `captureContent`; that Local harness is deprecated in VS Code 1.146 and will be removed in February 2027, remaining available during the transition where organization policy permits ([changelog](https://github.blog/changelog/2026-11-16-vs-code-retires-the-local-harness-in-february-2027)). To attribute activity without collecting content, set only `capture.identity: true`. Captured content can include code, prompts, commands, and sensitive paths — enable only what an audit needs.
 
 ### Deployment methods
 - **Server-managed (recommended, GA):** `copilot/managed-settings.json` in a `.github-private` repo. Only method that reaches **cloud agent**. Propagates in ~1 hr; client restart forces refresh.

@@ -11,6 +11,8 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-11-17
 
+- **Added** — VS Code Local harness deprecated in 1.146 and scheduled for removal in February 2027 ([source](https://github.blog/changelog/2026-11-16-vs-code-retires-the-local-harness-in-february-2027)) — Updated: [Managed Settings]({{ '/sections/managed-settings/' | relative_url }})
+- **Added** — Budget limit raised to 40,000 budgets per GitHub Enterprise Cloud account ([source](https://github.blog/changelog/2026-11-16-budget-limit-increased-to-40000-budgets-per-account)) — Updated: [Plan Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
 - **Added** — `strictPluginOnlyCustomization` managed setting requires skills, custom agents, hooks, MCP servers, and/or executable extensions to come from plugins or managed settings; value format left as a known gap ([source](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
 - **Corrected** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecations took effect 2026-11-16; Opus 5 remains available for runtime refusal fallback through existing authorized access ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 
