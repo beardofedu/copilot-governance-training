@@ -12,9 +12,11 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 ## 2026-11-17
 
 - **Added** — `strictPluginOnlyCustomization` managed setting requires skills, custom agents, hooks, MCP servers, and/or executable extensions to come from plugins or managed settings; value format left as a known gap ([source](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+- **Corrected** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecations took effect 2026-11-16; Opus 5 remains available for runtime refusal fallback through existing authorized access ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 
 ## 2026-11-16
 
+- **Added** — GitHub Enterprise Server accounts are supported in the GitHub Copilot app (GA); cloud sessions are not available for GHES ([source](https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
 - **Corrected** — Removed Claude Opus 5 and GPT-5.6 Terra, deprecated on 2026-11-16 and no longer in the supported models table, from the generator model list ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)) — Updated: [Managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }})
 
 ## 2026-11-14
