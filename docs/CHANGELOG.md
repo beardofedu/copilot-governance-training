@@ -12,6 +12,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 ## 2026-11-16
 
 - **Added** — GitHub Enterprise Server accounts are supported in the GitHub Copilot app (GA); cloud sessions are not available for GHES ([source](https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
+- **Corrected** — Removed Claude Opus 5 and GPT-5.6 Terra, deprecated on 2026-11-16 and no longer in the supported models table, from the generator model list ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)) — Updated: [Managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }})
 
 ## 2026-11-14
 
