@@ -3,7 +3,7 @@ layout: default
 title: "`managed-settings.json` — The Core Enterprise Lockdown File"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-11-05
+last_reviewed: 2026-11-17
 ---
 
 # `managed-settings.json` — The Core Enterprise Lockdown File
