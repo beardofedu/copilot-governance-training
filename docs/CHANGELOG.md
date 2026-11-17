@@ -11,7 +11,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 
 ## 2026-11-17
 
-- **Corrected** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecations took effect 2026-11-16; Opus 5 remains a runtime refusal fallback; Opus 5 and GPT-5.6 Terra removed from the generator model list ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+- **Corrected** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecations took effect 2026-11-16; Opus 5 remains available for runtime refusal fallback through existing authorized access ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 
 ## 2026-11-14
 
