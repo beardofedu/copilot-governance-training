@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-16
+
+- **Corrected** — Removed Claude Opus 5 and GPT-5.6 Terra, deprecated on 2026-11-16 and no longer in the supported models table, from the generator model list ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)) — Updated: [Managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+
 ## 2026-11-14
 
 - **Added** — Claude Fable 5, Claude Haiku 4.5, Gemini 3.8 Flash, Gemini 4 Argon, Grok 4.6, and Kimi K3 deprecation on 2026-12-14, with suggested alternatives and default-enablement behavior ([source](https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
