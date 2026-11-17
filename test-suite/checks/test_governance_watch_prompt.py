@@ -1,6 +1,7 @@
 """Regression tests for Governance Watch execution and completion instructions."""
 
 import json
+import re
 import shlex
 import unittest
 from pathlib import Path
@@ -29,6 +30,23 @@ def compiled_json_env(name):
 
 
 class GovernanceWatchPromptTests(unittest.TestCase):
+    def test_copilot_inference_uses_individual_billing(self):
+        frontmatter = PROMPT.split("---", 2)[1]
+        self.assertIn("  copilot-requests: none\n", frontmatter)
+        self.assertNotRegex(LOCK, r"(?m)^\s+copilot-requests: write")
+        for job in ("agent", "detection"):
+            with self.subTest(job=job):
+                compiled_job = re.split(
+                    r"\n  \w+:\n", LOCK.split(f"\n  {job}:\n", 1)[1], maxsplit=1
+                )[0]
+                self.assertIn(
+                    "COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}",
+                    compiled_job,
+                )
+                self.assertNotIn(
+                    "COPILOT_GITHUB_TOKEN: ${{ github.token }}", compiled_job
+                )
+
     def test_execution_contract_precedes_calendar_and_source_work(self):
         self.assertLess(PROMPT.index("## Tool execution"), PROMPT.index("## Step 0"))
         for instruction in (
