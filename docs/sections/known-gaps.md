@@ -79,3 +79,10 @@ The announcement says Air administrators can disable Copilot with an Air governa
 > - [GitHub Copilot is now available in Xcode's coding assistant](https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant/)
 
 The built-in Xcode coding assistant is in public preview starting with Xcode 27.3 beta and supports all Copilot plans; it is separate from the existing Copilot for Xcode extension. The announcement does not explain which enterprise policies or managed-settings controls apply to this integration.
+
+### `strictPluginOnlyCustomization` value format
+
+> **Official source**
+> - [Control where GitHub Copilot customizations come from](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from)
+
+The announcement names the managed setting and its five categories (skills, custom agents, hooks, MCP servers, executable extensions) but the [enterprise managed settings reference](https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings) did not document the key's value format when reviewed, so it is not in the managed settings table or generator. Confirm the syntax before deploying.

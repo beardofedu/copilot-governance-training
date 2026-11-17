@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-17
+
+- **Added** — `strictPluginOnlyCustomization` managed setting requires skills, custom agents, hooks, MCP servers, and/or executable extensions to come from plugins or managed settings; value format left as a known gap ([source](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})
+
 ## 2026-11-16
 
 - **Corrected** — Removed Claude Opus 5 and GPT-5.6 Terra, deprecated on 2026-11-16 and no longer in the supported models table, from the generator model list ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026), [supported models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)) — Updated: [Managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }})
