@@ -163,6 +163,8 @@ On every review, check the official event sources in `docs/_data/copilot-events.
 
 Review both of these, restricted to the window from Step 1.
 
+Maintain a per-source coverage checklist for every source listed under (a) and (b), plus each applicable known gap. For each source, record the full review window, whether the relevant content was actually read, and its classification. A successful HTTP response, page title, or initial excerpt is not a completed review; continue reading paginated or truncated results as needed. Do not stop after reviewing only one source: finish all reachable source checks before classifying changes or deciding on a terminal output. If a retrieval path fails, continue with the other sources and the specified fallbacks.
+
 You have three ways to retrieve source content. Use them in this order, starting with the first action of this step:
 
 1. The `web_fetch` **tool call**, when exposed by the runtime. It is enabled for this workflow and the firewall allows `github.blog`, `docs.github.com`, and the other domains listed below. Make a real call if available; if tool discovery confirms it is absent, record that absence and proceed to `curl` rather than stopping.
@@ -189,6 +191,7 @@ Rules:
 - GitHub `search_code` has a strict secondary rate limit, and a 429 response says when to retry. Keep fallback searches few and targeted, and never fire several in parallel. On a 429, do not report `missing_tool` immediately. Continue with other work that does not need search, such as reading the site, the calendar, or sources already fetched. Use `sleep <remaining-seconds>` through `bash` if needed to wait out the stated interval; never retry early if waiting is denied. Retry the rate-limited query once after the stated interval. Treat the fallback as failed only if that retry also fails, and quote both errors. If the wait cannot be completed within this run, report the review as incomplete rather than claiming the retry failed.
 - Only report `missing_tool` via the safe-output if all three retrieval paths are unavailable or fail, and say which error or confirmed tool absence each one returned. Then call `report_incomplete` with the retrieval blocker, observed errors, and any partial review coverage; `missing_tool` is diagnostic, not a terminal safe output. If retrieval failures prevent completing the review, also call `report_incomplete` before ending; `missing_tool` alone is not a terminal safe output.
 - Never infer that fetching is impossible from a prior run's notes; tool availability changes between runs, so always try the available retrieval paths yourself.
+- Before a terminal output, verify from the checklist that every applicable source's full window was reviewed. Do not emit `report_incomplete` merely because the review is still partial or no updates have been found; continue while sources remain reachable. Use it only when a concrete blocker or interruption prevents finishing, and leave the coverage date unchanged for any source not fully reviewed.
 
 ### a. GitHub Blog + Changelog
 
