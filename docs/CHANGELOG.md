@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
 
+## 2026-11-17
+
+- **Corrected** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecations took effect 2026-11-16; Opus 5 remains available for runtime refusal fallback through existing authorized access ([source](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-11-16
 
 - **Added** — GitHub Enterprise Server accounts are supported in the GitHub Copilot app (GA); cloud sessions are not available for GHES ([source](https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app)) — Updated: [Plan-Tier Gating]({{ '/sections/plan-tier-gating/' | relative_url }})
