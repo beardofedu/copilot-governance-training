@@ -164,6 +164,20 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, PROMPT)
 
+    def test_source_coverage_must_be_complete_before_terminal_output(self):
+        source_review = PROMPT.split("## Step 2", 1)[1].split("## Step 3", 1)[0]
+        for instruction in (
+            "per-source coverage checklist",
+            "whether the relevant content was actually read",
+            "A successful HTTP response, page title, or initial excerpt is not a completed review",
+            "Do not stop after reviewing only one source",
+            "verify from the checklist that every applicable source's full window was reviewed",
+            "Do not emit `report_incomplete` merely because the review is still partial or no updates have been found",
+            "Use it only when a concrete blocker or interruption prevents finishing",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, source_review)
+
     def test_open_pr_coverage_is_specific_and_noop_is_deferred(self):
         step1 = PROMPT.split("## Step 1", 1)[1].split("## Step 2", 1)[0]
         for instruction in (
