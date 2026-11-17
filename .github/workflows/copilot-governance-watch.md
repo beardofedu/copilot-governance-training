@@ -29,7 +29,7 @@ jobs:
     needs: [event_schedule]
     if: needs.event_schedule.outputs.should_run == 'true'
 permissions:
-  copilot-requests: write
+  copilot-requests: none
   contents: read
   issues: read
   pull-requests: read

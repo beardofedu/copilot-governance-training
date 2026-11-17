@@ -101,6 +101,20 @@ remains readable, and creates or updates one issue if either check fails. The is
 closes after a later successful run. The canary job uses the built-in Actions
 `GITHUB_TOKEN` with `copilot-requests: write`, so no additional secret is needed;
 organization policy must allow Copilot CLI usage billed to the organization.
+
+Copilot Governance Watch uses **individual/seat billing**, with
+`copilot-requests: none`. Before enabling it, add a repository Actions secret named
+`COPILOT_GITHUB_TOKEN` containing a fine-grained personal access token from a user
+with an active Copilot subscription and the **Copilot Requests: read** account
+permission (select the user's account as the token's resource owner). Both the
+review and threat-detection jobs use this secret; the built-in
+`GITHUB_TOKEN` is not used for Copilot inference. Inference is attributed to the
+token owner's Copilot entitlements. See the [gh-aw billing guide](https://github.github.com/gh-aw/reference/billing/)
+for setup details. If organization billing becomes available, an organization owner
+must enable **Copilot → Policies → Copilot CLI → Allow use of Copilot CLI billed to
+the organization**, then change the watcher's permission to `copilot-requests: write`
+and recompile it.
+
 Hourly reviews recheck same-day announcements and avoid duplicating open PRs.
 GitHub Actions schedules are best-effort and may be delayed; the existing
 10,000 daily AI-credit cap still applies and can stop further reviews that day.
@@ -131,8 +145,8 @@ with the gh-aw version pinned in `.github/workflows/quality-checks.yml`:
 
 ```bash
 # If gh-aw is already installed, first run: gh extension remove gh-aw
-gh extension install github/gh-aw --pin v0.93.2
-gh aw compile
+gh extension install github/gh-aw --pin v1.2.2
+gh aw compile --no-check-update
 ```
 
 Commit both the `.md` and the regenerated `.lock.yml`.
