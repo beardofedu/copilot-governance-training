@@ -37,7 +37,7 @@ def find_stale_sections(as_of: date, sections_dir: Path = SECTIONS) -> list[dict
             stale.append(
                 {
                     "title": title_match.group(1),
-                    "url": f"https://beardofedu.github.io/copilot-governance-training/sections/{path.stem}/",
+                    "url": f"https://beardofedu.github.io/awesome-copilot-admin-stuff/sections/{path.stem}/",
                     "last_reviewed": last_reviewed.isoformat(),
                 }
             )

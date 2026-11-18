@@ -7,7 +7,11 @@ permalink: /changelog/
 
 # Changelog
 
-Automated updates from the [Copilot Governance Watch](../.github/workflows/copilot-governance-watch.md) workflow are recorded here, newest first. Each entry links to its official source and to the training page(s) that were updated.
+Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-admin-stuff' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
+
+## 2026-11-18
+
+- **Changed** — Reframed the guide around building trust and enabling responsible Copilot adoption, and moved the site to its new repository name — Updated: [Overview]({{ '/' | relative_url }}), [Mental Model]({{ '/sections/mental-model/' | relative_url }}), [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }}), [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Cloud Agent Governance]({{ '/sections/cloud-agent/' | relative_url }}), [CLI & App Sandboxing]({{ '/sections/cli-sandboxing/' | relative_url }})
 
 ## 2026-11-17
 
@@ -76,7 +80,7 @@ Automated updates from the [Copilot Governance Watch](../.github/workflows/copil
 ## 2026-10-29
 
 - **Added** — Repository plugin defaults and enterprise plugin controls (require/block plugins, approved marketplaces) generally available ([changelog](https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
-- **Added** — Copilot Automations new triggers, tools (including MCP and merge), and per-run/day/week/month AI-credit limits ([changelog](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)) — Updated: [Cloud Agent Restrictions]({{ '/sections/cloud-agent/' | relative_url }})
+- **Added** — Copilot Automations new triggers, tools (including MCP and merge), and per-run/day/week/month AI-credit limits ([changelog](https://github.blog/changelog/2026-10-28-new-tools-triggers-and-cost-controls-for-copilot-automations)) — Updated: [Cloud Agent Governance]({{ '/sections/cloud-agent/' | relative_url }})
 - **Added** — Server-to-server GitHub App usage attribution via `app_client_id` in AI usage CSVs ([changelog](https://github.blog/changelog/2026-10-27-github-copilot-supports-server-to-server-authentication)) — Updated: [Visibility & Audit]({{ '/sections/audit-visibility/' | relative_url }})
 - **Added** — Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra deprecation on 2026-11-16, with suggested alternatives and default-enablement behavior ([changelog](https://github.blog/changelog/2026-10-15-upcoming-deprecation-of-selected-github-copilot-models-in-mid-november/)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
 - **Added** — GitHub-verified MCP connectors (public preview) ([changelog](https://github.blog/changelog/2026-10-28-connect-your-tools-to-copilot-without-all-the-setup)) — Updated: [MCP Governance]({{ '/sections/mcp-governance/' | relative_url }}), [Known Gaps]({{ '/sections/known-gaps/' | relative_url }})

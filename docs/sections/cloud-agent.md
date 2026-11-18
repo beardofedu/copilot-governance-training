@@ -1,12 +1,14 @@
 ---
 layout: default
-title: "Copilot Coding (Cloud) Agent Restrictions"
+title: "Copilot Coding (Cloud) Agent Governance"
 nav_order: 6
 permalink: /sections/cloud-agent/
-last_reviewed: 2026-11-05
+last_reviewed: 2026-11-18
 ---
 
-# Copilot Coding (Cloud) Agent Restrictions
+# Copilot Coding (Cloud) Agent Governance
+
+Enable cloud-agent workflows with appropriate access, review, network, and cost controls. Choose settings based on your organization's needs and verify the coverage and limitations of each control.
 
 ### Network firewall
 > **Official documentation**

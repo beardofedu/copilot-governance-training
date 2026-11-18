@@ -1,12 +1,14 @@
 ---
 layout: default
-title: "`managed-settings.json` — The Core Enterprise Lockdown File"
+title: "`managed-settings.json` — Enterprise Governance Settings"
 nav_order: 3
 permalink: /sections/managed-settings/
-last_reviewed: 2026-11-17
+last_reviewed: 2026-11-18
 ---
 
-# `managed-settings.json` — The Core Enterprise Lockdown File
+# `managed-settings.json` — Enterprise Governance Settings
+
+Use managed settings to establish consistent agent behavior, enable approved integrations, and apply safeguards where they are needed.
 
 **Build your policy:** use the [managed settings generator]({{ '/sections/managed-settings-generator/' | relative_url }}) for guided controls, advanced settings, and copy-ready JSON with deployment instructions.
 
@@ -26,7 +28,7 @@ Exception: in Copilot CLI, VS Code Agent Host sessions, and the Copilot app, the
 
 | Key | Purpose | CLI | VS Code | Copilot app | Cloud agent | JetBrains |
 |---|---|---|---|---|---|---|
-| `strictKnownMarketplaces` | Lock plugin installs to explicitly listed marketplaces only (empty array = full lockdown) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `strictKnownMarketplaces` | Permit plugin installs only from explicitly listed marketplaces (empty array = no marketplace installs) | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `extraKnownMarketplaces` | Add enterprise-approved marketplaces | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `enabledPlugins` | Enable/disable specific plugins by `PLUGIN@MARKETPLACE` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `allowedMcpServers` | Allowlist MCP servers (URL/command match); unmatched = blocked | ✅ | ✅ | ✅ | ❌ | ✅ |

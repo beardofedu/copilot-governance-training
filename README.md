@@ -1,10 +1,10 @@
-# copilot-governance-training
+# Awesome Copilot Admin Stuff
 
-**Locking Down GitHub Copilot — Full Enterprise Guardrails Guide**
+**Building trust at scale by governing GitHub Copilot**
 
-A training site covering every enterprise/org-level mechanism to restrict, govern, and audit GitHub Copilot usage.
+A practical guide for administrators enabling responsible Copilot adoption. Explore policies, managed settings, visibility, and risk-appropriate guardrails that balance security with developer productivity.
 
-📖 **Published site:** https://beardofedu.github.io/copilot-governance-training/
+📖 **Published site:** https://beardofedu.github.io/awesome-copilot-admin-stuff/
 
 ## Repository layout
 
@@ -166,7 +166,7 @@ described in [SECURITY.md](SECURITY.md).
 
 - Training content in `docs/` is licensed under
   [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-docs).
-  Attribute reuse to "Copilot Governance Training by beardofedu" with a link to
+  Attribute reuse to "Awesome Copilot Admin Stuff by beardofedu" with a link to
   this repository.
 - All other files, including scripts, workflows, and the test suite, are licensed
   under the [MIT License](LICENSE).

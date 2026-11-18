@@ -1,6 +1,6 @@
-title: "Locking Down GitHub Copilot"
-description: "A complete admin guardrails training for governing GitHub Copilot at enterprise scale."
-baseurl: "/copilot-governance-training"
+title: "Awesome Copilot Admin Stuff"
+description: "Building trust at scale by governing GitHub Copilot."
+baseurl: "/awesome-copilot-admin-stuff"
 url: "https://beardofedu.github.io"
 
 markdown: kramdown

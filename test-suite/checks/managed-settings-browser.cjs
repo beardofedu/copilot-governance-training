@@ -4,7 +4,8 @@ const { chromium } = require('playwright');
 const AxeBuilder = require('@axe-core/playwright').default;
 const { fields, groups } = require('../../docs/assets/js/managed-settings.js');
 
-const base = process.env.SETTINGS_TEST_URL || 'http://127.0.0.1:4173/copilot-governance-training';
+const base = process.env.SETTINGS_TEST_URL || 'http://127.0.0.1:4173/awesome-copilot-admin-stuff';
+const repository = process.env.GITHUB_REPOSITORY || 'beardofedu/awesome-copilot-admin-stuff';
 const themes = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
 const id = path => '#setting-' + path.replace(/\./g, '-');
 
@@ -22,11 +23,18 @@ async function main() {
         body: JSON.stringify(openPullRequests)
       }));
     page.on('pageerror', error => errors.push(error.message));
+    assert.ok((await page.goto(`${base}/`)).ok());
+    const homePath = new URL(`${base}/`).pathname;
+    assert.equal(await page.locator('.site-title').getAttribute('href'), homePath);
+    const stylesheet = await page.locator('link[rel="stylesheet"]').getAttribute('href');
+    assert.ok(stylesheet);
+    assert.ok((await page.request.get(new URL(stylesheet, `${base}/`).href)).ok());
+    assert.equal(await page.locator('#search-dialog').getAttribute('data-index-url'), `${homePath}search.json`);
     assert.ok((await page.goto(`${base}/sections/managed-settings-generator/`)).ok());
     const banner = page.locator('#open-pr-banner');
     await banner.waitFor({ state: 'visible' });
     assert.equal(await banner.locator('a').getAttribute('href'),
-      'https://github.com/beardofedu/copilot-governance-training/pulls');
+      `https://github.com/${repository}/pulls`);
     const noPullsResponse = page.waitForResponse(response => response.url().includes('/pulls?state=open'));
     openPullRequests = [];
     await page.reload();
