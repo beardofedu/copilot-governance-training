@@ -6,9 +6,9 @@ permalink: /
 
 <section class="hero">
   <div class="hero-copy">
-  <p class="eyebrow">Enterprise governance playbook</p>
-  <h1>Locking Down<br><span>GitHub Copilot</span></h1>
-  <p class="hero-lede">A practical guide to the controls, policies, and audit layers that keep Copilot useful, secure, and aligned with your organization.</p>
+  <p class="eyebrow">Practical GitHub Copilot governance</p>
+  <h1>Govern GitHub Copilot.<br><span>Build trust at scale.</span></h1>
+  <p class="hero-lede">Enable responsible adoption with practical policies, visibility, and guardrails that balance security with developer productivity.</p>
   <div class="hero-actions">
     <a class="button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
     <a class="button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>

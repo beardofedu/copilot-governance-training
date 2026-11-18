@@ -3,10 +3,12 @@ layout: default
 title: "Mental Model: Where Controls Live"
 nav_order: 1
 permalink: /sections/mental-model/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-11-18
 ---
 
 # Mental Model: Where Controls Live
+
+Governance is about enabling teams to use Copilot responsibly, not simply turning features off. Start with the outcomes and risks that matter to your organization, choose proportionate controls, and verify both protection and developer experience as usage evolves.
 
 | Layer | Examples | Applies to |
 |---|---|---|

@@ -9,17 +9,17 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Ways to contribute
 
 - **Report outdated or incorrect content.** Use the
-  [content correction form](https://github.com/beardofedu/copilot-governance-training/issues/new?template=content-correction.yml) and
+  [content correction form](https://github.com/beardofedu/awesome-copilot-admin-stuff/issues/new?template=content-correction.yml) and
   link the official source that shows the current behavior.
 - **Suggest a control or topic.** Use the
-  [new content form](https://github.com/beardofedu/copilot-governance-training/issues/new?template=content-request.yml).
+  [new content form](https://github.com/beardofedu/awesome-copilot-admin-stuff/issues/new?template=content-request.yml).
 - **Report a site problem.** Use the
-  [site bug form](https://github.com/beardofedu/copilot-governance-training/issues/new?template=site-bug.yml) for broken layout,
+  [site bug form](https://github.com/beardofedu/awesome-copilot-admin-stuff/issues/new?template=site-bug.yml) for broken layout,
   search, navigation, themes, or accessibility barriers.
 - **Improve the governance test suite.** See [`test-suite/README.md`](test-suite/README.md).
 - **Pick up an existing issue.** Look for
-  [`good first issue`](https://github.com/beardofedu/copilot-governance-training/labels/good%20first%20issue) or
-  [`help wanted`](https://github.com/beardofedu/copilot-governance-training/labels/help%20wanted).
+  [`good first issue`](https://github.com/beardofedu/awesome-copilot-admin-stuff/labels/good%20first%20issue) or
+  [`help wanted`](https://github.com/beardofedu/awesome-copilot-admin-stuff/labels/help%20wanted).
 
 Report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md),
 not in public issues.
@@ -47,8 +47,8 @@ The site is a Jekyll project in `docs/`, built by GitHub Pages without custom pl
 ```bash
 # Preview the site locally (requires Ruby and Bundler)
 gem install jekyll
-jekyll serve --source docs --baseurl /copilot-governance-training
-# Visit http://127.0.0.1:4000/copilot-governance-training/
+jekyll serve --source docs --baseurl /awesome-copilot-admin-stuff
+# Visit http://127.0.0.1:4000/awesome-copilot-admin-stuff/
 
 # Run offline tests
 python3 -m unittest discover -s test-suite/checks -p 'test_*.py'
@@ -63,7 +63,7 @@ npm run test:a11y
 ```
 
 The accessibility script expects the site at
-`http://127.0.0.1:4173/copilot-governance-training/`; see
+`http://127.0.0.1:4173/awesome-copilot-admin-stuff/`; see
 `.github/workflows/quality-checks.yml` for how CI serves it.
 
 The managed settings generator is defined in `docs/assets/js/managed-settings.js`.

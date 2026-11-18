@@ -3,7 +3,7 @@ layout: default
 title: "Copilot CLI & App Sandboxing"
 nav_order: 7
 permalink: /sections/cli-sandboxing/
-last_reviewed: 2026-10-16
+last_reviewed: 2026-11-18
 ---
 
 # Copilot CLI & App Sandboxing
@@ -15,10 +15,10 @@ last_reviewed: 2026-10-16
 > - [Configuring local sandbox settings: masking environment variables](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/configuring-local-sandbox-settings#masking-environment-variables)
 > - [Using local sandboxing](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/using-local-sandboxing)
 >
-> **Related sections:** [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}) · [Cloud Agent Restrictions]({{ '/sections/cloud-agent/' | relative_url }})
+> **Related sections:** [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}) · [Cloud Agent Governance]({{ '/sections/cloud-agent/' | relative_url }})
 
 - Enterprise AI controls → **Copilot Clients → Copilot CLI** dropdown enables/disables CLI independently of the Copilot app.
-- `permissions.disableBypassPermissionsMode`: kills "YOLO"/bypass-all mode.
+- `permissions.disableBypassPermissionsMode`: disables "YOLO"/bypass-all mode.
 - **Corrected:** local sandboxing is generally available in Copilot CLI, the GitHub Copilot app, and VS Code Agent Host sessions. The [`sandbox` managed-settings key]({{ '/sections/managed-settings/#sandbox-sub-properties' | relative_url }}) enforces on the app as well as Copilot CLI — minimum restrictions on command execution, filesystem/network access, credentials, local MCP/LSP servers — cumulative-restrictive across MDM/server/file/user layers (see the [precedence exception]({{ '/sections/managed-settings/#precedence' | relative_url }})). The public-preview notice applies to cloud sandboxes, not local sandboxing.
 - **Corrected:** `sandbox` also enforces for Agent Host sessions in VS Code 1.138.0+, and the CLI's `/sandbox disable` is a session-only opt-out that only `allowBypass: false` blocks.
 - In app sessions, the embedded runtime enforces the *complete* effective managed `sandbox` object, including properties not shown in the app's own project settings UI — the app only displays the user's project settings, not per-setting managed locks.

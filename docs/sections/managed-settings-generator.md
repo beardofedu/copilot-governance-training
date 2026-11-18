@@ -4,7 +4,7 @@ title: "Managed settings generator"
 description: "Build enterprise managed-settings.json with a step-by-step setup wizard that explains each setting, plus copy-ready JSON."
 nav_order: 90
 permalink: /sections/managed-settings-generator/
-last_reviewed: 2026-11-16
+last_reviewed: 2026-11-18
 wide_content: true
 ---
 
@@ -47,7 +47,7 @@ wide_content: true
 </div>
 
 <h2 id="deploy-your-settings">Deploy your settings</h2>
-<p><strong>Review first.</strong> Compare against your existing policy rather than replacing it blindly. Pilot with a small scope, check client support, and preserve any existing restrictions you still need. An empty <code>{}</code> configures no controls and is not a lockdown baseline.</p>
+<p><strong>Review first.</strong> Compare against your existing policy rather than replacing it blindly. Pilot with a small scope, check client support, and preserve any existing restrictions you still need. An empty <code>{}</code> configures no controls and is not an enforced policy baseline.</p>
 <ol>
   <li><strong>Server-managed (recommended):</strong> copy the generated JSON into <code>copilot/managed-settings.json</code> in your enterprise's <code>.github-private</code> repository. This is the only delivery method that reaches cloud agent; individual keys still have client-specific support. Follow <a href="https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/get-started">GitHub's setup and validation instructions</a>. Review errors and warnings in the enterprise <strong>Agents</strong> tab under <strong>Copilot settings validation</strong>.</li>
   <li><strong>File-based (local clients only):</strong> distribute using your administrator tooling to <code>/Library/Application Support/GitHubCopilot/managed-settings.json</code> on macOS, <code>%ProgramFiles%\GitHubCopilot\managed-settings.json</code> on Windows, or <code>/etc/github-copilot/managed-settings.json</code> on Linux. macOS/Linux CLI files must be root-owned, not group/world-writable, and not symlinks. See <a href="https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/use-managed-settings/deploy-managed-settings">deployment requirements</a>.</li>
