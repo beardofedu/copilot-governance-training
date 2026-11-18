@@ -26,7 +26,7 @@ async function main() {
     assert.ok((await page.goto(`${base}/`)).ok());
     const homePath = new URL(`${base}/`).pathname;
     assert.equal(await page.locator('.site-title').getAttribute('href'), homePath);
-    const stylesheet = await page.locator('link[rel="stylesheet"]').getAttribute('href');
+    const stylesheet = await page.locator('link[rel="stylesheet"][href$="style.css"]').getAttribute('href');
     assert.ok(stylesheet);
     assert.ok((await page.request.get(new URL(stylesheet, `${base}/`).href)).ok());
     assert.equal(await page.locator('#search-dialog').getAttribute('data-index-url'), `${homePath}search.json`);
