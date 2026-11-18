@@ -155,6 +155,10 @@ async function main() {
     assert.ok(complete.extraKnownMarketplaces['enterprise-plugins'].source);
     for (const theme of themes) {
       await page.locator('#theme-select').selectOption(theme);
+      await goTo('review');
+      assert.match(await page.locator('.settings-help a[href="#deploy-your-settings"]').evaluate(
+        element => getComputedStyle(element).textDecorationLine
+      ), /underline/, `${theme} review help link`);
       for (const step of ['welcome', ...groups.map(group => group.id), 'review']) {
         await goTo(step);
         await page.locator('.settings-advanced').evaluateAll(details => details.forEach(element => { element.open = true; }));
