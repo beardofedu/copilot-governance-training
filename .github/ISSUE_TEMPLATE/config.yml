@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security vulnerability
-    url: https://github.com/beardofedu/awesome-copilot-admin-stuff/security/advisories/new
+    url: https://github.com/beardofedu/awesome-copilot-governance/security/advisories/new
     about: Report vulnerabilities privately. Don't open a public issue.
   - name: Copilot product support
     url: https://support.github.com/

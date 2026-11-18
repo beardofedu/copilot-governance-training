@@ -50,14 +50,14 @@ jobs:
 
       - name: Run accessibility checks in all themes
         run: |
-          mkdir -p "$RUNNER_TEMP/site/awesome-copilot-admin-stuff"
-          cp -R _site/. "$RUNNER_TEMP/site/awesome-copilot-admin-stuff/"
+          mkdir -p "$RUNNER_TEMP/site/awesome-copilot-governance"
+          cp -R _site/. "$RUNNER_TEMP/site/awesome-copilot-governance/"
           python3 -m http.server 4173 --directory "$RUNNER_TEMP/site" > "$RUNNER_TEMP/site-server.log" 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           for attempt in $(seq 1 30); do
             echo "Waiting for the site server ($attempt/30)"
-            if curl --fail --silent http://127.0.0.1:4173/awesome-copilot-admin-stuff/ > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:4173/awesome-copilot-governance/ > /dev/null; then
               break
             fi
             sleep 1

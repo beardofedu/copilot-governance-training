@@ -6,7 +6,7 @@ Please **do not** report security vulnerabilities in public issues, discussions,
 pull requests.
 
 Report them privately through
-[GitHub private vulnerability reporting](https://github.com/beardofedu/awesome-copilot-admin-stuff/security/advisories/new). Include:
+[GitHub private vulnerability reporting](https://github.com/beardofedu/awesome-copilot-governance/security/advisories/new). Include:
 
 - A description of the issue and its potential impact
 - Steps to reproduce or a proof of concept
@@ -33,7 +33,7 @@ Out of scope:
 - The fake secrets in `test-suite/fixtures/`. These canary values are intentionally
   committed and grant no access.
 - Inaccurate governance guidance that is not a security vulnerability. Use the
-  [content correction form](https://github.com/beardofedu/awesome-copilot-admin-stuff/issues/new?template=content-correction.yml).
+  [content correction form](https://github.com/beardofedu/awesome-copilot-governance/issues/new?template=content-correction.yml).
 
 ## Supported versions
 

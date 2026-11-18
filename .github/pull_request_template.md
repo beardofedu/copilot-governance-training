@@ -21,7 +21,7 @@ Closes #
 
 ## Checklist
 
-- [ ] I read [CONTRIBUTING.md](https://github.com/beardofedu/awesome-copilot-admin-stuff/blob/main/CONTRIBUTING.md).
+- [ ] I read [CONTRIBUTING.md](https://github.com/beardofedu/awesome-copilot-governance/blob/main/CONTRIBUTING.md).
 - [ ] Every new or changed claim about Copilot behavior cites an official source, or is listed under Known Gaps to Verify.
 - [ ] I updated `last_reviewed` on any guide section I reviewed.
 - [ ] I ran `gh aw compile` and committed the `.lock.yml` if I changed Governance Watch frontmatter.

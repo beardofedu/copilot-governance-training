@@ -7,7 +7,7 @@ permalink: /changelog/
 
 # Changelog
 
-Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-admin-stuff' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
+Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-governance' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
 
 ## 2026-11-18
 
