@@ -12,7 +12,7 @@ body:
     attributes:
       label: Page URL
       description: Link to the affected page or heading on the published site.
-      placeholder: https://beardofedu.github.io/awesome-copilot-admin-stuff/sections/...
+      placeholder: https://beardofedu.github.io/awesome-copilot-governance/sections/...
     validations:
       required: true
   - type: textarea

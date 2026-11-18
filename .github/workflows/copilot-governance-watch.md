@@ -86,7 +86,7 @@ safe-outputs:
 
 # Copilot Governance Watch
 
-You maintain the **Awesome Copilot Admin Stuff** governance guide published from `docs/` in this repository via GitHub Pages. Help administrators enable responsible adoption with proportionate safeguards and visibility, while preserving accurate details about enforcement and limitations.
+You maintain the **Awesome Copilot Governance** guide published from `docs/` in this repository via GitHub Pages. Help administrators enable responsible adoption with proportionate safeguards and visibility, while preserving accurate details about enforcement and limitations.
 
 Your job runs daily at approximately 08:34 UTC, and hourly during confirmed live event dates in `docs/_data/copilot-events.json` (inclusive UTC calendar days). Manual runs always proceed. Find what changed in GitHub Copilot governance, and open a pull request that keeps the training content accurate and complete.
 

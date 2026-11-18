@@ -1,10 +1,10 @@
-# Awesome Copilot Admin Stuff
+# Awesome Copilot Governance
 
 **Building trust at scale by governing GitHub Copilot**
 
 A practical guide for administrators enabling responsible Copilot adoption. Explore policies, managed settings, visibility, and risk-appropriate guardrails that balance security with developer productivity.
 
-📖 **Published site:** https://beardofedu.github.io/awesome-copilot-admin-stuff/
+📖 **Published site:** https://beardofedu.github.io/awesome-copilot-governance/
 
 ## Repository layout
 
@@ -166,7 +166,7 @@ described in [SECURITY.md](SECURITY.md).
 
 - Training content in `docs/` is licensed under
   [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-docs).
-  Attribute reuse to "Awesome Copilot Admin Stuff by beardofedu" with a link to
+  Attribute reuse to "Awesome Copilot Governance by beardofedu" with a link to
   this repository.
 - All other files, including scripts, workflows, and the test suite, are licensed
   under the [MIT License](LICENSE).

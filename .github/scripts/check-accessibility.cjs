@@ -3,7 +3,7 @@ const path = require("node:path");
 const { chromium } = require("playwright");
 const AxeBuilder = require("@axe-core/playwright").default;
 
-const baseUrl = "http://127.0.0.1:4173/awesome-copilot-admin-stuff";
+const baseUrl = "http://127.0.0.1:4173/awesome-copilot-governance";
 const siteDirectory = process.env.SITE_DIRECTORY || path.join(process.cwd(), "_site");
 const themes = [
   { label: "auto (system light)", value: "auto", colorScheme: "light" },

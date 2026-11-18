@@ -25,7 +25,7 @@ class SectionFreshnessTests(unittest.TestCase):
                 [
                     {
                         "title": "Stale section",
-                        "url": "https://beardofedu.github.io/awesome-copilot-admin-stuff/sections/stale/",
+                        "url": "https://beardofedu.github.io/awesome-copilot-governance/sections/stale/",
                         "last_reviewed": "2026-01-01",
                     }
                 ],

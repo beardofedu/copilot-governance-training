@@ -4,8 +4,8 @@ const { chromium } = require('playwright');
 const AxeBuilder = require('@axe-core/playwright').default;
 const { fields, groups } = require('../../docs/assets/js/managed-settings.js');
 
-const base = process.env.SETTINGS_TEST_URL || 'http://127.0.0.1:4173/awesome-copilot-admin-stuff';
-const repository = process.env.GITHUB_REPOSITORY || 'beardofedu/awesome-copilot-admin-stuff';
+const base = process.env.SETTINGS_TEST_URL || 'http://127.0.0.1:4173/awesome-copilot-governance';
+const repository = process.env.GITHUB_REPOSITORY || 'beardofedu/awesome-copilot-governance';
 const themes = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
 const id = path => '#setting-' + path.replace(/\./g, '-');
 
