@@ -154,7 +154,7 @@ async function main() {
     assert.equal(complete.sandbox.learningMode, 'deny');
     assert.ok(complete.extraKnownMarketplaces['enterprise-plugins'].source);
     for (const theme of themes) {
-      await page.locator('html').evaluate((html, value) => html.setAttribute('data-theme', value), theme);
+      await page.locator('#theme-select').selectOption(theme);
       for (const step of ['welcome', ...groups.map(group => group.id), 'review']) {
         await goTo(step);
         await page.locator('.settings-advanced').evaluateAll(details => details.forEach(element => { element.open = true; }));
