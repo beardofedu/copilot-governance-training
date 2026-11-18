@@ -90,6 +90,20 @@ async function main() {
           await page.waitForFunction(() => document.activeElement.classList.contains("search-toggle"));
         }
 
+        if (route === "/") {
+          const title = page.locator(".site-title");
+          const normalColor = await title.evaluate((element) => getComputedStyle(element).color);
+          await title.hover();
+          const hoverColor = await title.evaluate((element) => getComputedStyle(element).color);
+          await page.mouse.move(0, 0);
+          await title.focus();
+          const focusColor = await title.evaluate((element) => getComputedStyle(element).color);
+          if (hoverColor !== normalColor || focusColor !== normalColor) {
+            throw new Error(`Site title loses its color on hover or focus in ${theme.label}`);
+          }
+          await title.blur();
+        }
+
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
           .analyze();

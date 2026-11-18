@@ -299,6 +299,7 @@ img { max-width: 100%; }
 }
 .open-pr-banner a { text-decoration: underline; }
 .header-inner {
+  --header-fgColor-default: var(--fg);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
