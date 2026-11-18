@@ -59,6 +59,37 @@ async function main() {
         }
         await page.locator("#open-pr-banner").waitFor({ state: "visible" });
 
+        if (route === "/" && theme === themes[0]) {
+          await page.emulateMedia({ reducedMotion: "reduce" });
+          const headingTransition = await page.locator(".heading-anchor").first().evaluate(
+            (element) => getComputedStyle(element).transitionDuration
+          );
+          if (headingTransition !== "0s") {
+            throw new Error("Heading permalinks still animate with reduced motion enabled");
+          }
+
+          await page.keyboard.press("Tab");
+          if (await page.evaluate(() => document.activeElement.className) !== "skip-link") {
+            throw new Error("The first keyboard stop is not the skip link");
+          }
+          const skipLinkBounds = await page.locator(".skip-link").evaluate((element) => {
+            const bounds = element.getBoundingClientRect();
+            return { left: bounds.left, top: bounds.top, width: bounds.width, height: bounds.height };
+          });
+          if (skipLinkBounds.left < 0 || skipLinkBounds.top < 0 ||
+              skipLinkBounds.width === 0 || skipLinkBounds.height === 0) {
+            throw new Error("The focused skip link is not visible");
+          }
+          await page.keyboard.press("Enter");
+          await page.waitForFunction(() => document.activeElement.id === "content");
+
+          const searchToggle = page.locator(".search-toggle");
+          await searchToggle.click();
+          await page.waitForFunction(() => document.activeElement.id === "search-input");
+          await page.keyboard.press("Escape");
+          await page.waitForFunction(() => document.activeElement.classList.contains("search-toggle"));
+        }
+
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
           .analyze();
