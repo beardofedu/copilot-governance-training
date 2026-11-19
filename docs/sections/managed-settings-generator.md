@@ -20,9 +20,9 @@ wide_content: true
     <nav aria-label="Setup progress"><ol id="wizard-steps" class="wizard-steps"></ol></nav>
     <form id="settings-form" class="wizard-body" aria-label="Managed settings setup"></form>
     <div class="wizard-nav">
-      <button id="wizard-back" class="Button button" type="button">Back</button>
+      <button id="wizard-back" class="btn button" type="button">Back</button>
       <p id="wizard-position" role="status"></p>
-      <button id="wizard-next" class="Button Button--primary button button-primary" type="button">Next</button>
+      <button id="wizard-next" class="btn btn-primary button button-primary" type="button">Next</button>
     </div>
   </div>
   <section id="wizard-review" hidden>
@@ -30,9 +30,9 @@ wide_content: true
     <p>Check what you chose for each area, fix any errors listed in the preview, then copy or download your file.</p>
     <ul id="settings-summary" class="wizard-summary" aria-label="Configured settings by area"></ul>
     <div class="settings-actions">
-      <button id="settings-copy" class="Button Button--primary button button-primary" type="button">Copy JSON</button>
-      <button id="settings-download" class="Button button" type="button">Download JSON</button>
-      <button id="settings-reset" class="Button button" type="button">Start over</button>
+      <button id="settings-copy" class="btn btn-primary button button-primary" type="button">Copy JSON</button>
+      <button id="settings-download" class="btn button" type="button">Download JSON</button>
+      <button id="settings-reset" class="btn button" type="button">Start over</button>
     </div>
     <p id="settings-feedback" role="status"></p>
     <p class="settings-help">This checks input shape and selected dependencies, not effective policy on a client. It does not connect to your enterprise or deploy anything. Team override checkboxes produce base-file <code>overridable</code> wrappers, not team files or mappings. Next, follow <a href="#deploy-your-settings">Deploy your settings</a>.</p>

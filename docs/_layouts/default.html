@@ -36,7 +36,7 @@
 
 <header class="site-header">
   <div class="Header header-inner" style="--header-bgColor: var(--header-bg); --header-fgColor-default: var(--fg); --header-fgColor-logo: var(--fg);">
-    <button class="Button nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
+    <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
       <span class="nav-toggle-bars" aria-hidden="true"></span>
       <span>Menu</span>
     </button>
@@ -47,7 +47,7 @@
       <span class="site-title-text">{{ site.title }}</span>
     </a>
     <div class="header-actions">
-      <button class="Button search-toggle" type="button" aria-haspopup="dialog" aria-controls="search-dialog" hidden>
+      <button class="btn search-toggle" type="button" aria-haspopup="dialog" aria-controls="search-dialog" hidden>
         <span>Search controls...</span>
         <kbd aria-hidden="true">⌘K</kbd>
       </button>
@@ -65,7 +65,7 @@
           <option value="dark-high-contrast">Dark high contrast</option>
         </select>
       </div>
-      <a class="Button repo-link" href="https://github.com/{{ repo_nwo }}">
+      <a class="btn repo-link" href="https://github.com/{{ repo_nwo }}">
         <span>View on GitHub</span>
         <span aria-hidden="true">↗</span>
       </a>
@@ -76,7 +76,7 @@
 <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title" data-index-url="{{ '/search.json' | relative_url }}">
   <div class="search-heading">
     <h2 id="search-title">Search the guide</h2>
-    <button class="Button search-close" type="button" aria-label="Close search">Esc</button>
+    <button class="btn search-close" type="button" aria-label="Close search">Esc</button>
   </div>
   <label class="visually-hidden" for="search-input">Search controls</label>
   <input id="search-input" class="form-control" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" aria-describedby="search-status" autocomplete="off" spellcheck="false" placeholder="Search controls..." autofocus>
@@ -131,7 +131,7 @@
       {% assign next_idx = idx | plus: 1 %}
       {% if next_idx < sections.size %}
         {% assign next = sections[next_idx] %}
-        <a class="Box pager-link" href="{{ next.url | relative_url }}"><span class="pager-label">Next</span><span class="pager-title">{{ next.title | strip_html | replace: '`', '' }}</span></a>
+        <a class="Box pager-link pager-next" href="{{ next.url | relative_url }}"><span class="pager-label">Next</span><span class="pager-title">{{ next.title | strip_html | replace: '`', '' }}</span></a>
       {% endif %}
     </nav>
     {% endif %}

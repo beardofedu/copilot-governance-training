@@ -10,8 +10,8 @@ permalink: /
   <h1>Govern GitHub Copilot.<br><span>Build trust at scale.</span></h1>
   <p class="hero-lede">Enable responsible adoption with practical policies, visibility, and guardrails that balance security with developer productivity.</p>
   <div class="hero-actions">
-    <a class="Button Button--primary button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
-    <a class="Button button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>
+    <a class="btn btn-primary button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
+    <a class="btn button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>
     <span class="updated-note"><span class="status-dot"></span>Kept current automatically</span>
   </div>
   </div>
