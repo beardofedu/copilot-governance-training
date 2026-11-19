@@ -276,7 +276,7 @@ img { max-width: 100%; }
   color: var(--fg);
 }
 
-:focus-visible:focus { outline: 3px solid var(--accent-emphasis); outline-offset: 3px; }
+:focus-visible:focus { outline: 3px solid var(--accent-fg); outline-offset: 3px; }
 
 /* ==========================================================================
    Header
