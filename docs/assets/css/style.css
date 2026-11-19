@@ -293,6 +293,7 @@ img { max-width: 100%; }
   text-align: center;
   font-size: 14px;
 }
+.open-pr-banner a { text-decoration: underline; }
 .header-inner {
   display: flex;
   flex-wrap: wrap;
