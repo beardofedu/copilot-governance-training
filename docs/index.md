@@ -10,12 +10,12 @@ permalink: /
   <h1>Govern GitHub Copilot.<br><span>Build trust at scale.</span></h1>
   <p class="hero-lede">Enable responsible adoption with practical policies, visibility, and guardrails that balance security with developer productivity.</p>
   <div class="hero-actions">
-    <a class="button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
-    <a class="button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>
+    <a class="btn btn-primary button button-primary" href="{{ '/sections/mental-model/' | relative_url }}">Start with the mental model <span aria-hidden="true">→</span></a>
+    <a class="btn button" href="{{ '/sections/managed-settings-generator/' | relative_url }}">Build managed settings <span aria-hidden="true">→</span></a>
     <span class="updated-note"><span class="status-dot"></span>Kept current automatically</span>
   </div>
   </div>
-  <aside class="control-map" aria-label="Governance guide navigation">
+  <aside class="Box control-map" aria-label="Governance guide navigation">
     <div class="control-map-bar"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span> governance / control-map</div>
     <p class="control-map-comment">// Find the layer that owns the control.</p>
     <ol>
@@ -46,7 +46,7 @@ permalink: /
 <ul class="cards">
 {% assign sections = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
 {% for s in sections %}
-  <li><a href="{{ s.url | relative_url }}"><span class="card-index">{% if s.nav_order < 90 %}{{ s.nav_order | prepend: '0' | slice: -2, 2 }}{% else %}··{% endif %}</span><strong>{{ s.title | strip_html | replace: '`', '' }}</strong><small>Read section <span aria-hidden="true">→</span></small></a></li>
+  <li><a class="Box" href="{{ s.url | relative_url }}"><span class="card-index">{% if s.nav_order < 90 %}{{ s.nav_order | prepend: '0' | slice: -2, 2 }}{% else %}··{% endif %}</span><strong>{{ s.title | strip_html | replace: '`', '' }}</strong><small>Read section <span aria-hidden="true">→</span></small></a></li>
 {% endfor %}
 </ul>
 

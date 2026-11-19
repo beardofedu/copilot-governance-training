@@ -26,7 +26,7 @@ async function main() {
     assert.ok((await page.goto(`${base}/`)).ok());
     const homePath = new URL(`${base}/`).pathname;
     assert.equal(await page.locator('.site-title').getAttribute('href'), homePath);
-    const stylesheet = await page.locator('link[rel="stylesheet"]').getAttribute('href');
+    const stylesheet = await page.locator('link[rel="stylesheet"][href$="style.css"]').getAttribute('href');
     assert.ok(stylesheet);
     assert.ok((await page.request.get(new URL(stylesheet, `${base}/`).href)).ok());
     assert.equal(await page.locator('#search-dialog').getAttribute('data-index-url'), `${homePath}search.json`);
@@ -154,7 +154,11 @@ async function main() {
     assert.equal(complete.sandbox.learningMode, 'deny');
     assert.ok(complete.extraKnownMarketplaces['enterprise-plugins'].source);
     for (const theme of themes) {
-      await page.locator('html').evaluate((html, value) => html.setAttribute('data-theme', value), theme);
+      await page.locator('#theme-select').selectOption(theme);
+      await goTo('review');
+      assert.match(await page.locator('.settings-help a[href="#deploy-your-settings"]').evaluate(
+        element => getComputedStyle(element).textDecorationLine
+      ), /underline/, `${theme} review help link`);
       for (const step of ['welcome', ...groups.map(group => group.id), 'review']) {
         await goTo(step);
         await page.locator('.settings-advanced').evaluateAll(details => details.forEach(element => { element.open = true; }));

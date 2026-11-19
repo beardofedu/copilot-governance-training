@@ -191,6 +191,7 @@
 .settings-include input { flex-shrink: 0; }
 .settings-key { overflow-wrap: anywhere; }
 .settings-help { color: var(--fg-muted); font-size: 14px; }
+.settings-help a, .markdown-body td a { text-decoration: underline; }
 .settings-field input:not([type="checkbox"]), .settings-field textarea,
 .settings-field select, #settings-output {
   display: block;
@@ -292,6 +293,7 @@ img { max-width: 100%; }
   text-align: center;
   font-size: 14px;
 }
+.open-pr-banner a { text-decoration: underline; }
 .header-inner {
   display: flex;
   flex-wrap: wrap;
@@ -527,6 +529,8 @@ img { max-width: 100%; }
   margin: 16px 0;
   padding: 16px;
   overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   border: 1px solid var(--border-muted);
   border-radius: 10px;
   background: var(--canvas-inset);
@@ -540,7 +544,7 @@ img { max-width: 100%; }
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 85%;
 }
-.markdown-body pre code { padding: 0; background: none; font-size: inherit; }
+.markdown-body pre code { padding: 0; background: none; font-size: inherit; white-space: inherit; }
 
 .markdown-body blockquote {
   margin: 16px 0;

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | default: site.title }} · {{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/primer-22.1.1.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <script>
     // Applied before first paint so the stored theme never flashes the wrong colors.
@@ -13,7 +14,11 @@
         var stored = localStorage.getItem('cgt-theme');
         var valid = ['auto', 'light', 'dark', 'dark-dimmed', 'light-high-contrast', 'dark-high-contrast'];
         var choice = valid.indexOf(stored) === -1 ? 'auto' : stored;
-        document.documentElement.setAttribute('data-theme', choice);
+        var root = document.documentElement;
+        root.setAttribute('data-theme', choice);
+        root.setAttribute('data-color-mode', choice === 'auto' ? 'auto' : choice.indexOf('dark') === 0 ? 'dark' : 'light');
+        root.setAttribute('data-light-theme', choice === 'light-high-contrast' ? 'light_high_contrast' : 'light');
+        root.setAttribute('data-dark-theme', choice === 'dark-dimmed' ? 'dark_dimmed' : choice === 'dark-high-contrast' ? 'dark_high_contrast' : 'dark');
       } catch (e) { /* storage unavailable: keep the auto default */ }
     })();
   </script>
@@ -30,19 +35,19 @@
 </div>
 
 <header class="site-header">
-  <div class="header-inner">
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
+  <div class="Header header-inner" style="--header-bgColor: var(--header-bg); --header-fgColor-default: var(--fg); --header-fgColor-logo: var(--fg);">
+    <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar">
       <span class="nav-toggle-bars" aria-hidden="true"></span>
       <span>Menu</span>
     </button>
-    <a class="site-title" href="{{ '/' | relative_url }}">
+    <a class="Header-item Header-link site-title" href="{{ '/' | relative_url }}">
       <svg class="site-mark" viewBox="0 0 16 16" width="24" height="24" aria-hidden="true" fill="currentColor">
         <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
       </svg>
       <span class="site-title-text">{{ site.title }}</span>
     </a>
     <div class="header-actions">
-      <button class="search-toggle" type="button" aria-haspopup="dialog" aria-controls="search-dialog" hidden>
+      <button class="btn search-toggle" type="button" aria-haspopup="dialog" aria-controls="search-dialog" hidden>
         <span>Search controls...</span>
         <kbd aria-hidden="true">⌘K</kbd>
       </button>
@@ -51,7 +56,7 @@
         <svg class="theme-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
           <path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-1.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm5.657-8.157a.75.75 0 0 1 0 1.061l-1.061 1.06a.749.749 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0Zm-9.193 9.193a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 1 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0ZM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0ZM3 8a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 3 8Zm13 0a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 16 8ZM8 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13ZM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.751.751 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06Zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061Z"></path>
         </svg>
-        <select id="theme-select">
+        <select id="theme-select" class="form-control">
           <option value="auto">System</option>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
@@ -60,7 +65,7 @@
           <option value="dark-high-contrast">Dark high contrast</option>
         </select>
       </div>
-      <a class="repo-link" href="https://github.com/{{ repo_nwo }}">
+      <a class="btn repo-link" href="https://github.com/{{ repo_nwo }}">
         <span>View on GitHub</span>
         <span aria-hidden="true">↗</span>
       </a>
@@ -71,22 +76,22 @@
 <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title" data-index-url="{{ '/search.json' | relative_url }}">
   <div class="search-heading">
     <h2 id="search-title">Search the guide</h2>
-    <button class="search-close" type="button" aria-label="Close search">Esc</button>
+    <button class="btn search-close" type="button" aria-label="Close search">Esc</button>
   </div>
   <label class="visually-hidden" for="search-input">Search controls</label>
-  <input id="search-input" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" aria-describedby="search-status" autocomplete="off" spellcheck="false" placeholder="Search controls..." autofocus>
+  <input id="search-input" class="form-control" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" aria-describedby="search-status" autocomplete="off" spellcheck="false" placeholder="Search controls..." autofocus>
   <p id="search-status" class="search-status" role="status">Type to search page titles, headings, and content.</p>
   <ul id="search-results" class="search-results" role="listbox" aria-label="Search results"></ul>
   <p class="search-help">Use ↑ ↓ to select, Enter to open, and Esc to close.</p>
 </dialog>
 
 <div class="layout{% if page.url == '/' %} layout-overview{% endif %}{% if page.wide_content %} layout-tool{% endif %}">
-  <nav id="sidebar" class="sidebar" aria-label="Guide sections">
+  <nav id="sidebar" class="SideNav sidebar" aria-label="Guide sections">
     <p class="nav-heading">Guide contents</p>
     <ul class="nav-list">
-      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active" aria-current="page"{% endif %}><span class="nav-number">00</span>Overview</a></li>
+      <li><a class="SideNav-item{% if page.url == '/' %} active{% endif %}" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}><span class="nav-number">00</span>Overview</a></li>
       {% for s in sections %}
-      <li><a href="{{ s.url | relative_url }}"{% if page.url == s.url %} class="active" aria-current="page"{% endif %}>{% if s.nav_order < 90 %}<span class="nav-number">{{ s.nav_order | prepend: '0' | slice: -2, 2 }}</span>{% else %}<span class="nav-number" aria-hidden="true">·</span>{% endif %}{{ s.title | strip_html | replace: '`', '' }}</a></li>
+      <li><a class="SideNav-item{% if page.url == s.url %} active{% endif %}" href="{{ s.url | relative_url }}"{% if page.url == s.url %} aria-current="page"{% endif %}>{% if s.nav_order < 90 %}<span class="nav-number">{{ s.nav_order | prepend: '0' | slice: -2, 2 }}</span>{% else %}<span class="nav-number" aria-hidden="true">·</span>{% endif %}{{ s.title | strip_html | replace: '`', '' }}</a></li>
       {% endfor %}
     </ul>
   </nav>
@@ -119,14 +124,14 @@
       {% if idx > 0 %}
         {% assign prev_idx = idx | minus: 1 %}
         {% assign prev = sections[prev_idx] %}
-        <a class="pager-link" href="{{ prev.url | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">{{ prev.title | strip_html | replace: '`', '' }}</span></a>
+        <a class="Box pager-link" href="{{ prev.url | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">{{ prev.title | strip_html | replace: '`', '' }}</span></a>
       {% else %}
-        <a class="pager-link" href="{{ '/' | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">Overview</span></a>
+        <a class="Box pager-link" href="{{ '/' | relative_url }}"><span class="pager-label">Previous</span><span class="pager-title">Overview</span></a>
       {% endif %}
       {% assign next_idx = idx | plus: 1 %}
       {% if next_idx < sections.size %}
         {% assign next = sections[next_idx] %}
-        <a class="pager-link pager-next" href="{{ next.url | relative_url }}"><span class="pager-label">Next</span><span class="pager-title">{{ next.title | strip_html | replace: '`', '' }}</span></a>
+        <a class="Box pager-link pager-next" href="{{ next.url | relative_url }}"><span class="pager-label">Next</span><span class="pager-title">{{ next.title | strip_html | replace: '`', '' }}</span></a>
       {% endif %}
     </nav>
     {% endif %}
@@ -140,7 +145,7 @@
 
 {% endcapture %}
     <div class="page-actions">
-      <a class="button report-issue" href="https://github.com/{{ repo_nwo }}/issues/new?title={{ issue_title | strip | url_encode }}&amp;body={{ issue_body | url_encode }}" target="_blank" rel="noopener">
+      <a class="btn button report-issue" href="https://github.com/{{ repo_nwo }}/issues/new?title={{ issue_title | strip | url_encode }}&amp;body={{ issue_body | url_encode }}" target="_blank" rel="noopener">
         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
           <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm9 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.25 4.25a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5Z"></path>
         </svg>

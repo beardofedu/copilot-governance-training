@@ -31,6 +31,9 @@
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
+    root.setAttribute('data-color-mode', theme === 'auto' ? 'auto' : theme.indexOf('dark') === 0 ? 'dark' : 'light');
+    root.setAttribute('data-light-theme', theme === 'light-high-contrast' ? 'light_high_contrast' : 'light');
+    root.setAttribute('data-dark-theme', theme === 'dark-dimmed' ? 'dark_dimmed' : theme === 'dark-high-contrast' ? 'dark_high_contrast' : 'dark');
   }
 
   var select = document.getElementById('theme-select');

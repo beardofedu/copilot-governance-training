@@ -36,6 +36,13 @@ async function main() {
       await context.addInitScript((selectedTheme) => {
         localStorage.setItem("cgt-theme", selectedTheme);
       }, theme.value);
+      await context.route("https://api.github.com/repos/**/pulls?state=open&per_page=1", (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify([{ number: 1 }]),
+        }),
+      );
 
       for (const route of pages) {
         const page = await context.newPage();
@@ -50,6 +57,7 @@ async function main() {
         if (activeTheme !== theme.value) {
           throw new Error(`${route} did not apply the ${theme.label} theme`);
         }
+        await page.locator("#open-pr-banner").waitFor({ state: "visible" });
 
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
