@@ -9,6 +9,13 @@ permalink: /changelog/
 
 Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-governance' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
 
+## 2026-11-19
+
+- **Added** — GPT-6.2 Astra and GPT-6.2 Sol are GA and governed by the model policy and default model enablement ([source](https://github.blog/changelog/2026-11-17-openais-gpt-6-2-astra-and-gpt-6-2-sol-now-available)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+- **Added** — Gemini 4 Neon is GA and governed by the model policy and default model enablement ([source](https://github.blog/changelog/2026-11-18-gemini-4-neon-in-github-copilot)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+- **Added** — Team customizations (team-default plugins) are GA for Copilot Business and Enterprise, subordinate to enterprise and organization policy ([source](https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team)) — Updated: [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }})
+- **Added** — Eight more GitHub-verified connectors in public preview; individually listed allowlists need the new connectors added ([source](https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot)) — Updated: [MCP Governance]({{ '/sections/mcp-governance/' | relative_url }})
+
 ## 2026-11-18
 
 - **Changed** — Reframed the guide around building trust and enabling responsible Copilot adoption, and moved the site to its new repository name — Updated: [Overview]({{ '/' | relative_url }}), [Mental Model]({{ '/sections/mental-model/' | relative_url }}), [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }}), [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Cloud Agent Governance]({{ '/sections/cloud-agent/' | relative_url }}), [CLI & App Sandboxing]({{ '/sections/cli-sandboxing/' | relative_url }})
