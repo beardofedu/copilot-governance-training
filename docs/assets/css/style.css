@@ -238,7 +238,11 @@ body {
   font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
 }
 
-a { color: var(--accent-fg); }
+a {
+  color: var(--accent-fg);
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
 
 .eyebrow, .nav-heading, .nav-number, .card-index, .pager-label,
 .toc-heading, .breadcrumbs, .control-map, .markdown-body th {
@@ -272,7 +276,7 @@ img { max-width: 100%; }
   color: var(--fg);
 }
 
-:focus-visible { outline: 2px solid var(--accent-emphasis); outline-offset: 2px; }
+:focus-visible:focus { outline: 3px solid var(--accent-fg); outline-offset: 3px; }
 
 /* ==========================================================================
    Header
@@ -295,6 +299,7 @@ img { max-width: 100%; }
 }
 .open-pr-banner a { text-decoration: underline; }
 .header-inner {
+  --header-fgColor-default: var(--fg);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -302,6 +307,8 @@ img { max-width: 100%; }
   max-width: 1600px;
   margin: 0 auto;
   padding: 12px 24px;
+  background: var(--header-bg);
+  color: var(--fg);
 }
 .site-title {
   display: inline-flex;
@@ -441,7 +448,8 @@ img { max-width: 100%; }
   text-decoration: none;
 }
 .nav-list a:hover { background: var(--neutral-subtle); }
-.nav-list a.active {
+.nav-list a.active,
+.nav-list a.active[aria-current="page"] {
   background: var(--neutral-subtle);
   border-left-color: var(--success-fg);
   color: var(--fg);
@@ -504,6 +512,15 @@ img { max-width: 100%; }
 .markdown-body h2:hover .heading-anchor,
 .markdown-body h3:hover .heading-anchor,
 .heading-anchor:focus { opacity: 1; }
+.markdown-body a:not(.button):not(.Box) {
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .15em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heading-anchor { transition: none; }
+}
 
 .markdown-body table {
   display: block;
