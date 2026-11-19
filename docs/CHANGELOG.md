@@ -9,6 +9,12 @@ permalink: /changelog/
 
 Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-governance' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
 
+## 2026-11-19
+
+- **Added** — Copilot code review Adaptive effort (capped by the enterprise/org/repo maximum), secret detection and cross-repository context in public preview ([source](https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
+- **Added** — S3 audit log streaming with OpenID Connect now on GHE.com ([source](https://github.blog/changelog/2026-11-19-s3-audit-log-streaming-with-openid-connect-expands-to-ghe-com)) — Updated: [Audit & Visibility]({{ '/sections/audit-visibility/' | relative_url }})
+- **Added** — Copilot Fusion on github.com, Visual Studio and GitHub Mobile beta, plus new models per tier ([source](https://github.blog/changelog/2026-11-17-github-copilot-fusion-updates-more-availability-benchmarks-and-models)) — Updated: [Model & Data Governance]({{ '/sections/model-data-governance/' | relative_url }})
+
 ## 2026-11-18
 
 - **Changed** — Reframed the guide around building trust and enabling responsible Copilot adoption, and moved the site to its new repository name — Updated: [Overview]({{ '/' | relative_url }}), [Mental Model]({{ '/sections/mental-model/' | relative_url }}), [Managed Settings]({{ '/sections/managed-settings/' | relative_url }}), [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }}), [Plugin Marketplace Governance]({{ '/sections/plugin-marketplaces/' | relative_url }}), [Cloud Agent Governance]({{ '/sections/cloud-agent/' | relative_url }}), [CLI & App Sandboxing]({{ '/sections/cli-sandboxing/' | relative_url }})
