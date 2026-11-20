@@ -13,17 +13,18 @@
     { id: 'support', title: '8. Support contact', help: 'Informational organization help URL for Copilot CLI. It does not configure a support service or affect policy enforcement.' }
   ];
   var fields = [];
-  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models and https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference (reviewed 2026-11-16).
+  // Source: https://docs.github.com/en/copilot/reference/ai-models/supported-models and https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference (reviewed 2026-11-20).
   var modelCatalog = [
     { provider: 'Automatic', models: [['auto', 'Auto (automatic model selection)'], ['fusion', 'Fusion (model routing; see fusionTier)']] },
     { provider: 'OpenAI', models: [['gpt-5.3-codex', 'GPT-5.3-Codex'],
       ['gpt-5.6-luna', 'GPT-5.6 Luna'], ['gpt-5.6-sol', 'GPT-5.6 Sol'],
       ['gpt-6-astra', 'GPT-6 Astra'], ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-6-sol', 'GPT-6 Sol'],
-      ['gpt-6.1-sol', 'GPT-6.1 Sol'], ['gpt-6.1-terra', 'GPT-6.1 Terra']] },
+      ['gpt-6.1-sol', 'GPT-6.1 Sol'], ['gpt-6.1-terra', 'GPT-6.1 Terra'],
+      ['gpt-6.2-astra', 'GPT-6.2 Astra'], ['gpt-6.2-sol', 'GPT-6.2 Sol']] },
     { provider: 'Anthropic', models: [['claude-haiku-4.5', 'Claude Haiku 4.5'], ['claude-haiku-5.5', 'Claude Haiku 5.5'],
       ['claude-opus-5.5', 'Claude Opus 5.5'], ['claude-sonnet-4.6', 'Claude Sonnet 4.6'],
       ['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-sonnet-5.5', 'Claude Sonnet 5.5']] },
-    { provider: 'Google', models: [['gemini-3.8-flash', 'Gemini 3.8 Flash'], ['gemini-4-argon', 'Gemini 4 Argon']] },
+    { provider: 'Google', models: [['gemini-3.8-flash', 'Gemini 3.8 Flash'], ['gemini-4-argon', 'Gemini 4 Argon'], ['gemini-4-hydrogen', 'Gemini 4 Hydrogen']] },
     { provider: 'Microsoft', models: [['mai-code-1.1-flash', 'MAI-Code-1.1-Flash']] },
     { provider: 'Moonshot AI', models: [['kimi-k3', 'Kimi K3']] },
     { provider: 'xAI', models: [['grok-4.5', 'Grok 4.5'], ['grok-4.6', 'Grok 4.6'], ['grok-4.7', 'Grok 4.7']] }
