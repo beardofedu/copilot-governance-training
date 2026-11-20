@@ -3,7 +3,7 @@ layout: default
 title: "Enterprise & Org Policies (AI controls)"
 nav_order: 2
 permalink: /sections/enterprise-org-policies/
-last_reviewed: 2026-11-11
+last_reviewed: 2026-11-20
 ---
 
 # Enterprise & Org Policies (AI controls)
@@ -44,6 +44,8 @@ Treat availability as one layer of governance, not the whole control: enabling a
 - Copilot cloud agent (enterprise selects **which specific orgs** get it — not just on/off)
 - Editor preview features (IDEs only)
 - Third-party coding agents (Claude, Codex) — org toggle gated by enterprise enablement
+- **Copilot CLI Microsoft Entra sign-in (public preview, Nov 17, 2026):** enterprises using EMUs via OIDC get silent SSO from Copilot CLI (and VS Code) with their Entra identity. It requires an assigned Copilot Business or Enterprise license and the **Copilot CLI** policy enabled; usage uses GitHub inference and is governed by the organization's Copilot plan. Separately, Frontier organizations with a Microsoft 365 Copilot license **with usage-based billing** can sign in without a GitHub account; that path uses Microsoft 365 inference, and model access and limits are managed in Microsoft 365 Copilot settings, not GitHub. Supported on Windows and macOS (Linux to follow); requires CLI 1.0.113+ ([changelog](https://github.blog/changelog/2026-11-17-github-copilot-cli-adds-microsoft-entra-sign-in-as-a-preview)).
+- **JetBrains (Nov 17, 2026 release):** enterprise-managed settings now disable Claude and Codex in the JetBrains plugin unless an administrator policy allows an exception ([changelog](https://github.blog/changelog/2026-11-17-github-copilot-in-jetbrains-ignite-releases)).
 - **JetBrains Air:** Copilot tasks use the existing subscription via Agent Client Protocol for local or cloud work. Air administrators can disable Copilot through an Air governance policy, but Air analytics do not include Copilot usage and Air cannot set Copilot spending limits; users cannot choose which personal or organization plan an individual task uses ([changelog](https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air)). Whether GitHub organization policies and managed settings apply to these Air tasks is not specified; see [Known Gaps]({{ '/sections/known-gaps/' | relative_url }}).
 - Agent apps (single policy)
 - MCP servers in Copilot (GA toggle — governs only Copilot's own surfaces, not third-party hosts like Cursor/Windsurf)
