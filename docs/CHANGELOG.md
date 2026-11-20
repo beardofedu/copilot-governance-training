@@ -9,6 +9,10 @@ permalink: /changelog/
 
 Guide updates, including those from the [Copilot Governance Watch](https://github.com/{{ site.github.repository_nwo | default: 'beardofedu/awesome-copilot-governance' }}/blob/main/.github/workflows/copilot-governance-watch.md) workflow, are recorded here, newest first. Product updates link to their official sources and the training pages that were updated.
 
+## 2026-11-20
+
+- **Added** — Repository insights for Copilot code review outcomes, also exposed in the usage metrics API `repos-1-day` reports ([source](https://github.blog/changelog/2026-11-17-track-copilot-code-review-outcomes-in-repository-insights)) — Updated: [Audit & Visibility]({{ '/sections/audit-visibility/' | relative_url }})
+
 ## 2026-11-19
 
 - **Added** — Copilot code review Adaptive effort (capped by the enterprise/org/repo maximum), secret detection and cross-repository context in public preview ([source](https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more)) — Updated: [Enterprise & Org Policies]({{ '/sections/enterprise-org-policies/' | relative_url }})
