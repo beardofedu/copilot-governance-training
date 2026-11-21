@@ -199,6 +199,8 @@ Rules:
 - Filter for anything touching: Copilot policies / AI controls, enterprise managed settings, MCP servers and registries, plugins and marketplaces, the Copilot cloud agent, Copilot CLI, content exclusion, public-code matching, audit logs, usage metrics, models and data retention, network/firewall controls, plan tiers.
 - Ignore pure product-marketing posts with no admin/governance surface.
 
+The feed recipe above is discovery-only: its recent-entry list may not span the review window. In the changelog archive, enumerate entries from the Step 1 start date through today, following archive pagination as needed, and read each relevant post's full content. A feed that ends after the cutoff is not full coverage; if the archive cannot be reviewed back to the cutoff, report the blog review as incomplete and leave its cutoff unchanged.
+
 ### b. GitHub Copilot documentation
 
 Fetch and compare against the current site content, focusing on:
