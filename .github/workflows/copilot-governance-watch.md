@@ -196,10 +196,10 @@ Rules:
 ### a. GitHub Blog + Changelog
 
 - `https://github.blog/changelog/` and `https://github.blog/`
+- The changelog RSS feed is only a recent sample, not the complete window. If it does not reach the window start, continue through the changelog archive pages, starting with `https://github.blog/changelog/` and following its next-page links (for example, `https://github.blog/changelog/page/2/`). Similarly follow the Blog's archive pagination for older posts. Read all entries in the window, including every entry on the start date; continue to an older date or the end of the archive before claiming coverage. Read candidate posts in full.
+- A short feed, a large review window, or concern about the effort or cost is not itself a blocker. Continue with the remaining archive pages and all documentation sources instead of reporting incomplete solely because the review is unfinished. If an actual blocker prevents completion, report it and the unreviewed coverage without advancing that source's cutoff.
 - Filter for anything touching: Copilot policies / AI controls, enterprise managed settings, MCP servers and registries, plugins and marketplaces, the Copilot cloud agent, Copilot CLI, content exclusion, public-code matching, audit logs, usage metrics, models and data retention, network/firewall controls, plan tiers.
 - Ignore pure product-marketing posts with no admin/governance surface.
-
-The feed recipe above is discovery-only: its recent-entry list may not span the review window. In the changelog archive, enumerate entries from the Step 1 start date through today, following archive pagination as needed, and read each relevant post's full content. A feed that ends after the cutoff is not full coverage; if the archive cannot be reviewed back to the cutoff, report the blog review as incomplete and leave its cutoff unchanged.
 
 ### b. GitHub Copilot documentation
 
