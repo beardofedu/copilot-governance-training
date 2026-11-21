@@ -11,6 +11,8 @@ Guide updates, including those from the [Copilot Governance Watch](https://githu
 
 ## 2026-11-20
 
+- **Corrected** — Managed settings generator model list now includes `gpt-6.2-sol`, `gpt-6.2-astra` and `gemini-4-hydrogen`, whose identifiers appear in the CLI reference ([source](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)) — Updated: [Managed Settings Generator]({{ '/sections/managed-settings-generator/' | relative_url }})
+
 - **Added** — Repository insights for Copilot code review outcomes, also exposed in the usage metrics API `repos-1-day` reports ([source](https://github.blog/changelog/2026-11-17-track-copilot-code-review-outcomes-in-repository-insights)) — Updated: [Audit & Visibility]({{ '/sections/audit-visibility/' | relative_url }})
 
 ## 2026-11-19
