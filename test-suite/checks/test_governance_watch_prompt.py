@@ -196,6 +196,24 @@ class GovernanceWatchPromptTests(unittest.TestCase):
             with self.subTest(instruction=instruction):
                 self.assertIn(instruction, source_review)
 
+    def test_short_feed_continues_through_archives_and_docs(self):
+        blog_review = PROMPT.split("### a. GitHub Blog + Changelog", 1)[1].split(
+            "### b. GitHub Copilot documentation", 1
+        )[0]
+        for instruction in (
+            "RSS feed is only a recent sample",
+            "following its next-page links",
+            "https://github.blog/changelog/page/2/",
+            "Blog's archive pagination",
+            "including every entry on the start date",
+            "continue to an older date or the end of the archive",
+            "all documentation sources",
+            "concern about the effort or cost is not itself a blocker",
+            "without advancing that source's cutoff",
+        ):
+            with self.subTest(instruction=instruction):
+                self.assertIn(instruction, blog_review)
+
     def test_open_pr_coverage_is_specific_and_noop_is_deferred(self):
         step1 = PROMPT.split("## Step 1", 1)[1].split("## Step 2", 1)[0]
         for instruction in (
